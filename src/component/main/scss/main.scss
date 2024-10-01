@@ -1,0 +1,58 @@
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  .adv-box {
+    width: 100%;
+    height: 600px;
+    background: #cccccc;
+    margin-top: 150px;
+  }
+  .implication-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    .impl-title-name {
+      text-align: center;
+      font-size: 35px;
+      margin: 100px;
+    }
+    .implied-object {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      .left-arrow {
+
+      }
+      .implied-map {
+        margin-top: 50px;
+        width: 500px;
+        height: 500px;
+        background: #cccccc;
+      }
+      .implied-board {
+        width: 500px;
+        height: 600px;
+        border: 1px solid #000000;
+        border-radius: 5px;
+      }
+      .right-arrow {
+
+      }
+    }
+    .add-btn {
+      width: 150px;
+      height: 40px;
+      border: 1px solid #000000;
+      border-radius: 5px;
+      font-size: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+}
