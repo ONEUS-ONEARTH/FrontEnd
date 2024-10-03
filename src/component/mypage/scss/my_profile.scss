@@ -1,0 +1,70 @@
+.myinfo-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 80px;
+  gap: 100px;
+  .myinfo-text-box {
+    font-size: 30px;
+  }
+  .profile-container {
+    width: 80%;
+    height: 70vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    .header {
+      width: 30%;
+      height: 100%;
+    }
+    .myinfo-bg {
+      width: 70%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      box-shadow: inset 0 0 10px rgb(0,0,0,0.25);
+
+      .myinfo-box {
+        width: 85%;
+        height: 30%;
+        border: 1px solid #76AEA8;
+        border-radius: 5px;
+      }
+      .myadd-box {
+        width: 83%;
+        height: 18%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        border: 1px solid #76AEA8;
+        border-radius: 5px;
+        padding: 2%;
+        .detail-myadd {
+          .ar-ad {
+            font-size: 20px;
+          }
+          .j-ad {
+            font-size: 18px;
+          }
+        }
+      }
+      .info-modify-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 120px;
+        height: 45px;
+        font-size: 18px;
+        color: #ffffff;
+        background: #438385;
+        border-radius: 5px;
+      }
+    }
+  }
+}
