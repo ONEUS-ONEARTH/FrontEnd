@@ -1,12 +1,15 @@
 import React, {useEffect, useState} from 'react';
+import Header from "../../header/js/header";
 import { useRoutes } from 'react-router-dom';
 import '../scss/main.scss';
+import {MdArrowBackIos, MdArrowForwardIos} from "react-icons/md";
 
 
 const Main = () => {
 
     return (
         <>
+            <Header/>
             <div className="main-container">
                 <div className="adv-box">
 
@@ -17,7 +20,7 @@ const Main = () => {
                     </div>
                     <div className="implied-object">
                         <div className="left-arrow">
-
+                            <MdArrowBackIos />
                         </div>
                         <div className="implied-map">
 
@@ -32,7 +35,7 @@ const Main = () => {
                             </div>
                         </div>
                         <div className="right-arrow">
-
+                            <MdArrowForwardIos />
                         </div>
                     </div>
                     <div className="add-btn">

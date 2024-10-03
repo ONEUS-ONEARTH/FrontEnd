@@ -1,3 +1,7 @@
+.scroll_ani_view {
+  animation: scrollDownAni 0.3s;
+}
+
 .main-container {
   display: flex;
   flex-direction: column;
@@ -6,7 +10,7 @@
     width: 100%;
     height: 600px;
     background: #cccccc;
-    margin-top: 150px;
+    margin: 7% 0;
   }
   .implication-box {
     display: flex;
@@ -14,21 +18,22 @@
     justify-content: center;
     align-items: center;
     gap: 50px;
+    margin-bottom: 2%;
     .impl-title-name {
       text-align: center;
       font-size: 35px;
-      margin: 100px;
     }
     .implied-object {
       width: 100%;
       display: flex;
       flex-direction: row;
       justify-content: space-around;
+      align-items: center;
       .left-arrow {
-
+        font-size: 70px;
+        color: #333333;
       }
       .implied-map {
-        margin-top: 50px;
         width: 500px;
         height: 500px;
         background: #cccccc;
@@ -40,7 +45,8 @@
         border-radius: 5px;
       }
       .right-arrow {
-
+        font-size: 70px;
+        color: #333333;
       }
     }
     .add-btn {
