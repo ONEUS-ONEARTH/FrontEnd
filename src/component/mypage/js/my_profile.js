@@ -25,11 +25,19 @@ const My_profile = () => {
                                 <p className="myinfo-name">장선경</p>
                             </div>
                             <div className="myinfo-data">
-
+                                <div className="pn-box">
+                                    <p>전화번호: </p>
+                                </div>
+                                <div className="email-box">
+                                    <p>이메일: </p>
+                                </div>
+                                <div className="pw-box">
+                                    <p>비밀번호: </p>
+                                </div>
                             </div>
                         </div>
                         <div className="myadd-box">
-                            <p>거주지 주소</p>
+                            <p className="ad-title">거주지 주소</p>
                             <div className="detail-myadd">
                                 <p className="ar-ad">
                                     ddddd

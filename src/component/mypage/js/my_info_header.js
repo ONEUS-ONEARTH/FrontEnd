@@ -11,7 +11,7 @@ const My_info_header = () => {
 
                 </div>
                 <div className="my-nickname">
-                    <p>seon</p>
+                    <p>soen</p>
                 </div>
                 <div className="myinfo-menu">
                     <p>내프로필</p>

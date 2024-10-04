@@ -1,0 +1,89 @@
+.signup-container {
+  width: 100%;
+  height: 88vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  .signup-title {
+    font-size: 30px;
+  }
+
+  .signup-box {
+    height: 80%;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid #636363;
+
+    .text-box {
+      width: 77%;
+    }
+    .nn-box {
+      width: 90%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      .name-box {
+        width: 50%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+      }
+      .nickname-box {
+        width: 50%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+      }
+    }
+    .pn-box {
+      width: 90%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      .pn-text-box {
+        width: 61%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        .pn-input-box {
+          width: 16%;
+        }
+      }
+
+    }
+    .submit-box {
+      width: 90%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .signup-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 120px;
+        height: 45px;
+        font-size: 18px;
+        color: #ffffff;
+        background: #438385;
+        border-radius: 5px;
+      }
+    }
+    .info-box {
+      width: 90%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+  }
+}
