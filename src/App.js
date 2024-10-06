@@ -13,13 +13,13 @@ function App() {
   return (
     <BrowserRouter>
       <Reset/>
-          <Routes>
-              <Route path="/" element={<Main/>}/>
-              <Route path="/sign_in" element={<Sign_in/>}/>
-              <Route path="/sign_up" element={<Sign_up/>}/>
-              <Route path="/my_profile" element={<My_profile/>}/>
+      <Routes>
+          <Route path="/" element={<Main/>}/>
+          <Route path="/sign_in" element={<Sign_in/>}/>
+          <Route path="/sign_up" element={<Sign_up/>}/>
+          <Route path="/my_profile" element={<My_profile/>}/>
 
-          </Routes>
+      </Routes>
     </BrowserRouter>
   );
 }

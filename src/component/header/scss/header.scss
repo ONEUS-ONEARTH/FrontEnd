@@ -5,6 +5,7 @@
   justify-content: space-between;
   background: #79B49F;
 
+
   .logo {
     height: 100%;
     display: flex;
@@ -13,6 +14,7 @@
     font-size: 50px;
     color: #ffffff;
     margin-left: 20px;
+    text-decoration: none;
     .word-E {
       color: #006928;
     }
@@ -38,10 +40,12 @@
     font-size: 20px;
     color: #ffffff;
     .sign-up {
-
+      color: #ffffff;
+      text-decoration: none;
     }
     .sign-in {
-
+      color: #ffffff;
+      text-decoration: none;
     }
   }
 

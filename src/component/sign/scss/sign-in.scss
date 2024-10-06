@@ -1,0 +1,107 @@
+.signin-container {
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+
+  .signin-title {
+    font-size: 50px;
+  }
+  .sign-boxes {
+    width: 1000px;
+    height: 500px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #79B49F;
+    border-radius: 5px;
+    .signin-box {
+      width: 50%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      .login-info-box {
+        width: 75%;
+        height: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        .input-box {
+          width: 100%;
+          height: 55px;
+          border: 1px inset #ADADAD;
+          border-radius: 5px;
+        }
+        .id-box {
+          width: 100%;
+          height: 40%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-evenly;
+          gap: 20px;
+          .id-text {
+            font-size: 24px;
+          }
+        }
+        .pw-box {
+          width: 100%;
+          height: 40%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-evenly;
+          gap: 20px;
+          .pw-text {
+            font-size: 24px;
+          }
+        }
+      }
+      .login-btn {
+        width: 75%;
+        height: 55px;
+        background: #79B49F;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        border-radius: 5px;
+        font-size: 30px;
+      }
+    }
+    .signup-box {
+      width: 50%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      background: #79B49F;
+      .signup-text {
+        width: 100%;
+        height: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        font-size: 35px;
+      }
+      .signup-btn {
+        width: 75%;
+        height: 55px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #fff;
+        color: #79B49F;
+        border-radius: 5px;
+        font-size: 30px;
+        text-decoration: none;
+      }
+    }
+  }
+}
