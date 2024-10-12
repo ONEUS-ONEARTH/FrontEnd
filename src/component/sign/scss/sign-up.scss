@@ -8,7 +8,6 @@
   .signup-title {
     font-size: 50px;
   }
-
   .signup-box {
     height: 80%;
     width: 35%;
@@ -18,82 +17,69 @@
     align-items: center;
     border: 1px solid #636363;
     font-size: 24px;
-    .nm-input {
-      width: 180px;
+  }
+  .profile-box {
+    width: 150px;
+    height: 150px;
+    background: #ADADAD;
+      border-radius: 50%;
     }
-    .text-box {
-      width: 77%;
-    }
-    .input-h {
-      height: 35px;
-      font-size: 20px;
-    }
+  .sign-info-box {
+    width: 80%;
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    border: 1px solid #ADADAD;
+    border-radius: 5px;
     .nn-box {
-      width: 90%;
+      width: 100%;
       display: flex;
       flex-direction: row;
-      justify-content: center;
+      .nn-input {
+        width: 48%;
+        height: 40px;
+        font-size: 18px;
+        padding: 1%;
+      }
       .name-box {
-        width: 50%;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        align-items: center;
+        border: none;
       }
       .nickname-box {
-        width: 50%;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        align-items: center;
+        border-left: 1px solid #ADADAD;
+        border-bottom: none;
+        border-right: none;
+        border-top: none;
       }
     }
-    .pn-box {
-      width: 90%;
+    .beside-inputs {
+      width: 100%;
       display: flex;
-      flex-direction: row;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      gap: 20px;
-      #pn-select {
-        width: 80px;
-      }
-      .pn-text-box {
-        width: 78%;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        .pn-input-box {
-          width: 100px;
-        }
-      }
-
-    }
-    .submit-box {
-      width: 90%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      .signup-btn {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 120px;
-        height: 45px;
+      .low-input {
+        width: 98%;
+        height: 40px;
+        border-top: 1px solid #ADADAD;
+        border-right: none;
+        border-bottom: none;
+        border-left: none;
         font-size: 18px;
-        color: #ffffff;
-        background: #438385;
-        border-radius: 5px;
+        padding: 1%;
+      }
+      .ad-box {
+
       }
     }
-    .info-box {
-      width: 90%;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
-    }
+  }
+  .signup-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 140px;
+    height: 50px;
+    background: #79B49F;
+    border-radius: 5px;
   }
 }
