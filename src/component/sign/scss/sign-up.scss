@@ -26,7 +26,6 @@
     }
   .sign-info-box {
     width: 80%;
-    height: 40%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -58,19 +57,27 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      .low-input {
+      .inputbox-css {
         width: 98%;
         height: 40px;
         border-top: 1px solid #ADADAD;
         border-right: none;
         border-bottom: none;
         border-left: none;
-        font-size: 18px;
         padding: 1%;
+        .low-input {
+          width: 50%;
+          height: 100%;
+          border: none;
+          outline: none;
+          font-size: 18px;
+        }
+        .message {
+          width: 50%;
+          font-size: 15px;
+        }
       }
-      .ad-box {
 
-      }
     }
   }
   .signup-btn {
@@ -80,6 +87,8 @@
     width: 140px;
     height: 50px;
     background: #79B49F;
+    border: none;
     border-radius: 5px;
+    font-size: 18px;
   }
 }
