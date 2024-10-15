@@ -23,5 +23,32 @@
     gap: 30px;
     margin-top: 60px;
     font-size: 25px;
+    .link-btn {
+      color: #000000;
+      text-decoration: none;
+    }
+    .menu {
+      display: flex;
+      flex-direction: column;
+      .mylist-info {
+        display: none;
+      }
+
+    }
+    .menu:hover .mylist-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      border-top: 1px solid #000000;
+      margin-top: 20px;
+      padding-top: 20px;
+      .link-text {
+        color: #000;
+        text-decoration: none;
+      }
+    }
+
   }
 }

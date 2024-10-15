@@ -188,7 +188,7 @@ const Sign_up = () => {
 
         let msg = '', flag = false;
 
-        const res = await fetch( API_BASE_URL + "/check?phoneNumber=" + phoneNumber);
+        const res = await fetch( API_BASE_URL + "/phcheck?phoneNumber=" + phoneNumber);
         const json = await res.json();
 
         if (json) {
@@ -240,7 +240,7 @@ const Sign_up = () => {
         e.preventDefault();
 
         // 모든 검증이 통과했는지 확인
-        if (!correct.password || !correct.passwordCheck || !correct.id) {
+        if (!correct.password || !correct.passwordCheck || !correct.email || !correct.phoneNumber) {
             // 만약 어떤 검증이라도 실패하면 경고창 표시
             alert('입력란을 다시 확인해주세요!');
             return;

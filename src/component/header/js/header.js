@@ -14,12 +14,12 @@ const Header = () => {
                 </Link>
                 <div className="header-box">
                     <p>모임</p>
-                    <p>업사이클</p>
+                    <Link to='/upcycle' className="link-text">업사이클</Link>
                     <p>에코가게정보</p>
                 </div>
                 <div className="sign-box">
-                    <Link to="/sign_up" className="sign-up">회원가입</Link>
-                    <Link to="/sign_in" className="sign-in">
+                    <Link to="/sign_up" className="link-text">회원가입</Link>
+                    <Link to="/sign_in" className="link-text">
                         <p>로그인</p>
                     </Link>
                 </div>

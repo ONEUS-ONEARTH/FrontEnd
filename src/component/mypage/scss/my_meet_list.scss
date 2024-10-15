@@ -1,0 +1,34 @@
+.myinfo-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 80px;
+  gap: 100px;
+  .myinfo-text-box {
+    font-size: 30px;
+  }
+  .profile-container {
+    width: 80%;
+    height: 70vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    .header {
+      width: 30%;
+      height: 100%;
+    }
+    .myinfo-bg {
+      width: 70%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      box-shadow: inset 0 0 10px rgb(0, 0, 0, 0.25);
+    }
+  }
+}
