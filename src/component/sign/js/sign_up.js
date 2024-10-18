@@ -8,7 +8,7 @@ import { USER_URL } from "../../../config/host-config";
 
 const Sign_up = () => {
     const API_BASE_URL = USER_URL;
-    const SIGN_UP_URL = USER_URL + "/sign_up";
+    const SIGN_UP_URL = USER_URL + "/signup";
     const EMAIL_URL = USER_URL + "/emailcheck";
     const PN_URL = USER_URL + "/phonecheck";
 
@@ -22,7 +22,7 @@ const Sign_up = () => {
         email:'',
         password:'',
         phoneNumber:'',
-        adress:''
+        address:''
     });
 
     // 입력값 검증 메시지를 관리할 상태변수
@@ -69,7 +69,7 @@ const Sign_up = () => {
     }
     const nicknameHandler = (e) => {
         const inputVal = e.target.value;
-        setUserValue({...userValue, name:inputVal});
+        setUserValue({...userValue, nickname:inputVal});
     }
 
     // 이메일 입력값을 검증하고 관리할 함수
@@ -169,7 +169,9 @@ const Sign_up = () => {
             flag = true;
         }
 
-        saveInputState(flag, msg, inputVal, 'passwordCheck');
+
+        setMessage({...message, passwordCheck: msg});
+        setCorrect({...correct, passwordCheck: flag});
     };
 
 
