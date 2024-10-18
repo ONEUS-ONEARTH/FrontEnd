@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import Header from "../../header/js/header";
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,9 @@ import { USER_URL } from "../../../config/host-config";
 const Sign_up = () => {
     const API_BASE_URL = USER_URL;
     const SIGN_UP_URL = USER_URL + "/sign_up";
+    const EMAIL_URL = USER_URL + "/emailcheck";
+    const PN_URL = USER_URL + "/phonecheck";
+
     const redirection = useNavigate(); // 리다이렉트 함수를 리턴
 
 
@@ -18,8 +21,8 @@ const Sign_up = () => {
         nickname:'',
         email:'',
         password:'',
-        adress:'',
-        phoneNumber:''
+        phoneNumber:'',
+        adress:''
     });
 
     // 입력값 검증 메시지를 관리할 상태변수
@@ -70,10 +73,12 @@ const Sign_up = () => {
     }
 
     // 이메일 입력값을 검증하고 관리할 함수
-    const emailHandler = e => {
+    const emailHandler = (e) => {
         const inputVal = e.target.value;
 
-        const emailRegex = /^[a-z0-9\.\-_]+@([a-z0-9\-]+\.)+[a-z]{2,6}$/;
+        const emailRegex = /^[a-zA-Z0-9\.\-_]+@([a-zA-Z0-9\-]+\.)+[a-zA-Z]{2,6}$/;
+        console.log(inputVal);
+
 
         let msg, flag;
         if (!inputVal) {
@@ -96,9 +101,12 @@ const Sign_up = () => {
 
         let msg = '', flag = false;
 
-        const res = await fetch(API_BASE_URL + "/check?email=" + email);
+        const res = await fetch(EMAIL_URL, {
+            method: 'POST',
+            body: JSON.stringify(userValue)
+        })
         const json = await res.json();
-
+        console.log(json);
         if (json) {
             msg = '이메일이 중복되었습니다!';
             flag = false;
@@ -106,9 +114,11 @@ const Sign_up = () => {
             msg = '사용 가능한 이메일입니다.';
             flag = true;
         }
-        setUserValue({...userValue, id: email});
-        setMessage({...message, id: msg});
-        setCorrect({...correct, id: flag});
+        setUserValue({...userValue, email: email});
+        setMessage({...message, email: msg});
+        setCorrect({...correct, email: flag});
+
+
     };
 
     // 패스워드 입력값을 검증하고 관리할 함수
@@ -164,32 +174,47 @@ const Sign_up = () => {
 
 
     // 폰 넘버 입력값을 검증하고 관리할 함수
-    const phoneNumHandler = e => {
+    const phoneNumHandler = (e) => {
+        let inputVal = e.target.value.replace(/[^0-9]/g, ""); // 숫자 이외의 문자는 제거합니다.
 
-        const inputVal = e.target.value;
+        // 길이에 따라 하이픈 자동 추가 (3-4-4 형식)
+        inputVal = inputVal.replace(
+            /^(01[016789]|0[3-9]{1}[0-9]?)(\d{3,4})(\d{4})$/,
+            "$1-$2-$3"
+        );
 
-        var phRegex = /^\d{3}-\d{3,4}-\d{4}$/;
+        e.target.value = inputVal; // 수정된 값을 input에 다시 할당합니다.
 
+        const phoneRegex = /^\d{3}-\d{4}-\d{4}$/; // 한국 전화번호 형식 정규식
         let msg, flag;
+
         if (!inputVal) {
             msg = '전화번호는 필수 값입니다.';
             flag = false;
-        } else if (!phRegex.test(inputVal)) {
+        } else if (!phoneRegex.test(inputVal)) {
             msg = '형식에 맞지 않는 번호입니다.';
             flag = false;
         } else {
-            // 폰넘버 중복체크
+            // 폰넘버 중복체크 함수 호출
             fetchPhCheck(inputVal);
             return;
         }
-    }
+        saveInputState(flag, msg, inputVal, 'phoneNumber');
+        // 에러 메시지와 플래그를 처리하는 로직 추가
+    };
+
 
     const fetchPhCheck = async (phoneNumber) => {
 
+
         let msg = '', flag = false;
 
-        const res = await fetch( API_BASE_URL + "/phcheck?phoneNumber=" + phoneNumber);
+        const res = await fetch(PN_URL, {
+            method: 'POST',
+            body: JSON.stringify(phoneNumber)
+        })
         const json = await res.json();
+        console.log(json);
 
         if (json) {
             msg = '전화번호가 중복되었습니다!';
@@ -198,9 +223,9 @@ const Sign_up = () => {
             msg = '사용가능한 번호입니다.';
             flag = true;
         }
-        setUserValue({...userValue, id: phoneNumber});
-        setMessage({...message, id: msg});
-        setCorrect({...correct, id: flag});
+        setUserValue({...userValue, phoneNumber: phoneNumber});
+        setMessage({...message, phoneNumber: msg});
+        setCorrect({...correct, phoneNumber: flag});
     };
 
     // 주소 입력값을 검증하고 관리할 함수

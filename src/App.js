@@ -14,6 +14,7 @@ import Upcycle from "./component/subpage/js/upcycle";
 
 
 function App() {
+    
   return (
     <BrowserRouter>
       <Reset/>
