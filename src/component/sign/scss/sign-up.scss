@@ -21,9 +21,12 @@
   .profile-box {
     width: 150px;
     height: 150px;
-    background: #ADADAD;
+    //background: #ADADAD;
       border-radius: 50%;
     }
+  .profile-input {
+    display: none;
+  }
   .sign-info-box {
     width: 80%;
     display: flex;

@@ -1,6 +1,6 @@
 // import React from "react";
 import Header from "../../header/js/header";
-import { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../scss/sign-up.scss"
 import { USER_URL } from "../../../config/host-config";
@@ -14,6 +14,10 @@ const Sign_up = () => {
 
     const redirection = useNavigate(); // 리다이렉트 함수를 리턴
 
+    // 이미지 URL을 저장할 상태변수
+    const defaultImg = process.env.PUBLIC_URL + '/assets/profile_img.jpg';
+    const [imgUrl, setImgUrl] = useState(defaultImg);
+    const imgRef = useRef();
 
     // 상태변수로 회원가입 입력값 관리
     const[userValue, setUserValue] = useState({
@@ -22,7 +26,8 @@ const Sign_up = () => {
         email:'',
         password:'',
         phoneNumber:'',
-        address:''
+        adress:'',
+        imagePath:''
     });
 
     // 입력값 검증 메시지를 관리할 상태변수
@@ -61,6 +66,24 @@ const Sign_up = () => {
 
     };
 
+    // 이미지 업로드 input의 onChange
+    const imgUploadHandler = () => {
+        const file = imgRef.current.files?.[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = () => {
+            const imageDataUrl = reader.result;
+            setImgUrl(imageDataUrl);
+
+            // userValue에 이미지 URL 추가
+            setUserValue({
+                ...userValue,
+                imagePath: imageDataUrl, // 'profileImage'는 서버에서 기대하는 키로 변경할 수 있음
+            });
+        };
+        reader.readAsDataURL(file);
+    };
 
 
     const nameHandler = (e) => {
@@ -71,6 +94,7 @@ const Sign_up = () => {
         const inputVal = e.target.value;
         setUserValue({...userValue, nickname:inputVal});
     }
+
 
     // 이메일 입력값을 검증하고 관리할 함수
     const emailHandler = (e) => {
@@ -233,7 +257,7 @@ const Sign_up = () => {
     // 주소 입력값을 검증하고 관리할 함수
     const addressHandler = e => {
         const inputVal = e.target.value;
-        setUserValue({...userValue, address:inputVal});
+        setUserValue({...userValue, adress:inputVal});
     }
 
 
@@ -263,20 +287,15 @@ const Sign_up = () => {
     }
 
     // 계정 생성 버튼을 누르면 동작할 내용
-    const joinClickHandler = e => {
+    const joinClickHandler = (e) => {
         e.preventDefault();
-
-        // 모든 검증이 통과했는지 확인
         if (!correct.password || !correct.passwordCheck || !correct.email || !correct.phoneNumber) {
-            // 만약 어떤 검증이라도 실패하면 경고창 표시
             alert('입력란을 다시 확인해주세요!');
             return;
         }
-
-        // 모든 검증이 통과했으면 회원가입 진행
         fetchSignUpPost();
-
     };
+
 
     return (
         <>
@@ -286,13 +305,25 @@ const Sign_up = () => {
                     <p>회원가입</p>
                 </div>
                 <form className="signup-box" action="">
-                    <div className="profile-box">
-
+                    <div className="profile-box" onClick={() => imgRef.current.click()}>
+                        {imgUrl && (
+                            <img
+                                className="profile-box"
+                                src={imgUrl}
+                                alt="프로필 미리보기"
+                            />
+                        )}
                     </div>
+                    <input type="file" className="profile-input" accept="image/*"
+                           name="imgPath"
+                           onChange={imgUploadHandler}
+                           ref={imgRef}/>
                     <div className="sign-info-box">
                         <div className="nn-box">
-                            <input className="name-box nn-input" type="text" name="name" onChange={nameHandler} placeholder="이름"/>
-                            <input className="nickname-box nn-input" type="text" name="nickname" onChange={nicknameHandler} placeholder="별명"/>
+                            <input className="name-box nn-input" type="text" name="name" onChange={nameHandler}
+                                   placeholder="이름"/>
+                            <input className="nickname-box nn-input" type="text" name="nickname"
+                                   onChange={nicknameHandler} placeholder="별명"/>
                         </div>
                         <div className="beside-inputs">
                             <div className="id-box inputbox-css">
@@ -351,6 +382,6 @@ const Sign_up = () => {
                 </form>
             </div>
         </>
-    )
+)
 }
 export default Sign_up;
