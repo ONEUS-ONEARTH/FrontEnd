@@ -1,6 +1,6 @@
 // import React from "react";
 import Header from "../../header/js/header";
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../scss/sign-up.scss"
 import { USER_URL } from "../../../config/host-config";
@@ -120,29 +120,28 @@ const Sign_up = () => {
         saveInputState(flag, msg, inputVal, 'email');
     };
 
+
     // 이메일 중복체크
     const fetchDuplicatedCheck = async (email) => {
 
         let msg = '', flag = false;
-
         const res = await fetch(EMAIL_URL, {
             method: 'POST',
             body: JSON.stringify(userValue)
         })
         const json = await res.json();
         console.log(json);
-        if (json) {
-            msg = '이메일이 중복되었습니다!';
-            flag = false;
-        } else {
+        if (!json) {
             msg = '사용 가능한 이메일입니다.';
             flag = true;
+        } else {
+            flag = false;
+            msg = '이메일이 중복되었습니다!';
+
         }
         setUserValue({...userValue, email: email});
         setMessage({...message, email: msg});
         setCorrect({...correct, email: flag});
-
-
     };
 
     // 패스워드 입력값을 검증하고 관리할 함수
@@ -264,37 +263,58 @@ const Sign_up = () => {
 
     // 회원가입 비동기요청을 서버로 보내는 함수
     const fetchSignUpPost = async () => {
-        console.log(userValue);
+        const formData = new FormData();
 
-        const res = await fetch(SIGN_UP_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userValue)
-        });
 
-        if (res.status === 200) {
-            const json = await res.json();
-            console.log(json);
-
-            // 로그인 페이지로 리다이렉션
-            redirection('/sign_in');
-
-        } else {
-            alert('서버와의 통신이 원활하지 않습니다.');
+        // 이미지 파일이 있는 경우에만 추가
+        if (imgRef.current.files[0]) {
+            formData.append('profileImage', imgUrl); // 'profileImage'는 서버에서 기대하는 키로 변경 가능
         }
-    }
+        // userValue의 각 필드를 FormData에 추가
+        formData.append('account', userValue.name);
+        formData.append('userName', userValue.nickname);
+        formData.append('email', userValue.email);
+        formData.append('password', userValue.password);
+        formData.append('password', userValue.adress);
+
+        try {
+            const res = await fetch(SIGN_UP_URL, {
+                method: 'POST',
+                body: formData
+            });
+
+            if (res.ok) {
+                const json = await res.json();
+                console.log(json);
+                redirection('/sign_in'); // 성공 시 리다이렉트
+            } else {
+                console.error('응답 상태 코드:', res.status);
+                alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
+            }
+        } catch (error) {
+            console.error('회원가입 요청 중 오류 발생:', error);
+            alert('회원가입 중 문제가 발생했습니다.');
+        }
+    };
+
 
     // 계정 생성 버튼을 누르면 동작할 내용
-    const joinClickHandler = (e) => {
+    const joinClickHandler = async (e) => {
         e.preventDefault();
+
+        // 이메일과 다른 입력값들이 올바른지 확인
         if (!correct.password || !correct.passwordCheck || !correct.email || !correct.phoneNumber) {
             alert('입력란을 다시 확인해주세요!');
             return;
         }
+
+        // fetchSignUpPost를 호출하기 전에 userValue가 올바르게 업데이트되었는지 확인
+        await new Promise((resolve) => setTimeout(resolve, 100)); // 약간의 지연시간 추가
+
+        // 회원가입 진행
         fetchSignUpPost();
     };
+
 
 
     return (
