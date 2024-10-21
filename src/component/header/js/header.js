@@ -6,7 +6,6 @@ const Header = () => {
 
     return (
         <>
-            <reset></reset>
             <div id="header">
                 <Link to='/'className="logo">
                     <p>OUO</p>

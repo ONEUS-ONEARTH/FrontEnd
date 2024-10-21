@@ -68,19 +68,16 @@ const Sign_up = () => {
 
     // 이미지 업로드 input의 onChange
     const imgUploadHandler = () => {
-        const file = imgRef.current.files?.[0];
+        const file = imgRef.current.files?.[0]; // 파일을 가져옴
         if (!file) return;
 
+        // 미리보기 위해 Data URL을 생성 (서버 전송과는 별개)
         const reader = new FileReader();
         reader.onload = () => {
             const imageDataUrl = reader.result;
-            setImgUrl(imageDataUrl);
+            setImgUrl(imageDataUrl); // 미리보기용으로만 사용
 
-            // userValue에 이미지 URL 추가
-            setUserValue({
-                ...userValue,
-                imagePath: imageDataUrl, // 'profileImage'는 서버에서 기대하는 키로 변경할 수 있음
-            });
+            // 파일 객체는 userValue에 저장하지 않음, 나중에 FormData에 직접 추가
         };
         reader.readAsDataURL(file);
     };
@@ -267,15 +264,16 @@ const Sign_up = () => {
 
 
         // 이미지 파일이 있는 경우에만 추가
-        if (imgRef.current.files[0]) {
-            formData.append('profileImage', imgUrl); // 'profileImage'는 서버에서 기대하는 키로 변경 가능
+        const file = imgRef.current.files?.[0];
+        if (file) {
+            formData.append('imageFile', file); // 파일 객체를 직접 추가
         }
         // userValue의 각 필드를 FormData에 추가
-        formData.append('account', userValue.name);
-        formData.append('userName', userValue.nickname);
+        formData.append('name', userValue.name);
+        formData.append('nickname', userValue.nickname);
         formData.append('email', userValue.email);
         formData.append('password', userValue.password);
-        formData.append('password', userValue.adress);
+        formData.append('adress', userValue.adress);
 
         try {
             const res = await fetch(SIGN_UP_URL, {
@@ -296,6 +294,14 @@ const Sign_up = () => {
             alert('회원가입 중 문제가 발생했습니다.');
         }
     };
+
+    const imgHandler = e => {
+        const img = e.target.files[0];
+
+        setImgUrl(img);
+        //setIsChange(true);
+    }
+
 
 
     // 계정 생성 버튼을 누르면 동작할 내용
@@ -324,7 +330,7 @@ const Sign_up = () => {
                 <div className="signup-title">
                     <p>회원가입</p>
                 </div>
-                <form className="signup-box" action="">
+                <form className="signup-box" onSubmit={fetchSignUpPost} encType= "multipart/form-data">
                     <div className="profile-box" onClick={() => imgRef.current.click()}>
                         {imgUrl && (
                             <img
@@ -333,9 +339,11 @@ const Sign_up = () => {
                                 alt="프로필 미리보기"
                             />
                         )}
+
+
                     </div>
                     <input type="file" className="profile-input" accept="image/*"
-                           name="imgPath"
+                           name="imagePath"
                            onChange={imgUploadHandler}
                            ref={imgRef}/>
                     <div className="sign-info-box">
