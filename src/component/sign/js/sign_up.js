@@ -2,7 +2,7 @@
 import Header from "../../header/js/header";
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import "../scss/sign-up.scss"
+import "../scss/sign_up.scss"
 import { USER_URL } from "../../../config/host-config";
 
 
@@ -20,14 +20,14 @@ const Sign_up = () => {
     const imgRef = useRef();
 
     // 상태변수로 회원가입 입력값 관리
-    const[userValue, setUserValue] = useState({
-        name:'',
-        nickname:'',
-        email:'',
-        password:'',
-        phoneNumber:'',
-        adress:'',
-        imagePath:''
+    const [userValue, setUserValue] = useState({
+        name: '',
+        nickname: '',
+        email: '',
+        password: '',
+        phoneNumber: '',
+        adress: '',
+        imagePath: ''
     });
 
     // 입력값 검증 메시지를 관리할 상태변수
@@ -85,11 +85,11 @@ const Sign_up = () => {
 
     const nameHandler = (e) => {
         const inputVal = e.target.value;
-        setUserValue({...userValue, name:inputVal});
+        setUserValue({...userValue, name: inputVal});
     }
     const nicknameHandler = (e) => {
         const inputVal = e.target.value;
-        setUserValue({...userValue, nickname:inputVal});
+        setUserValue({...userValue, nickname: inputVal});
     }
 
 
@@ -98,7 +98,7 @@ const Sign_up = () => {
         const inputVal = e.target.value;
 
         const emailRegex = /^[a-zA-Z0-9\.\-_]+@([a-zA-Z0-9\-]+\.)+[a-zA-Z]{2,6}$/;
-        console.log(inputVal);
+        // console.log(inputVal);
 
 
         let msg, flag;
@@ -124,7 +124,8 @@ const Sign_up = () => {
         let msg = '', flag = false;
         const res = await fetch(EMAIL_URL, {
             method: 'POST',
-            body: JSON.stringify(userValue)
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify({email})
         })
         const json = await res.json();
         console.log(json);
@@ -132,9 +133,8 @@ const Sign_up = () => {
             msg = '사용 가능한 이메일입니다.';
             flag = true;
         } else {
-            flag = false;
             msg = '이메일이 중복되었습니다!';
-
+            flag = false;
         }
         setUserValue({...userValue, email: email});
         setMessage({...message, email: msg});
@@ -233,7 +233,8 @@ const Sign_up = () => {
 
         const res = await fetch(PN_URL, {
             method: 'POST',
-            body: JSON.stringify(phoneNumber)
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify({phoneNumber})
         })
         const json = await res.json();
         console.log(json);
@@ -253,45 +254,53 @@ const Sign_up = () => {
     // 주소 입력값을 검증하고 관리할 함수
     const addressHandler = e => {
         const inputVal = e.target.value;
-        setUserValue({...userValue, adress:inputVal});
+        setUserValue({...userValue, adress: inputVal});
     }
-
 
 
     // 회원가입 비동기요청을 서버로 보내는 함수
     const fetchSignUpPost = async () => {
         const formData = new FormData();
 
+        console.log(userValue);
 
         // 이미지 파일이 있는 경우에만 추가
         const file = imgRef.current.files?.[0];
         if (file) {
             formData.append('imageFile', file); // 파일 객체를 직접 추가
-        }
-        // userValue의 각 필드를 FormData에 추가
-        formData.append('name', userValue.name);
-        formData.append('nickname', userValue.nickname);
-        formData.append('email', userValue.email);
-        formData.append('password', userValue.password);
-        formData.append('adress', userValue.adress);
-
-        try {
-            const res = await fetch(SIGN_UP_URL, {
-                method: 'POST',
-                body: formData
-            });
-
-            if (res.ok) {
-                const json = await res.json();
-                console.log(json);
-                redirection('/sign_in'); // 성공 시 리다이렉트
-            } else {
-                console.error('응답 상태 코드:', res.status);
-                alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
+        } else {
+            const reader = new FileReader(defaultImg);
+            reader.onload = () => {
+                const imageDataUrl = reader.result;
+                setImgUrl(imageDataUrl);
+                formData.append('imageFile', imgUrl)
             }
-        } catch (error) {
-            console.error('회원가입 요청 중 오류 발생:', error);
-            alert('회원가입 중 문제가 발생했습니다.');
+            // userValue의 각 필드를 FormData에 추가
+            formData.append('name', userValue.name);
+            formData.append('nickname', userValue.nickname);
+            formData.append('email', userValue.email);
+            formData.append('password', userValue.password);
+            formData.append('adress', userValue.adress);
+            formData.append('phoneNumber', userValue.phoneNumber);
+
+            try {
+                const res = await fetch(SIGN_UP_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (res.ok) {
+                    const json = await res.json();
+                    console.log(json);
+                    redirection('/sign_in'); // 성공 시 리다이렉트
+                } else {
+                    console.error('응답 상태 코드:', res.status);
+                    alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
+                }
+            } catch (error) {
+                console.error('회원가입 요청 중 오류 발생:', error);
+                alert('회원가입 중 문제가 발생했습니다.');
+            }
         }
     };
 
@@ -300,8 +309,7 @@ const Sign_up = () => {
 
         setImgUrl(img);
         //setIsChange(true);
-    }
-
+    };
 
 
     // 계정 생성 버튼을 누르면 동작할 내용
@@ -322,7 +330,6 @@ const Sign_up = () => {
     };
 
 
-
     return (
         <>
             <Header/>
@@ -330,7 +337,7 @@ const Sign_up = () => {
                 <div className="signup-title">
                     <p>회원가입</p>
                 </div>
-                <form className="signup-box" onSubmit={fetchSignUpPost} encType= "multipart/form-data">
+                <form className="signup-box" onSubmit={fetchSignUpPost} encType="multipart/form-data">
                     <div className="profile-box" onClick={() => imgRef.current.click()}>
                         {imgUrl && (
                             <img
@@ -410,6 +417,6 @@ const Sign_up = () => {
                 </form>
             </div>
         </>
-)
+    )
 }
 export default Sign_up;
