@@ -35,7 +35,7 @@ const Sign_in = () => {
         }
 
         if (res.status === 200) {
-            const {token, grantType, accessToken, refreshToken} = await res.json();
+            const {token, nickname, email} = await res.json();
             // const responseData = await res.json();
             // 클라이언트에서 로그인을 했다는 사실을 알게 해야함
             // 서버에서 받은 토큰을 브라우저에 저장할것.
@@ -44,8 +44,8 @@ const Sign_in = () => {
             localStorage.setItem('GRANT_TYPE', token.grantType);
             localStorage.setItem('ACCESS_TOKEN', token.accessToken);
             localStorage.setItem('REFRESH_TOKEN', token.refreshToken);
-            localStorage.setItem('NAME', res.name);
-            localStorage.setItem('NAME', res.name);
+            localStorage.setItem('NICKNAME', nickname);
+            localStorage.setItem('EMAIL', email);
 
             redirection('/');
         }
@@ -87,7 +87,6 @@ const Sign_in = () => {
                         </Link>
                     </div>
                 </div>
-
             </div>
         </>
     )

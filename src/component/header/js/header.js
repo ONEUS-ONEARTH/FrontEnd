@@ -8,10 +8,11 @@ const Header = () => {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userInfo, setUserInfo] = useState(null);
-
+    const nickname = localStorage.getItem('NICKNAME')
     useEffect(() => {
         // 로그인 상태 확인 로직 (localStorage 또는 서버 API 호출)
         const storedToken = localStorage.getItem('ACCESS_TOKEN');
+
         if (storedToken) {
             setIsLoggedIn(true);
         }
@@ -33,11 +34,12 @@ const Header = () => {
                 <div className="sign-box">
                     {isLoggedIn ? (
                         <div>
-                            <img
-                                className="profile-img-box"
-                                src={profileImg}
-                                alt="프로필이미지"
-                            /><p className="profile-name">{nickname}</p>
+                            {/*<img*/}
+                            {/*    className="profile-img-box"*/}
+                            {/*    src={profileImg}*/}
+                            {/*    alt="프로필이미지"*/}
+                            {/*/>*/}
+                            <p className="profile-name">{nickname}</p>
                         </div>
                     ) : (
                         <>

@@ -1,4 +1,3 @@
-// import React from "react";
 import Header from "../../header/js/header";
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -124,7 +123,7 @@ const Sign_up = () => {
         let msg = '', flag = false;
         const res = await fetch(EMAIL_URL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json'},
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({email})
         })
         const json = await res.json();
@@ -233,7 +232,7 @@ const Sign_up = () => {
 
         const res = await fetch(PN_URL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json'},
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({phoneNumber})
         })
         const json = await res.json();
@@ -262,45 +261,44 @@ const Sign_up = () => {
     const fetchSignUpPost = async () => {
         const formData = new FormData();
 
-        console.log(userValue);
+        // console.log(userValue);
 
         // 이미지 파일이 있는 경우에만 추가
         const file = imgRef.current.files?.[0];
+
         if (file) {
             formData.append('imageFile', file); // 파일 객체를 직접 추가
         } else {
-            const reader = new FileReader(defaultImg);
-            reader.onload = () => {
-                const imageDataUrl = reader.result;
-                setImgUrl(imageDataUrl);
-                formData.append('imageFile', imgUrl)
-            }
-            // userValue의 각 필드를 FormData에 추가
-            formData.append('name', userValue.name);
-            formData.append('nickname', userValue.nickname);
-            formData.append('email', userValue.email);
-            formData.append('password', userValue.password);
-            formData.append('adress', userValue.adress);
-            formData.append('phoneNumber', userValue.phoneNumber);
+            const response = await fetch(defaultImg);
+            const blob = await response.blob();
+            const defaultFile = new File([blob], 'profile_img.jpg', {type: blob.type});
+            formData.append('imageFile', defaultFile);
+        }
+        // userValue의 각 필드를 FormData에 추가
+        formData.append('name', userValue.name);
+        formData.append('nickname', userValue.nickname);
+        formData.append('email', userValue.email);
+        formData.append('password', userValue.password);
+        formData.append('adress', userValue.adress);
+        formData.append('phoneNumber', userValue.phoneNumber);
 
-            try {
-                const res = await fetch(SIGN_UP_URL, {
-                    method: 'POST',
-                    body: formData
-                });
+        try {
+            const res = await fetch(SIGN_UP_URL, {
+                method: 'POST',
+                body: formData
+            });
 
-                if (res.ok) {
-                    const json = await res.json();
-                    console.log(json);
-                    redirection('/sign_in'); // 성공 시 리다이렉트
-                } else {
-                    console.error('응답 상태 코드:', res.status);
-                    alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
-                }
-            } catch (error) {
-                console.error('회원가입 요청 중 오류 발생:', error);
-                alert('회원가입 중 문제가 발생했습니다.');
+            if (res.ok) {
+                const json = await res.json();
+                console.log(json);
+                redirection('/sign_in'); // 성공 시 리다이렉트
+            } else {
+                console.error('응답 상태 코드:', res.status);
+                alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
             }
+        } catch (error) {
+            console.error('회원가입 요청 중 오류 발생:', error);
+            alert('회원가입 중 문제가 발생했습니다.');
         }
     };
 
@@ -308,7 +306,6 @@ const Sign_up = () => {
         const img = e.target.files[0];
 
         setImgUrl(img);
-        //setIsChange(true);
     };
 
 
