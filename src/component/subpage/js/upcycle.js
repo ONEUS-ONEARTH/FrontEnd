@@ -1,6 +1,8 @@
 import React from "react";
+import { Link, useNavigate } from 'react-router-dom';
 import "../scss/upcycle.scss"
 import Header from "../../header/js/header";
+import { CiCirclePlus } from "react-icons/ci";
 
 const Upcycle = () => {
     return (
@@ -42,8 +44,13 @@ const Upcycle = () => {
                         </ul>
                     </div>
                 </div>
+                <div className="upcycle-post">
+                    <Link to='/upcycle_post'>
+                        <CiCirclePlus className="plus-icon" />
+                    </Link>
+                </div>
             </div>
         </>
-    )
+    )       
 }
 export default Upcycle;

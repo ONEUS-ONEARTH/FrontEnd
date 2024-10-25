@@ -11,6 +11,7 @@ import My_profile from "./component/mypage/js/my_profile";
 import My_meet_list from "./component/mypage/js/my_meet_list";
 import My_upcycle_list from "./component/mypage/js/my_upcycle_list";
 import Upcycle from "./component/subpage/js/upcycle";
+import Upcycle_post from "./component/subpage/js/upcycle_post";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route path="/my_meet_list" element={<My_meet_list/>}/>
           <Route path="/my_upcycle_list" element={<My_upcycle_list/>}/>
           <Route path="/upcycle" element={<Upcycle/>}/>
+          <Route path="/upcycle_post" element={<Upcycle_post/>}/>
       </Routes>
     </BrowserRouter>
   );

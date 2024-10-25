@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../scss/sign_up.scss"
 import { USER_URL } from "../../../config/host-config";
+import DaumPostcode from 'react-daum-postcode';
 
 
 const Sign_up = () => {
@@ -250,13 +251,22 @@ const Sign_up = () => {
         setCorrect({...correct, phoneNumber: flag});
     };
 
-    // 주소 입력값을 검증하고 관리할 함수
-    const addressHandler = e => {
-        const inputVal = e.target.value;
-        setUserValue({...userValue, adress: inputVal});
-    }
+    const [isPostcodeVisible, setIsPostcodeVisible] = useState(false);
+    const [selectedAddress, setSelectedAddress] = useState('');
 
+// ...
 
+    const addressHandler = (e) => {
+        e.preventDefault(); // Prevent any default behavior that might cause the form to submit
+        setIsPostcodeVisible(true);
+    };
+
+    const selectAddress = (data) => {
+        // Update the selected address and hide the Daum Postcode popup
+        setSelectedAddress(data.address);
+        setIsPostcodeVisible(false); // This should only hide the popup, not cause other re-renders
+        setUserValue({...userValue, adress: data.address});
+    };
     // 회원가입 비동기요청을 서버로 보내는 함수
     const fetchSignUpPost = async () => {
         const formData = new FormData();
@@ -292,6 +302,7 @@ const Sign_up = () => {
                 const json = await res.json();
                 console.log(json);
                 redirection('/sign_in'); // 성공 시 리다이렉트
+                alert('회원가입이 완료되었습니다!');
             } else {
                 console.error('응답 상태 코드:', res.status);
                 alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
@@ -334,86 +345,105 @@ const Sign_up = () => {
                 <div className="signup-title">
                     <p>회원가입</p>
                 </div>
-                <form className="signup-box" onSubmit={fetchSignUpPost} encType="multipart/form-data">
-                    <div className="profile-box" onClick={() => imgRef.current.click()}>
-                        {imgUrl && (
-                            <img
-                                className="profile-box"
-                                src={imgUrl}
-                                alt="프로필 미리보기"
+
+                {isPostcodeVisible && (
+                    <div className="modal-background" onClick={() => setIsPostcodeVisible(false)}>
+                        <div className="modal-content">
+                            <DaumPostcode
+                                className="daumpostcode"
+                                visible={isPostcodeVisible}
+                                autoClose={false}
+                                onComplete={selectAddress}
                             />
+                        </div>
+                    </div>
                         )}
+                        <form className="signup-box" onSubmit={fetchSignUpPost} encType="multipart/form-data">
+                            <div className="profile-box" onClick={() => imgRef.current.click()}>
+                                {imgUrl && (
+                                    <img
+                                        className="profile-box"
+                                        src={imgUrl}
+                                        alt="프로필 미리보기"
+                                    />
+                                )}
 
 
+                            </div>
+                            <input type="file" className="profile-input" accept="image/*"
+                                   name="imagePath"
+                                   onChange={imgUploadHandler}
+                                   ref={imgRef}/>
+                            <div className="sign-info-box">
+                                <div className="nn-box">
+                                    <input className="name-box nn-input" type="text" name="name" onChange={nameHandler}
+                                           placeholder="이름"/>
+                                    <input className="nickname-box nn-input" type="text" name="nickname"
+                                           onChange={nicknameHandler} placeholder="별명"/>
+                                </div>
+                                <div className="beside-inputs">
+                                    <div className="id-box inputbox-css">
+                                        <input className="low-input" type="text" name="email"
+                                               onChange={emailHandler}
+                                               placeholder="아이디 ex)abcdef@gmail.com"/>
+                                        <span className={'message'} style={
+                                            correct.email
+                                                ? {color: '#61DBF0'}
+                                                : {color: '#F15F5F'}}>{message.email}</span>
+                                    </div>
+                                    <div className="pw-box inputbox-css">
+                                        <input className="low-input" type="password"
+                                               name="password"
+                                               id="password"
+                                               autoComplete="current-password"
+                                               onChange={passwordHandler}
+                                               placeholder="비밀번호"/>
+                                        <span className={'message'} style={
+                                            correct.password
+                                                ? {color: '#61DBF0'}
+                                                : {color: '#F15F5F'}}>{message.password}</span>
+                                    </div>
+                                    <div className="pw-ck-box inputbox-css">
+                                        <input className="low-input" type="password"
+                                               id="password-check"
+                                               autoComplete="check-password"
+                                               onChange={pwCheckHandler}
+                                               placeholder="비밀번호다시확인"/>
+                                        <span id="check-text" className={'message'} style={
+                                            correct.passwordCheck
+                                                ? {color: '#61DBF0'}
+                                                : {color: '#F15F5F'}}>{message.passwordCheck}</span>
+                                    </div>
+                                    <div className="ph-box inputbox-css">
+                                        <input className="low-input" type="text"
+                                               onChange={phoneNumHandler}
+                                               placeholder="전화번호"/>
+                                        <span className={'message'} style={
+                                            correct.phoneNumber
+                                                ? {color: '#61DBF0'}
+                                                : {color: '#F15F5F'}}>{message.phoneNumber}</span>
+                                    </div>
+                                    <div className="ad-box inputbox-css">
+                                        <input className="add-input" type="text"
+                                               value={selectedAddress}
+                                               onChange={(e) => setSelectedAddress(e.target.value)}
+                                               placeholder="주소"/>
+                                        <div className="add-box">
+                                            <button className="add-btn"
+                                                    onClick={addressHandler}>주소찾기
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="join-btn" onClick={joinClickHandler}>
+                                <button type="submit" className="signup-btn">
+                                    <span className="signup-text">회원가입</span>
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                    <input type="file" className="profile-input" accept="image/*"
-                           name="imagePath"
-                           onChange={imgUploadHandler}
-                           ref={imgRef}/>
-                    <div className="sign-info-box">
-                        <div className="nn-box">
-                            <input className="name-box nn-input" type="text" name="name" onChange={nameHandler}
-                                   placeholder="이름"/>
-                            <input className="nickname-box nn-input" type="text" name="nickname"
-                                   onChange={nicknameHandler} placeholder="별명"/>
-                        </div>
-                        <div className="beside-inputs">
-                            <div className="id-box inputbox-css">
-                                <input className="low-input" type="text" name="email"
-                                       onChange={emailHandler}
-                                       placeholder="아이디 ex)abcdef@gmail.com"/>
-                                <span className={'message'} style={
-                                    correct.email
-                                        ? {color: '#61DBF0'}
-                                        : {color: '#F15F5F'}}>{message.email}</span>
-                            </div>
-                            <div className="pw-box inputbox-css">
-                                <input className="low-input" type="password"
-                                       name="password"
-                                       id="password"
-                                       autoComplete="current-password"
-                                       onChange={passwordHandler}
-                                       placeholder="비밀번호"/>
-                                <span className={'message'} style={
-                                    correct.password
-                                        ? {color: '#61DBF0'}
-                                        : {color: '#F15F5F'}}>{message.password}</span>
-                            </div>
-                            <div className="pw-ck-box inputbox-css">
-                                <input className="low-input" type="password"
-                                       id="password-check"
-                                       autoComplete="check-password"
-                                       onChange={pwCheckHandler}
-                                       placeholder="비밀번호다시확인"/>
-                                <span id="check-text" className={'message'} style={
-                                    correct.passwordCheck
-                                        ? {color: '#61DBF0'}
-                                        : {color: '#F15F5F'}}>{message.passwordCheck}</span>
-                            </div>
-                            <div className="ph-box inputbox-css">
-                                <input className="low-input" type="text"
-                                       onChange={phoneNumHandler}
-                                       placeholder="전화번호"/>
-                                <span className={'message'} style={
-                                    correct.phoneNumber
-                                        ? {color: '#61DBF0'}
-                                        : {color: '#F15F5F'}}>{message.phoneNumber}</span>
-                            </div>
-                            <div className="ad-box inputbox-css">
-                                <input className="low-input" type="text"
-                                       onChange={addressHandler}
-                                       placeholder="주소"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="join-btn" onClick={joinClickHandler}>
-                        <button type="submit" className="signup-btn">
-                            <p>회원가입</p>
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </>
-    )
-}
-export default Sign_up;
+                    </>
+                    )
+                }
+                export default Sign_up;

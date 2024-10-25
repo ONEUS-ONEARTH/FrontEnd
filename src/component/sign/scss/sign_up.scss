@@ -61,6 +61,8 @@
       flex-direction: column;
       align-items: center;
       .inputbox-css {
+        display: flex;
+        flex-direction: row;
         width: 98%;
         height: 40px;
         border-top: 1px solid #ADADAD;
@@ -79,9 +81,52 @@
           width: 50%;
           font-size: 15px;
         }
+        .add-input {
+          width: 70%;
+          height: 100%;
+          border: none;
+          outline: none;
+          font-size: 18px;
+        }
+        .add-box {
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          .add-btn {
+            width: 90px;
+            height: 35px;
+            background: #79B49F;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 15px;
+          }
+        }
       }
 
     }
+  }
+  .modal-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); // 어두운 배경 (투명도 0.5)
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; // 다른 요소들보다 위에 표시되도록 설정
+  }
+
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px; // 팝업의 너비 조절
+    max-width: 90%; // 화면보다 너무 커지지 않도록 제한
+    height: 500px; // 필요에 따라 높이 조절
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
   }
   .signup-btn {
     display: flex;
@@ -93,5 +138,8 @@
     border: none;
     border-radius: 5px;
     font-size: 18px;
+    .signup-text {
+    color: #fff;
+    }
   }
 }

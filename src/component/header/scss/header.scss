@@ -36,13 +36,55 @@
   }
   .sign-box {
     display: flex;
+    position: relative;
     flex-direction: row;
     justify-content: center;
     gap: 15px;
-    margin: 0 20px;
+    margin: 0 60px;
     align-items: center;
     font-size: 20px;
     color: #ffffff;
+    .profile-img-box {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+
+
+    .profile-name {
+      display: flex;
+      position: relative; /* 하위 요소를 기준으로 위치 조정 가능하게 설정 */
+    }
+
+    .myinfo-menu {
+      display: none;
+      cursor: pointer;
+      color: #333;
+      .text-deco {
+        text-decoration: none;
+        color: #333;
+      }
+    }
+
+
+    .profile-name:hover .myinfo-menu {
+      position: absolute; /* profile-name 아래에 위치할 수 있도록 */
+      width: 90px;
+      height: 90px;
+      top: 100%; /* nickname 아래에 나타나도록 */
+      left: -20px; /* profile-name의 왼쪽을 기준으로 위치 */
+      background-color: white; /* 하얀색 배경 */
+      border: 1px solid #ddd; /* 테두리 */
+      border-radius: 5px; /* 모서리를 둥글게 */
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 그림자 */
+      padding: 8px ; /* 내부 여백 */
+      z-index: 10; /* 다른 요소보다 위에 표시되도록 */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+    }
+
   }
 
 }

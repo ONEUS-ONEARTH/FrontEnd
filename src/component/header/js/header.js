@@ -1,14 +1,21 @@
 import React, {useEffect, useState} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../scss/header.scss';
 import { USER_URL } from "../../../config/host-config";
+import cn from 'classnames';
 
 const Header = () => {
     const API_BASE_URL = USER_URL;
 
+    const redirection = useNavigate(); // 리다이렉트 함수를 리턴
+
+    const nickname = localStorage.getItem('NICKNAME');
+    const profileImg = localStorage.getItem('PROFILE_IMG');
+    
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userInfo, setUserInfo] = useState(null);
-    const nickname = localStorage.getItem('NICKNAME')
+    const [menuVisible, setMenuVisible] = useState(false);
+    
     useEffect(() => {
         // 로그인 상태 확인 로직 (localStorage 또는 서버 API 호출)
         const storedToken = localStorage.getItem('ACCESS_TOKEN');
@@ -18,6 +25,14 @@ const Header = () => {
         }
         
     }, []);
+
+    const handleLogout = () => {
+        // localStorage를 비웁니다.
+        localStorage.clear();
+
+        // 로그아웃 후 리다이렉션 (예: 로그인 페이지)
+        redirection('/sign_in');
+    };
 
     return (
         <>
@@ -33,14 +48,26 @@ const Header = () => {
                 </div>
                 <div className="sign-box">
                     {isLoggedIn ? (
-                        <div>
-                            {/*<img*/}
-                            {/*    className="profile-img-box"*/}
-                            {/*    src={profileImg}*/}
-                            {/*    alt="프로필이미지"*/}
-                            {/*/>*/}
-                            <p className="profile-name">{nickname}</p>
-                        </div>
+                        <>
+                            <img
+                                className="profile-img-box"
+                                src={profileImg}
+                                alt="프로필이미지"
+                            />
+                            <div className="profile-name">
+                                <span>{nickname}</span>
+
+                                <div className="myinfo-menu">
+                                    <Link to='/my_profile' className="text-deco">
+                                        <span>내정보</span>
+                                    </Link>
+                                    <div onClick={handleLogout}>
+                                        <span>로그아웃</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </>
                     ) : (
                         <>
                             <Link to="/sign_up" className="link-text">회원가입</Link>

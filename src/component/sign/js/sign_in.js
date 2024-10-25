@@ -1,9 +1,11 @@
 import React from "react";
 import Header from "../../header/js/header";
-import { Link, useNavigate } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 // import react, {  } from 'react';
 import "../scss/sign_in.scss"
-import { USER_URL } from "../../../config/host-config";
+import {USER_URL} from "../../../config/host-config";
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 
 const Sign_in = () => {
@@ -32,10 +34,11 @@ const Sign_in = () => {
             // alert(text);
             alert("뭔가 잘못됨");
             return;
+        } else if (res.status === 500) {
+            alert("아이디나 비밀번호가 잘못되었습니다.");
         }
-
         if (res.status === 200) {
-            const {token, nickname, email} = await res.json();
+            const {token, nickname, profileImg} = await res.json();
             // const responseData = await res.json();
             // 클라이언트에서 로그인을 했다는 사실을 알게 해야함
             // 서버에서 받은 토큰을 브라우저에 저장할것.
@@ -45,7 +48,7 @@ const Sign_in = () => {
             localStorage.setItem('ACCESS_TOKEN', token.accessToken);
             localStorage.setItem('REFRESH_TOKEN', token.refreshToken);
             localStorage.setItem('NICKNAME', nickname);
-            localStorage.setItem('EMAIL', email);
+            localStorage.setItem('PROFILE_IMG', profileImg);
 
             redirection('/');
         }
@@ -74,7 +77,7 @@ const Sign_in = () => {
                                 <input className="input-box" id={'password'} type="password" placeholder={'password'}/>
                             </div>
                         </div>
-                        <button  onClick={signinHandler} className="login-btn">
+                        <button onClick={signinHandler} className="login-btn">
                             <p>로그인</p>
                         </button>
                     </div>
