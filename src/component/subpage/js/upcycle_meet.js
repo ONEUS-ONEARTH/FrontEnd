@@ -2,10 +2,24 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from "../../header/js/header";
 import "../scss/upcycle_meet.scss"
+import { Map } from "react-kakao-maps-sdk";
 import { FaHeart } from "react-icons/fa";
 
 
-const Upcycle_meet = () => {
+
+const Upcycle_meet = (props) => {
+    // const kakaoApiKey = process.env.REACT_APP_KAKAOMAP_KEY;
+    //
+    // useEffect(() => {
+    //     const script = document.createElement("script");
+    //     script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoApiKey}&libraries=services`;
+    //     script.async = true;
+    //     document.head.appendChild(script);
+    //
+    //     return () => {
+    //         document.head.removeChild(script);
+    //     };
+    // }, [kakaoApiKey]);
 
     return (
         <>
@@ -43,9 +57,11 @@ const Upcycle_meet = () => {
                             
                         </div>
                     </div>
-                    <div id="map" className="map-api">
-
-                    </div>
+                    <Map
+                        className="map-api"
+                        center={{ lat: 33.450701, lng: 126.570667 }}
+                        level={1}
+                    />
                 </div>
             </div>
         </>

@@ -86,10 +86,10 @@ const Sign_in = () => {
                         <div className="social-login">
                             <a href="https://accounts.google.com/o/oauth2/v2/auth?"
                                scope="https%3A//www.googleapis.com/auth/drive.metadata.readonly&"
-                            access_type="offline&"
-                            response_type="code&"
-                            redirect_uri="http://localhost:8080/&"
-                            client_id="506474340540-ptvmfj17ahedtpqqi63bnor2g0c38lgg.apps.googleusercontent.com">
+                                access_type="offline&"
+                                response_type="code&"
+                                redirect_uri="http://localhost:8080/&"
+                                client_id="506474340540-ptvmfj17ahedtpqqi63bnor2g0c38lgg.apps.googleusercontent.com">
                             <FcGoogle className="google"/>
                         </a>
                         </div>
