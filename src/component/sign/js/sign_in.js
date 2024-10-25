@@ -4,8 +4,8 @@ import {Link, useNavigate} from 'react-router-dom';
 // import react, {  } from 'react';
 import "../scss/sign_in.scss"
 import {USER_URL} from "../../../config/host-config";
+import { FcGoogle } from "react-icons/fc";
 
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 
 const Sign_in = () => {
@@ -18,6 +18,11 @@ const Sign_in = () => {
         fetchSignInProcess();
     }
 
+    const keyDownHandler = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            fetchSignInProcess(); // 작성한 댓글 post 요청하는 함수
+        }
+    };
     const fetchSignInProcess = async () => {
         const res = await fetch(SIGN_IN_URL, {
             method: 'POST',
@@ -32,7 +37,7 @@ const Sign_in = () => {
             // 서버에서 온 텍스트를 추출
             // const text = await res.text();
             // alert(text);
-            alert("뭔가 잘못됨");
+            alert("아이디나 비밀번호가 잘못되었습니다.");
             return;
         } else if (res.status === 500) {
             alert("아이디나 비밀번호가 잘못되었습니다.");
@@ -74,8 +79,19 @@ const Sign_in = () => {
                                 <div className="pw-text">
                                     <p>비밀번호</p>
                                 </div>
-                                <input className="input-box" id={'password'} type="password" placeholder={'password'}/>
+                                <input className="input-box" id={'password'} type="password" placeholder={'password'}
+                                       onKeyDown={keyDownHandler} />
                             </div>
+                        </div>
+                        <div className="social-login">
+                            <a href="https://accounts.google.com/o/oauth2/v2/auth?"
+                               scope="https%3A//www.googleapis.com/auth/drive.metadata.readonly&"
+                            access_type="offline&"
+                            response_type="code&"
+                            redirect_uri="http://localhost:8080/&"
+                            client_id="506474340540-ptvmfj17ahedtpqqi63bnor2g0c38lgg.apps.googleusercontent.com">
+                            <FcGoogle className="google"/>
+                        </a>
                         </div>
                         <button onClick={signinHandler} className="login-btn">
                             <p>로그인</p>

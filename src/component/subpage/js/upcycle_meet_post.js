@@ -1,13 +1,13 @@
 import React from "react";
 import { Link, useNavigate } from 'react-router-dom';
-import "../scss/upcycle_post.scss"
+import "../scss/upcycle_meet_post.scss"
 
-const Upcycle_Post = () => {
+const Upcycle_meet_post = () => {
 
     return (
         <>
-            
+
         </>
     )
 }
-export default Upcycle_Post;
+export default Upcycle_meet_post;

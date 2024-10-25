@@ -1,10 +1,21 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import "../scss/upcycle.scss"
 import Header from "../../header/js/header";
 import { CiCirclePlus } from "react-icons/ci";
 
 const Upcycle = () => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        // 로그인 상태 확인 로직 (localStorage 또는 서버 API 호출)
+        const storedToken = localStorage.getItem('ACCESS_TOKEN');
+
+        if (storedToken) {
+            setIsLoggedIn(true);
+        }
+
+    }, []);
     return (
         <>
         <Header/>
@@ -44,11 +55,13 @@ const Upcycle = () => {
                         </ul>
                     </div>
                 </div>
+                {isLoggedIn &&
                 <div className="upcycle-post">
                     <Link to='/upcycle_post'>
                         <CiCirclePlus className="plus-icon" />
                     </Link>
                 </div>
+                }
             </div>
         </>
     )       

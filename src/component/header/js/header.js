@@ -42,9 +42,9 @@ const Header = () => {
                     <p className="word-E">E</p>
                 </Link>
                 <div className="header-box">
-                    <p>모임</p>
+                    <Link to='/upcycle_meet' className="link-text">모임</Link>
                     <Link to='/upcycle' className="link-text">업사이클</Link>
-                    <p>에코가게정보</p>
+                    {/*<p>에코가게정보</p>*/}
                 </div>
                 <div className="sign-box">
                     {isLoggedIn ? (
@@ -55,7 +55,7 @@ const Header = () => {
                                 alt="프로필이미지"
                             />
                             <div className="profile-name">
-                                <span>{nickname}</span>
+                                <p>{nickname}</p>
 
                                 <div className="myinfo-menu">
                                     <Link to='/my_profile' className="text-deco">

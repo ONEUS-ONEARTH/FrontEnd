@@ -63,6 +63,7 @@
       .inputbox-css {
         display: flex;
         flex-direction: row;
+        align-items: center;
         width: 98%;
         height: 40px;
         border-top: 1px solid #ADADAD;
@@ -78,6 +79,7 @@
           font-size: 18px;
         }
         .message {
+
           width: 50%;
           font-size: 15px;
         }

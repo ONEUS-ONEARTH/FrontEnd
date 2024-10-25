@@ -111,6 +111,7 @@ const Sign_up = () => {
         } else {
             // 이메일 중복체크
             fetchDuplicatedCheck(inputVal);
+            saveInputState(flag, msg, inputVal, 'email');
             return;
         }
 
