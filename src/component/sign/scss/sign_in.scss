@@ -67,10 +67,20 @@
         display: flex;
         flex-direction: row;
 
-        .google {
-          font-size: 40px;
-          box-shadow: 1px 1px 3px #ccc;
+        .google-btn {
+          background: #fff;
           border-radius: 5px;
+          border: none;
+          width: 50px;
+          height: 50px;
+          box-shadow: 1px 1px 3px #ccc;
+          .google {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            border-radius: 5px;
+          }
         }
       }
       .login-btn {
@@ -83,6 +93,7 @@
         color: #fff;
         border-radius: 5px;
         font-size: 30px;
+        border: none;
       }
     }
     .signup-box {
@@ -90,7 +101,8 @@
       height: 100%;
       display: flex;
       flex-direction: column;
-      justify-content: space-evenly;
+      justify-content: space-around;
+      gap: 51px;
       align-items: center;
       background: #79B49F;
       .signup-text {

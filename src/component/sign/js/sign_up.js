@@ -112,6 +112,7 @@ const Sign_up = () => {
             // 이메일 중복체크
             fetchDuplicatedCheck(inputVal);
             saveInputState(flag, msg, inputVal, 'email');
+            console.log(inputVal);
             return;
         }
 
@@ -123,6 +124,8 @@ const Sign_up = () => {
     const fetchDuplicatedCheck = async (email) => {
 
         let msg = '', flag = false;
+        setUserValue({...userValue, email: email});
+
         const res = await fetch(EMAIL_URL, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},

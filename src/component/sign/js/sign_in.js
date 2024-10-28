@@ -108,8 +108,8 @@ const Sign_in = () => {
                             </div>
                         </div>
                         <div className="social-login">
-                            <button onClick={()=>googleLogin()}>
-                            <FcGoogle className="google"/>
+                            <button className="google-btn" onClick={()=>googleLogin()}>
+                                <FcGoogle className="google"/>
                             </button>
 
                         </div>
