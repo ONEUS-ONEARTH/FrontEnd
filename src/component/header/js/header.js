@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../scss/header.scss';
 import { USER_URL } from "../../../config/host-config";
-import cn from 'classnames';
 
 const Header = () => {
     const API_BASE_URL = USER_URL;
@@ -11,11 +10,11 @@ const Header = () => {
 
     const nickname = localStorage.getItem('NICKNAME');
     const profileImg = localStorage.getItem('PROFILE_IMG');
-    
+
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userInfo, setUserInfo] = useState(null);
     const [menuVisible, setMenuVisible] = useState(false);
-    
+
     useEffect(() => {
         // 로그인 상태 확인 로직 (localStorage 또는 서버 API 호출)
         const storedToken = localStorage.getItem('ACCESS_TOKEN');
@@ -23,7 +22,7 @@ const Header = () => {
         if (storedToken) {
             setIsLoggedIn(true);
         }
-        
+
     }, []);
 
     const handleLogout = () => {

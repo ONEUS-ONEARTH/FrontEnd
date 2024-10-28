@@ -5,7 +5,8 @@ import {Link, useNavigate} from 'react-router-dom';
 import "../scss/sign_in.scss"
 import {USER_URL} from "../../../config/host-config";
 import { FcGoogle } from "react-icons/fc";
-
+import {GoogleOAuthProvider } from "@react-oauth/google";
+import { useGoogleLogin } from '@react-oauth/google';
 
 
 const Sign_in = () => {
@@ -13,10 +14,32 @@ const Sign_in = () => {
     const SIGN_IN_URL = USER_URL + "/login";
     const redirection = useNavigate();
 
+    const AuthGoogle=async (auth)=>{
+        const res=await fetch('http://localhost:8080/api/user/login/oauth2/code/google',
+            {
+                method: 'POST',
+                headers: {'content-type': 'application/json'},
+                body: JSON.stringify({
+                    accessToken: auth.access_token,
+                    expiresIn:auth.expires_in,
+                    tokenType:auth.token_type,
+                    scope:auth.scope,
+                    refreshToken:auth.refresh_token
+                })
+            }
+            );
+    }
+
+    const googleLogin =  useGoogleLogin({
+        onSuccess: codeResponse =>AuthGoogle(codeResponse),
+        flow: 'implicit',
+    });
+
     const signinHandler = e => {
         e.preventDefault();
         fetchSignInProcess();
     }
+    
 
     const keyDownHandler = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter') {
@@ -61,6 +84,7 @@ const Sign_in = () => {
     }
     return (
         <>
+            
             <Header/>
             <div className="signin-container">
                 <div className="signin-title">
@@ -84,14 +108,10 @@ const Sign_in = () => {
                             </div>
                         </div>
                         <div className="social-login">
-                            <a href="https://accounts.google.com/o/oauth2/v2/auth?"
-                               scope="https%3A//www.googleapis.com/auth/drive.metadata.readonly&"
-                                access_type="offline&"
-                                response_type="code&"
-                                redirect_uri="http://localhost:8080/&"
-                                client_id="506474340540-ptvmfj17ahedtpqqi63bnor2g0c38lgg.apps.googleusercontent.com">
+                            <button onClick={()=>googleLogin()}>
                             <FcGoogle className="google"/>
-                        </a>
+                            </button>
+
                         </div>
                         <button onClick={signinHandler} className="login-btn">
                             <p>로그인</p>
