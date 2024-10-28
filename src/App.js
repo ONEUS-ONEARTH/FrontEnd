@@ -14,11 +14,12 @@ import Upcycle from "./component/subpage/js/upcycle";
 import Upcycle_post from "./component/subpage/js/upcycle_post";
 import Upcycle_meet from "./component/subpage/js/upcycle_meet";
 import Upcycle_meet_post from "./component/subpage/js/upcycle_meet_post";
-
-
+import { GoogleOAuthProvider } from "@react-oauth/google";
 function App() {
+    const clientId='506474340540-ptvmfj17ahedtpqqi63bnor2g0c38lgg.apps.googleusercontent.com';
     
   return (
+  <GoogleOAuthProvider clientId={clientId}>
     <BrowserRouter>
       <Reset/>
       <Routes>
@@ -34,6 +35,7 @@ function App() {
           <Route path="/upcycle_meet_post" element={<Upcycle_meet_post/>}/>
       </Routes>
     </BrowserRouter>
+  </GoogleOAuthProvider>
   );
 }
 
