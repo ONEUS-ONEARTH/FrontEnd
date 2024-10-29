@@ -28,6 +28,30 @@ const Sign_in = () => {
                 })
             }
             );
+        if (res.status === 400) { // 가입이 안되었거나 비번이 틀린 경우
+            // 서버에서 온 텍스트를 추출
+            // const text = await res.text();
+            // alert(text);
+            alert("아이디나 비밀번호가 잘못되었습니다.");
+            return;
+        } else if (res.status === 500) {
+            alert("아이디나 비밀번호가 잘못되었습니다.");
+        }
+        if (res.status === 200) {
+            const {token, nickname, profileImg} = await res.json();
+            // const responseData = await res.json();
+            // 클라이언트에서 로그인을 했다는 사실을 알게 해야함
+            // 서버에서 받은 토큰을 브라우저에 저장할것.
+            // 1. 로컬 스토리지 - 데이터를 브라우저가 종료되어도 계속 보관
+            // 2. 세션 스토리지 - 데이터를 브라우저가 종료되는 순간 삭제함
+            localStorage.setItem('GRANT_TYPE', token.grantType);
+            localStorage.setItem('ACCESS_TOKEN', token.accessToken);
+            localStorage.setItem('REFRESH_TOKEN', token.refreshToken);
+            localStorage.setItem('NICKNAME', nickname);
+            localStorage.setItem('PROFILE_IMG', profileImg);
+
+            redirection('/');
+        }
     }
 
     const googleLogin =  useGoogleLogin({
