@@ -4,15 +4,15 @@ import { Link } from 'react-router-dom';
 
 
 const My_info_header = () => {
+    const nickname = localStorage.getItem('NICKNAME');
+    const profileImg = localStorage.getItem('PROFILE_IMG');
 
     return (
         <>
             <div className="profile">
-                <div className="profile-img">
-
-                </div>
+                <img className="profile-img" src={profileImg} alt="프로필이미지"/>
                 <div className="my-nickname">
-                    <p>soen</p>
+                    <p>{nickname}</p>
                 </div>
                 <div className="myinfo-menu">
                     <Link to='/my_profile' className="profile-btn link-btn">

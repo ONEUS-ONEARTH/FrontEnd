@@ -1,5 +1,5 @@
 import React from "react";
-import "../scss/my_meet_list.scss"
+import "../scss/my_upcycle_list.scss"
 import Header from "../../header/js/header";
 import My_info_header from "./my_info_header";
 

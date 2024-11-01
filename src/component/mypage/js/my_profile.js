@@ -7,6 +7,9 @@ import {USER_URL} from "../../../config/host-config";
 const My_profile = () => {
     const PROFILE_URL = USER_URL + "/myprofile";
     const MODIFY_URL = USER_URL + "/modify";
+    
+   
+    
     const [userProfile, setUserProfile] = useState({
         name: '',
         nickname: '',
@@ -17,26 +20,35 @@ const My_profile = () => {
         imagePath: ''
     });
 
-    const storedToken = localStorage.getItem('ACCESS_TOKEN');
-    useEffect(() => {
-        // 로그인 상태 확인 로직 (localStorage 또는 서버 API 호출)
 
+    const storedToken = localStorage.getItem('ACCESS_TOKEN');
+
+    useEffect(() => {
         userProfileFetch();
     },[]);
 
-    const userProfileFetch = async () =>{
+    const userProfileFetch = async () => {
         const url = PROFILE_URL
-        const res = await fetch({
+        const res = await fetch(url, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${storedToken}`
             }
         });
         if (res.status === 200) {
-           
-        }
+            // setUserProfile({...userProfile, name: name});
+            // setUserProfile({...userProfile, nickname: nickname});
+            // setUserProfile({...userProfile, email: email});
+            // setUserProfile({...userProfile, password: password});
+            // setUserProfile({...userProfile, phoneNumber: phoneNumber});
+            // setUserProfile({...userProfile, adress: adress});
+            // setUserProfile({...userProfile, imagePath: profileImg});
 
+
+        }
     }
+
+
 
     return (
         <>

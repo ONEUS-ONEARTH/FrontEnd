@@ -1,18 +1,18 @@
 .upcycle-meet-container {
   width: 100%;
-  height: 97vh;
+  height: 93vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
-  margin-top: 80px;
   gap: 100px;
 
   .upcycle-meet-title {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 30px;
+    margin-top: 8vh;
+    font-size: 35px;
   }
 
   .upcycle-meet-box {
@@ -24,6 +24,7 @@
 
     .meetlist-box {
       width: 35%;
+      margin: 1%;
       display: flex;
       flex-direction: column;
 
@@ -85,7 +86,7 @@
       }
     }
     .map-api {
-      width: 60%;
+      width: 55%;
       height: 100%;
       background: #ccc;
     }
