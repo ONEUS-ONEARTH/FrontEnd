@@ -1,0 +1,106 @@
+.upcycle-post-container {
+  width: 100%;
+  height: 92vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+
+  .content-box {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+
+
+    box-shadow: 2px 0px 2px -2px rgba(34, 47, 62, .1),
+    8px 0px 8px -4px rgba(34, 47, 62, .07);
+
+
+    .title-box {
+      width: 98%;
+      margin-top: 2vh;
+
+      .title-input {
+        width: 100%;
+        height: 30px;
+        font-size: 30px;
+        border: none;
+        outline: none;
+      }
+    }
+
+    .tox-tinymce {
+      width: 100%;
+      height: 100%;
+      border: none;
+      .tox-statusbar {
+        display: none;
+      }
+    }
+
+    .tox.tox-tinymce.tox-edit-focus {
+      height: 100% !important;
+    }
+  }
+  .send-box {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 2vh;
+
+    .img-box {
+      width: 480px;
+      height: 340px;
+      background: #ccc;
+      border-radius: 10px;
+      .img {
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+      }
+    }
+    .img-input {
+      display: none;
+    }
+    .tag-input {
+      width: 80%;
+      height: 40px;
+      font-size: 20px;
+      border: 1px solid #333;
+      border-radius: 5px;
+      outline: none;
+    }
+    .uppost-btn-box {
+      width: 50%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+
+      .check {
+        width: 100px;
+        height: 35px;
+        background: #76AEA8;
+        border: 1px solid #76AEA8;
+        font-size: 18px;
+        border-radius: 5px;
+        color: #fff;
+      }
+      .cancel {
+        width: 100px;
+        height: 35px;
+        background: #fff;
+        border: 1px solid #333;
+        font-size: 18px;
+        border-radius: 5px;
+        color: #333;
+      }
+    }
+  }
+}
