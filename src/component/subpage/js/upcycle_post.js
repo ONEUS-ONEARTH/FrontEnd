@@ -12,7 +12,7 @@ const Upcycle_Post = () => {
     const [imgUrl, setImgUrl] = useState();
     const redirection = useNavigate(); // 리다이렉트 함수를 리턴
     const imgRef = useRef();
-    const editorRef = useRef(null);
+    const editorRef = useRef();
 
 
     useEffect(() => {
@@ -44,6 +44,7 @@ const Upcycle_Post = () => {
     // 이미지 업로드 input의 onChange
     const imgUploadHandler = (e) => {
         const inputVal = e.target.value;
+        console.log(inputVal)
         // const file = imgRef.current.files?.[0]; // 파일을 가져옴
         // if (!file) return;
         //
@@ -97,7 +98,7 @@ const Upcycle_Post = () => {
         } else {
             flag = true;
         }
-
+        console.log(value);
         setCorrect({...correct, tag: flag});
         setTagValue(value);
     };
@@ -106,6 +107,7 @@ const Upcycle_Post = () => {
     const [titleValue, setTitleValue] = useState();
     const titleAddHandler = (e) => {
         const inputVal = e.target.value;
+        console.log(inputVal);
 
         let flag;
         if (!inputVal) {
@@ -120,18 +122,19 @@ const Upcycle_Post = () => {
 
     // content
     const [contentValue, setContentValue] = useState();
-    const contentAddHandler = (e) => {
-        const inputVal = e.target.value;
-        setContentValue(inputVal);
+    const contentAddHandler = (content) => {
+        // const data = editorRef.current.getInstance().getHTML();
+        const inputVal = content;
+        console.log(content);
 
         let flag;
-        if (!inputVal) {
+        if (!content) {
             flag = false;
         } else {
             flag = true;
         }
         setCorrect({...correct, content: flag});
-        setContentValue(inputVal);
+        setContentValue(content);
     }
 
     const checkClickHandler = async (e) => {
@@ -157,6 +160,7 @@ const Upcycle_Post = () => {
         const res = await fetch(UPCYCLE_POST_URL, {
             method: 'POST',
             headers: {
+                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${storedToken}`
             },
             body: JSON.stringify({
@@ -194,8 +198,9 @@ const Upcycle_Post = () => {
                         style="height=1000px"
                         className="editor"
                         apiKey='k31l7cbssdoqhzh6h9f1f4c01mdz9d0g3lw57c76ji4s1un8'
-                        onInit={(_evt, editor) => editorRef.current = editor}
-                        onChange={contentAddHandler}
+                        onInit={(_evt, editor) => (editorRef.current = editor)}
+                        onEditorChange={contentAddHandler}
+                        ref={editorRef}
                         // initialValue="<p>This is the initial content of the editor.</p>"
                         init={{
                             height: 500,

@@ -17,18 +17,23 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 function App() {
     const clientId='506474340540-ptvmfj17ahedtpqqi63bnor2g0c38lgg.apps.googleusercontent.com';
 
+    // 창이 닫히거나 새로고침될 때 로컬 스토리지를 비우는 함수
+    const handleLogout = () => {
+        // 로그아웃 처리 시 세션 스토리지에서 사용자 정보 제거
+        sessionStorage.removeItem('user');
+        console.log('User logged out');
+    };
+
+    // 브라우저 창이 닫힐 때 로그아웃
     useEffect(() => {
-        // 창이 닫히거나 새로고침될 때 로컬 스토리지를 비우는 함수
-        const handleBeforeUnload = () => {
-            localStorage.clear();
+        const handleBeforeUnload = (event) => {
+            handleLogout();
         };
 
-        // 이벤트 리스너 추가
-        window.addEventListener("beforeunload", handleBeforeUnload);
+        window.addEventListener('unload', handleBeforeUnload);
 
-        // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
         return () => {
-            window.removeEventListener("beforeunload", handleBeforeUnload);
+            window.removeEventListener('unload', handleBeforeUnload);
         };
     }, []);
     
