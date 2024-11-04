@@ -174,8 +174,8 @@ const Upcycle_Post = () => {
         if (res.ok) {
             const json = await res.json();
             console.log(json);
-            redirection('/sign_in'); // 성공 시 리다이렉트
-            alert('회원가입이 완료되었습니다!');
+            redirection('/upcycle');
+            alert('성공적으로 게시물이 올라갔습니다.');
         } else {
             console.error('응답 상태 코드:', res.status);
             alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
