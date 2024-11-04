@@ -111,11 +111,7 @@ const Sign_up = () => {
         } else {
             // 이메일 중복체크
             fetchDuplicatedCheck(inputVal);
-            saveInputState(flag, msg, inputVal, 'email');
-            console.log(inputVal);
-            return;
         }
-
         saveInputState(flag, msg, inputVal, 'email');
     };
 
@@ -124,7 +120,6 @@ const Sign_up = () => {
     const fetchDuplicatedCheck = async (email) => {
 
         let msg = '', flag = false;
-        setUserValue({...userValue, email: email});
 
         const res = await fetch(EMAIL_URL, {
             method: 'POST',
@@ -135,6 +130,7 @@ const Sign_up = () => {
         console.log(json);
         if (!json) {
             msg = '사용 가능한 이메일입니다.';
+            console.log(email);
             flag = true;
         } else {
             msg = '이메일이 중복되었습니다!';

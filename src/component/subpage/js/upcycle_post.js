@@ -3,14 +3,16 @@ import "../scss/upcycle_post.scss"
 import { Editor } from '@tinymce/tinymce-react';
 import React, {useEffect, useRef, useState} from 'react';
 import Header from "../../header/js/header";
+import {UPCYCLE_URL} from "../../../config/host-config";
 
 const Upcycle_Post = () => {
+    const UPCYCLE_POST_URL = UPCYCLE_URL + '/createpost'
+    const storedToken = localStorage.getItem('ACCESS_TOKEN');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [imgUrl, setImgUrl] = useState();
     const redirection = useNavigate(); // 리다이렉트 함수를 리턴
     const imgRef = useRef();
     const editorRef = useRef(null);
-
 
 
     useEffect(() => {
@@ -29,56 +31,46 @@ const Upcycle_Post = () => {
     }, []);
 
 
-    // const [userValue, setUserValue] = useState({
-    //     name: '',
-    //     nickname: '',
-    //     email: '',
-    //     password: '',
-    //     phoneNumber: '',
-    //     adress: '',
-    //     imagePath: ''
-    // });
-    //
+
 
     // 검증 완료 체크에 대한 상태변수 관리
-    // const [correct, setCorrect] = useState({
-    //     password: false,
-    //     passwordCheck: false,
-    //     email: false,
-    //     phoneNumber: false
-    // });
+    const [correct, setCorrect] = useState({
+        title: false,
+        content: false,
+        img: false,
+        tag: false
+    });
 
-    // const saveInputState = (flag, inputVal, key) => {
-    //
-    //     setCorrect({
-    //         ...correct,
-    //         [key]: flag
-    //     });
-    //     setUserValue({
-    //         ...userValue,
-    //         [key]: inputVal
-    //     });
-    //
-    // };
+    // 이미지 업로드 input의 onChange
+    const imgUploadHandler = (e) => {
+        const inputVal = e.target.value;
+        // const file = imgRef.current.files?.[0]; // 파일을 가져옴
+        // if (!file) return;
+        //
+        // // 미리보기 위해 Data URL을 생성 (서버 전송과는 별개)
+        // const reader = new FileReader();
+        // reader.onload = () => {
+        //     const imageDataUrl = reader.result;
+        //     setImgUrl(imageDataUrl); // 미리보기용으로만 사용
+        //
+        //     // 파일 객체는 userValue에 저장하지 않음, 나중에 FormData에 직접 추가
+        // };
+        // reader.readAsDataURL(file);
 
-    const imgUploadHandler = () => {
-        const file = imgRef.current.files?.[0]; // 파일을 가져옴
-        if (!file) return;
-
-        // 미리보기 위해 Data URL을 생성 (서버 전송과는 별개)
-        const reader = new FileReader();
-        reader.onload = () => {
-            const imageDataUrl = reader.result;
-            setImgUrl(imageDataUrl); // 미리보기용으로만 사용
-
-            // 파일 객체는 userValue에 저장하지 않음, 나중에 FormData에 직접 추가
-        };
-        reader.readAsDataURL(file);
+        let flag;
+        if (!inputVal) {
+            flag = false;
+        } else {
+            flag = true;
+        }
+        setCorrect({...correct, img: flag});
+        setImgUrl(inputVal);
     };
+
 
     const [tagValue, setTagValue] = useState('#태그'); // 기본적으로 #이 표시되도록 초기화
 
-    const handleInputChange = (event) => {
+    const tagAddHandler = (event) => {
         let value = event.target.value;
 
         // #으로 시작하는 단어의 개수를 세기
@@ -98,28 +90,94 @@ const Upcycle_Post = () => {
         else if (value.endsWith(' ') && hashtagWords.length < 5) {
             value = value.trim() + ' #';
         }
+        
+        let flag;
+        if (!value) { 
+            flag = false;
+        } else {
+            flag = true;
+        }
 
+        setCorrect({...correct, tag: flag});
         setTagValue(value);
     };
+
+    // title
+    const [titleValue, setTitleValue] = useState();
+    const titleAddHandler = (e) => {
+        const inputVal = e.target.value;
+
+        let flag;
+        if (!inputVal) {
+            flag = false;
+        } else {
+            flag = true;
+        }
+        setCorrect({...correct, title: flag});
+        setTitleValue(inputVal);
+    }
+
+
+    // content
+    const [contentValue, setContentValue] = useState();
+    const contentAddHandler = (e) => {
+        const inputVal = e.target.value;
+        setContentValue(inputVal);
+
+        let flag;
+        if (!inputVal) {
+            flag = false;
+        } else {
+            flag = true;
+        }
+        setCorrect({...correct, content: flag});
+        setContentValue(inputVal);
+    }
 
     const checkClickHandler = async (e) => {
         e.preventDefault();
         if (editorRef.current) {
             console.log(editorRef.current.getContent());
         }
-        //
-        // // 이메일과 다른 입력값들이 올바른지 확인
-        // if (!correct.password || !correct.passwordCheck || !correct.email || !correct.phoneNumber) {
-        //     alert('입력란을 다시 확인해주세요!');
-        //     return;
-        // }
-        //
-        // // fetchSignUpPost를 호출하기 전에 userValue가 올바르게 업데이트되었는지 확인
-        // await new Promise((resolve) => setTimeout(resolve, 100)); // 약간의 지연시간 추가
-        //
-        // // 회원가입 진행
-        // fetchSignUpPost();
+
+        // 이메일과 다른 입력값들이 올바른지 확인
+        if (!correct.title || !correct.content || !correct.tag || !correct.img) {
+            alert('입력란을 다시 확인해주세요!');
+            return;
+        }
+
+        // fetchSignUpPost를 호출하기 전에 userValue가 올바르게 업데이트되었는지 확인
+        await new Promise((resolve) => setTimeout(resolve, 100)); // 약간의 지연시간 추가
+
+        // 회원가입 진행
+        fetchUpcyclePost();
     };
+    const fetchUpcyclePost = async () => {
+        
+        const res = await fetch(UPCYCLE_POST_URL, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${storedToken}`
+            },
+            body: JSON.stringify({
+                title: titleValue,
+                content: contentValue,
+                tag: tagValue,
+                thumbnailUrl: imgUrl
+            })
+        });
+
+        if (res.ok) {
+            const json = await res.json();
+            console.log(json);
+            redirection('/sign_in'); // 성공 시 리다이렉트
+            alert('회원가입이 완료되었습니다!');
+        } else {
+            console.error('응답 상태 코드:', res.status);
+            alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
+        }
+
+    }
 
     return (
         <>
@@ -127,13 +185,17 @@ const Upcycle_Post = () => {
             <div className="upcycle-post-container">
                 <div className="content-box">
                     <div className="title-box">
-                        <input className="title-input" type="text" placeholder="제목"/>
+                        <input className="title-input"
+                               type="text"
+                               onChange={titleAddHandler}
+                               placeholder="제목"/>
                     </div>
                     <Editor
                         style="height=1000px"
                         className="editor"
                         apiKey='k31l7cbssdoqhzh6h9f1f4c01mdz9d0g3lw57c76ji4s1un8'
                         onInit={(_evt, editor) => editorRef.current = editor}
+                        onChange={contentAddHandler}
                         // initialValue="<p>This is the initial content of the editor.</p>"
                         init={{
                             height: 500,
@@ -169,7 +231,7 @@ const Upcycle_Post = () => {
                            ref={imgRef}/>
                     <input className="tag-input"
                            value={tagValue}
-                           onChange={handleInputChange} type="text" placeholder="태그"/>
+                           onChange={tagAddHandler} type="text" placeholder="태그"/>
 
                     <div className="uppost-btn-box">
                         <button className="check" onClick={checkClickHandler}>확인</button>

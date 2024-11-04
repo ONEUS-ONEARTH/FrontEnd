@@ -36,7 +36,7 @@ const Sign_in = () => {
             return;
         } else if (res.status === 500) {
             
-            // alert("아이디나 비밀번호가 잘못되었습니다.");
+            alert("서버에 문제가 발생하였습니다.");
         }
         if (res.status === 200) {
             const {token, nickname, profileImg} = await res.json();

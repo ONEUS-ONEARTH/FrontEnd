@@ -89,6 +89,16 @@
       width: 55%;
       height: 100%;
       background: #ccc;
+      position: relative;
+
+      .mpost-icon {
+        position: absolute;
+        top: 50%; // 원하는 위치로 조정
+        left: 50%; // 원하는 위치로 조정
+        transform: translate(-50%, -50%); // 중앙에 맞추기 위해 변환
+        font-size: 24px; // 아이콘 크기 조정
+        color: #ff0000;
+      }
     }
   }
 }

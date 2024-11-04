@@ -1,9 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import {Reset} from "styled-reset";
-
+import React, {useEffect} from "react";
 import {BrowserRouter, json, Route, Router, Routes, useLocation} from "react-router-dom";
-
 import Main from "./component/main/js/main";
 import Sign_in from "./component/sign/js/sign_in";
 import Sign_up from "./component/sign/js/sign_up";
@@ -17,6 +16,21 @@ import Upcycle_meet_post from "./component/subpage/js/upcycle_meet_post";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 function App() {
     const clientId='506474340540-ptvmfj17ahedtpqqi63bnor2g0c38lgg.apps.googleusercontent.com';
+
+    useEffect(() => {
+        // 창이 닫히거나 새로고침될 때 로컬 스토리지를 비우는 함수
+        const handleBeforeUnload = () => {
+            localStorage.clear();
+        };
+
+        // 이벤트 리스너 추가
+        window.addEventListener("beforeunload", handleBeforeUnload);
+
+        // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
+        return () => {
+            window.removeEventListener("beforeunload", handleBeforeUnload);
+        };
+    }, []);
     
   return (
   <GoogleOAuthProvider clientId={clientId}>

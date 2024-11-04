@@ -18,6 +18,7 @@ const LOCATION_URL = 'http://localhost:3000';
 // }
 
 const USER = '/api/user';
-const SIGN_UP = '/api/user';
+const UPCYCLE = '/api/upcycle'
 
 export const USER_URL = API_BASE_URL + USER;
+export const UPCYCLE_URL = API_BASE_URL + UPCYCLE;
