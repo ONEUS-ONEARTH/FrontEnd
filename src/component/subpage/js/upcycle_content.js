@@ -1,15 +1,19 @@
 import React from "react";
 import "../scss/upcycle_content.scss"
+import { Link, useNavigate } from 'react-router-dom';
 import Moment from 'moment';
 import { BiLike } from "react-icons/bi";
+import {UPCYCLE_URL} from "../../../config/host-config";
 
 const Upcycle_content = ({id, title, content, tag, createdDate,author}) => {
+    const DETAIL_GET_UEL = UPCYCLE_URL + '/{id}'
+
 
     var moment = require('moment');
     const publish_date = moment(createdDate).format('YYYY년 MM월 DD일')
     return (
         <li>
-            <div className="post-box">
+            <Link className="post-box" to={`/upcycle_detail/${id}`} key={id}>
                 <div className="image-box">
 
                 </div>
@@ -32,7 +36,7 @@ const Upcycle_content = ({id, title, content, tag, createdDate,author}) => {
                         {tag}
                     </div>
                 </div>
-            </div>
+            </Link>
         </li>
     )
 }

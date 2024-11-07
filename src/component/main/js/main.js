@@ -1,13 +1,32 @@
 import React, {useEffect, useState} from 'react';
 import Header from "../../header/js/header";
 import { useRoutes } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../scss/main.scss';
 import {MdArrowBackIos, MdArrowForwardIos} from "react-icons/md";
-import { Map } from "react-kakao-maps-sdk";
-import { FaHeart } from "react-icons/fa";
+import Main_upcycle from "./main_upcycle";
+import Main_upcycle_meet from "./main_upcycle_meet";
+
+
 
 
 const Main = () => {
+    let [arrow, setArrow] = useState(false);
+    const redirection = useNavigate();
+
+    const arrowClickHandler = () => {
+        setArrow(!arrow);
+        console.log(arrow);
+    }
+
+    const addbtnClickHandler = () => {
+
+        if (arrow) {
+            redirection('/upcycle');
+        } else {
+            redirection('/upcycle_meet');
+        }
+    }
 
     // useEffect(() => {
     //
@@ -27,63 +46,29 @@ const Main = () => {
                     <img className="adv-box" src={process.env.PUBLIC_URL + '/assets/ad-img.jpg'} alt=""/>
                 <div className="implication-box">
                     <div className="impl-title-name">
-                        <p>자원봉사</p>
+                        {arrow ?(
+                            <p>업사이클</p>
+                        ) : (
+                            <p>모임</p>
+                        )}
                     </div>
                     <div className="implied-object">
-                        <div className="left-arrow">
+                        <div className="left-arrow"  onClick={arrowClickHandler}>
                             <MdArrowBackIos />
                         </div>
-                        <div className="implied-map">
-                            <Map
-                                className="map-api"
-                                center={{ lat: 33.450701, lng: 126.570667 }}
-                                level={5}
-                            />
-                        </div>
-                        <div className="implied-board">
-                            <ul className="list">
-                                <li className="list-obj">
-                                    <div className="content-box">
-                                        <div className="content-title">
-                                            <p>자원봉사 하실분 구해요~</p>
-                                        </div>
-                                        <div className="content-icon">
-                                            <FaHeart className="like-icon"/>
-                                            <p>5</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li className="list-obj">
-                                    <div className="content-box">
-                                        <div className="content-title">
-                                            <p>환경팝업스토어 도와주실분 구합니다</p>
-                                        </div>
-                                        <div className="content-icon">
-                                            <FaHeart className="like-icon"/>
-                                            <p>5</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li className="list-obj">
-                                    <div className="content-box">
-                                        <div className="content-title">
-                                            <p>산책하면서 쓰레기 주우실분 모집</p>
-                                        </div>
-                                        <div className="content-icon">
-                                            <FaHeart className="like-icon"/>
-                                            <p>5</p>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div className="right-arrow">
+                        {arrow ?(
+                            <Main_upcycle/>
+                        ) : (
+                            <Main_upcycle_meet/>
+                        )}
+
+                        <div className="right-arrow" onClick={arrowClickHandler}>
                             <MdArrowForwardIos/>
                         </div>
                     </div>
-                    <div className="add-btn">
-                        <p>더보기</p>
-                    </div>
+                    <button className="add-btn" onClick={addbtnClickHandler}>
+                        더보기
+                    </button>
                 </div>
             </div>
         </>

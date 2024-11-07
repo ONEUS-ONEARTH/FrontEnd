@@ -10,6 +10,8 @@ import My_profile from "./component/mypage/js/my_profile";
 import My_meet_list from "./component/mypage/js/my_meet_list";
 import My_upcycle_list from "./component/mypage/js/my_upcycle_list";
 import Upcycle from "./component/subpage/js/upcycle";
+import Upcycle_detail from "./component/subpage/js/upcycle_detail";
+
 import Upcycle_post from "./component/subpage/js/upcycle_post";
 import Upcycle_meet from "./component/subpage/js/upcycle_meet";
 import Upcycle_meet_post from "./component/subpage/js/upcycle_meet_post";
@@ -52,6 +54,7 @@ function App() {
           <Route path="/upcycle_post" element={<Upcycle_post/>}/>
           <Route path="/upcycle_meet" element={<Upcycle_meet/>}/>
           <Route path="/upcycle_meet_post" element={<Upcycle_meet_post/>}/>
+          <Route path={'/upcycle_detail/:Id'} element={<Upcycle_detail />}/>
       </Routes>
     </BrowserRouter>
   </GoogleOAuthProvider>

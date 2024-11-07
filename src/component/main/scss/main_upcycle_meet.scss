@@ -1,0 +1,47 @@
+.implied-map {
+  width: 500px;
+  height: 500px;
+  .map-api {
+    width: 500px;
+    height: 500px;
+    background: #ccc;
+  }
+  //background: #cccccc;
+}
+.implied-board {
+  width: 420px;
+  height: 520px;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  padding: 40px 40px;
+
+  .list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .list-obj {
+      width: 100%;
+
+      .content-box {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 20px;
+        border-bottom: 1px solid #333;
+
+        .content-title {
+          font-size: 18px;
+        }
+
+        .content-icon {
+          display: flex;
+          flex-direction: row;
+          gap: 10px;
+          font-size: 20px;
+        }
+      }
+    }
+  }
+}
