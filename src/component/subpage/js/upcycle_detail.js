@@ -8,6 +8,7 @@ const Upcycle_detail = () => {
     const DETAIL_GET_UEL = UPCYCLE_URL;
     const { id } = useParams();
     const [getItem,setGetItem] = useState([]);
+    // const storedToken = localStorage.getItem('ACCESS_TOKEN');
 
     useEffect(() => {
         getDetail();

@@ -13,7 +13,7 @@ const Upcycle_content = ({id, title, content, tag, createdDate,author}) => {
     const publish_date = moment(createdDate).format('YYYY년 MM월 DD일')
     return (
         <li>
-            <Link className="post-box" to={`/upcycle_detail/${id}`} key={id}>
+            <Link className="post-box" to={`/upcycle_detail/${id}`}>
                 <div className="image-box">
 
                 </div>

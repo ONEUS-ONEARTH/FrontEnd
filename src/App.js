@@ -54,7 +54,7 @@ function App() {
           <Route path="/upcycle_post" element={<Upcycle_post/>}/>
           <Route path="/upcycle_meet" element={<Upcycle_meet/>}/>
           <Route path="/upcycle_meet_post" element={<Upcycle_meet_post/>}/>
-          <Route path={'/upcycle_detail/:Id'} element={<Upcycle_detail />}/>
+          <Route path={'/upcycle_detail/:id'} element={<Upcycle_detail />}/>
       </Routes>
     </BrowserRouter>
   </GoogleOAuthProvider>
