@@ -61,6 +61,7 @@ const Upcycle_detail = () => {
         setMTitleValue(getItem.title);
         setMContentValue(content);
         setMTagValue(getItem.tag);
+        // setMImgUrl(getItem.);
     }, [getItem]);
 
 
@@ -188,16 +189,14 @@ const Upcycle_detail = () => {
     }
 
     const modifySendHandler = async () => {
-        console.log(id);
-        console.log(mImgUrl);
-        console.log(mTitleValue);
-        console.log(mContentValue);
-        console.log(mTagValue);
+
 
         try {
             const res = await fetch(`${UPCYCLE_URL}/modify`, {
+
                 method: 'PUT',
                 headers: {
+                    // 'Authorization': `Bearer ${storedToken}`, // 인증 헤더 추가
                     'Content-Type': 'application/json',
                 },
                 body: {
@@ -214,8 +213,15 @@ const Upcycle_detail = () => {
                 if (json) {
                     redirection(`/upcycle_detail/${id}`);
                 }
+            } else {
+                console.log(id);
+                console.log(mImgUrl);
+                console.log(mTitleValue);
+                console.log(mContentValue);
+                console.log(mTagValue);
             }
         } catch (error) {
+
             console.error("Error fetching upcycle posts:", error);
         }
     }
@@ -267,7 +273,7 @@ const Upcycle_detail = () => {
                 ) : (
                     <>
                         <div className="upd-column1">
-                            <img className="upd-img" src="" alt=""  onClick={() => imgRef.current.click()}/>
+                            <img className="upd-img" src="" alt="" onClick={() => imgRef.current.click()}/>
 
                             <input type="file" className="img-input" accept="image/*"
                                    name="imagePath"
