@@ -1,19 +1,81 @@
 .upd-container {
+  width: 100%;
+  height: 83vh;
   display: flex;
   flex-direction: row;
-  justify-content: center;
-
+  justify-content: space-around;
+  margin-top: 10vh;
   .upd-column1 {
+    width: 40%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+
+    .upd-img {
+      width: 480px;
+      height: 380px;
+      border-radius: 5px;
+      background: #ccc;
+    }
+    .upd-data {
+      width: 80%;
+      height: 10%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
   }
 
   .upd-column2 {
+    width: 40%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    align-items: center;
+    align-items: start;
+    .upd-title {
+      width: 100%;
+      font-size: 30px;
+    }
+    .upd-content {
+      width: 100%;
+      height: 40%;
+      //border: 1px solid #333;
+      border-radius: 5px;
+      font-size: 18px;
+    }
+    .btn-box  {
+      width: 100%;
+      display: flex;
+      justify-content: right;
+      .btn-modify{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 120px;
+        height: 45px;
+        font-size: 18px;
+        color: #ffffff;
+        background: #438385;
+        border-radius: 5px;
+        border: none;
+      }
+      .btn-delete{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 120px;
+        height: 45px;
+        font-size: 18px;
+        color: #333333;
+        background: #ffffff;
+        border-radius: 5px;
+        border: 1px solid #333333;
+      }
+    }
   }
+
+
+
+
 }
