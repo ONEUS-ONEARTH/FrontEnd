@@ -65,10 +65,6 @@ const Upcycle_detail = () => {
     }, [getItem]);
 
 
-    const modifyClickHandler = () => {
-        setIsModify(!isModify);
-    }
-
     const deleteClickHandler = async () =>{
         try {
             const res = await fetch(`${UPCYCLE_URL}/${id}`, {
@@ -82,12 +78,16 @@ const Upcycle_detail = () => {
             if (res.status === 200) {
                 const json = await res.json();
                 if (json) {
-                  redirection('/upcycle');
+
                 }
             }
         } catch (error) {
             console.error("Error fetching upcycle posts:", error);
         }
+    }
+
+    const modifyClickHandler = () => {
+        setIsModify(!isModify);
     }
 
     const [correct, setCorrect] = useState({
@@ -199,19 +199,20 @@ const Upcycle_detail = () => {
                     // 'Authorization': `Bearer ${storedToken}`, // 인증 헤더 추가
                     'Content-Type': 'application/json',
                 },
-                body: {
+                body: JSON.stringify({
                     postId: id,
                     title: mTitleValue,
                     content: mContentValue,
                     tag: mTagValue,
                     thumbnailUrl: mImgUrl
-                }
+                })
             });
 
             if (res.status === 200) {
                 const json = await res.json();
                 if (json) {
-                    redirection(`/upcycle_detail/${id}`);
+                    setIsModify(!isModify);
+                    getDetail();
                 }
             } else {
                 console.log(id);
