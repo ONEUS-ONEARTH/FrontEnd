@@ -4,9 +4,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Header from "../../header/js/header";
 import Moment from 'moment';
+import { BiLike } from "react-icons/bi";
 
 const Upcycle_detail = () => {
-    const DETAIL_GET_UEL = UPCYCLE_URL;
     const redirection = useNavigate();
     const { id } = useParams();
     const [isModify, setIsModify] = useState(false);
@@ -14,6 +14,7 @@ const Upcycle_detail = () => {
     var moment = require('moment');
     const publish_date = moment(getItem.createdDate).format('YYYY년 MM월 DD일');
     const storedToken = localStorage.getItem('ACCESS_TOKEN');
+    const [likeScore,setLikeScore] = useState();
     const [content, setContent] = useState('');
     const [edit, setEdit] = useState();
     const [mImgUrl, setMImgUrl] = useState();
@@ -22,7 +23,19 @@ const Upcycle_detail = () => {
     const [mContentValue, setMContentValue] = useState();
     const [mTagValue, setMTagValue] = useState();
 
+    useEffect(() => {
+        getDetail();
+        getScore();
+    },[]);
 
+    useEffect(() => {
+        // getItem 값이 변경될 때마다 호출
+        setEdit(getItem.editable);
+        setMTitleValue(getItem.title);
+        setMContentValue(content);
+        setMTagValue(getItem.tag);
+        // setMImgUrl(getItem.);
+    }, [getItem]);
 
 
     const getDetail = async () => {
@@ -51,18 +64,27 @@ const Upcycle_detail = () => {
             console.error("Error fetching upcycle posts:", error);
         }
     }
-    useEffect(() => {
-        getDetail();
-    },[]);
 
-    useEffect(() => {
-        // getItem 값이 변경될 때마다 호출
-        setEdit(getItem.editable);
-        setMTitleValue(getItem.title);
-        setMContentValue(content);
-        setMTagValue(getItem.tag);
-        // setMImgUrl(getItem.);
-    }, [getItem]);
+    const getScore = async () => {
+        try {
+            const res = await fetch(`${UPCYCLE_URL}/posts/score/${id}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization':`Bearer ${storedToken}`, // 인증 헤더 추가
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (res.status === 200) {
+                const json = await res.json();
+                if (json) {
+                    setLikeScore(json);
+                    console.log(json);
+                }
+            }
+        } catch (error) {
+            console.error("Error fetching upcycle posts:", error);
+        }
+    }
 
 
     const deleteClickHandler = async () =>{
@@ -244,7 +266,7 @@ const Upcycle_detail = () => {
                                     {publish_date}
                                 </div>
                                 <div className="upd-score">
-                                    
+                                    <BiLike /> {likeScore}
                                 </div>
                             </div>
                             <div className="upd-tag">
@@ -289,6 +311,9 @@ const Upcycle_detail = () => {
                                 </div>
                                 <div className="upd-date">
                                     {publish_date}
+                                </div>
+                                <div className="upd-score">
+                                    <BiLike/> {likeScore}
                                 </div>
                             </div>
                             <input className="upd-tag" value={mTagValue}
