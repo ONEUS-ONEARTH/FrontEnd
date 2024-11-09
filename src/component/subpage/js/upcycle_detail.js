@@ -195,7 +195,7 @@ const Upcycle_detail = () => {
         console.log(mTagValue);
 
         try {
-            const res = await fetch(`${UPCYCLE_URL}/${id}`, {
+            const res = await fetch(`${UPCYCLE_URL}/modify`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
