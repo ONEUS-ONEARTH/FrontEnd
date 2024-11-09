@@ -25,7 +25,6 @@ const Upcycle_detail = () => {
 
     useEffect(() => {
         getDetail();
-        getScore();
     },[]);
 
     useEffect(() => {
@@ -65,7 +64,7 @@ const Upcycle_detail = () => {
         }
     }
 
-    const getScore = async () => {
+    const scoreClickHandler = async () => {
         try {
             const res = await fetch(`${UPCYCLE_URL}/posts/score/${id}`, {
                 method: 'GET',
@@ -79,6 +78,7 @@ const Upcycle_detail = () => {
                 if (json) {
                     setLikeScore(json);
                     console.log(json);
+                    getDetail();
                 }
             }
         } catch (error) {
@@ -266,7 +266,7 @@ const Upcycle_detail = () => {
                                     {publish_date}
                                 </div>
                                 <div className="upd-score">
-                                    <BiLike /> {likeScore}
+                                    <BiLike onClick={scoreClickHandler}/> {getItem.likeScore}
                                 </div>
                             </div>
                             <div className="upd-tag">
