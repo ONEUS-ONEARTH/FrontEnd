@@ -78,7 +78,7 @@ const Upcycle_detail = () => {
             if (res.status === 200) {
                 const json = await res.json();
                 if (json) {
-
+                    redirection('/upcycle');
                 }
             }
         } catch (error) {
@@ -242,6 +242,9 @@ const Upcycle_detail = () => {
                                 </div>
                                 <div className="upd-date">
                                     {publish_date}
+                                </div>
+                                <div className="upd-score">
+                                    
                                 </div>
                             </div>
                             <div className="upd-tag">

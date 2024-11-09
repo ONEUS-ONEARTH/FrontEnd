@@ -40,7 +40,7 @@ const Upcycle = () => {
                 const json = await res.json();
                 if (json && json.boards) {
                     setPostList(json.boards);
-                    // console.log(json.boards); // boards를 여기에서 출력
+                    console.log(json.boards); // boards를 여기에서 출력
                 }
             }
         } catch (error) {
@@ -64,6 +64,7 @@ const Upcycle = () => {
                             title={boards.title}
                             content={boards.content}
                             author={boards.author}
+                            likeScore={boards.likeScore}
                             tag={boards.tag}
                             createdDate={boards.createdDate}
                             />

@@ -5,7 +5,7 @@ import Moment from 'moment';
 import { BiLike } from "react-icons/bi";
 import {UPCYCLE_URL} from "../../../config/host-config";
 
-const Upcycle_content = ({id, title, content, tag, createdDate,author}) => {
+const Upcycle_content = ({id, title, content, tag, createdDate,author,likeScore}) => {
     const DETAIL_GET_UEL = UPCYCLE_URL + '/{id}'
 
 
@@ -26,7 +26,7 @@ const Upcycle_content = ({id, title, content, tag, createdDate,author}) => {
                             {author}
                         </div>
                         <div className="post-like">
-                            <BiLike /> 0
+                            <BiLike /> {likeScore}
                         </div>
                     </div>
                     <div className="post-date">
