@@ -19,17 +19,23 @@
       background: #ccc;
     }
     .upd-data {
-      width: 80%;
+      width: 70%;
       height: 10%;
+      max-width: 480px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      font-size: 18px;
 
       .upd-score {
         display: flex;
         align-items: center;
         gap: 10px;
         font-size: 25px;
+
+        .like-btn {
+          color: rgb(68, 103, 213);
+        }
       }
     }
   }
@@ -55,6 +61,7 @@
       width: 100%;
       display: flex;
       justify-content: right;
+      gap: 20px;
       .btn-modify{
         display: flex;
         justify-content: center;

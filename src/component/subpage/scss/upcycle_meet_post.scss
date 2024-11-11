@@ -1,4 +1,25 @@
-.upcycle-post-container {
+.modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); // 어두운 배경 (투명도 0.5)
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; // 다른 요소들보다 위에 표시되도록 설정
+  .modal-meet-content {
+    display: flex;
+    width: 500px;
+
+    .daumpostcode {
+      height: 600px !important;
+    }
+  }
+}
+
+.meet-post-container {
   width: 100%;
   height: 93vh;
   display: flex;
@@ -68,15 +89,39 @@
     .img-input {
       display: none;
     }
-    .tag-input {
-      width: 80%;
-      height: 40px;
-      font-size: 20px;
-      border: 1px solid #333;
-      border-radius: 5px;
-      outline: none;
+
+    .radio-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      font-size: 25px;
     }
-    .uppost-btn-box {
+
+    .adress-box {
+      width: 50%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+
+      .mp-adress {
+        width: 75%;
+        height: 28px;
+        font-size: 15px;
+      }
+      .adress-btn {
+        width: 90px;
+        height: 35px;
+        background: #79B49F;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 15px;
+      }
+    }
+
+    .meetpost-btn-box {
       width: 50%;
       display: flex;
       flex-direction: row;

@@ -3,6 +3,7 @@ import {UPCYCLE_URL} from "../../../config/host-config";
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Header from "../../header/js/header";
+import cn from "classnames";
 import Moment from 'moment';
 import { BiLike } from "react-icons/bi";
 
@@ -33,6 +34,8 @@ const Upcycle_detail = () => {
         setMTitleValue(getItem.title);
         setMContentValue(content);
         setMTagValue(getItem.tag);
+        setLikeScore(getItem.cilcked);
+        console.log(likeScore);
         // setMImgUrl(getItem.);
     }, [getItem]);
 
@@ -76,8 +79,7 @@ const Upcycle_detail = () => {
             if (res.status === 200) {
                 const json = await res.json();
                 if (json) {
-                    setLikeScore(json);
-                    console.log(json);
+                    // console.log(json);
                     getDetail();
                 }
             }
@@ -266,7 +268,8 @@ const Upcycle_detail = () => {
                                     {publish_date}
                                 </div>
                                 <div className="upd-score">
-                                    <BiLike onClick={scoreClickHandler}/> {getItem.likeScore}
+                                    <BiLike className={cn({"like-btn" : likeScore})} onClick={scoreClickHandler}/>
+                                    {getItem.likeScore}
                                 </div>
                             </div>
                             <div className="upd-tag">

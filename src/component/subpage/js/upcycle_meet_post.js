@@ -2,11 +2,22 @@ import React, {useEffect, useRef, useState} from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import "../scss/upcycle_meet_post.scss";
 import Header from "../../header/js/header";
+import {MEET_URL} from "../../../config/host-config";
 import { Editor } from '@tinymce/tinymce-react';
+import DaumPostcode from 'react-daum-postcode';
 
 const Upcycle_meet_post = () => {
+    const MEET_POST_URL = MEET_URL + '/createmeeting';
+    const storedToken = localStorage.getItem('ACCESS_TOKEN');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [x,setX] = useState('1');
     const [imgUrl, setImgUrl] = useState();
+    const [selectedAddress, setSelectedAddress] = useState('');
+    const [isPostcodeVisible, setIsPostcodeVisible] = useState(false);
+    const [titleValue,setTitleValue] = useState();
+    const [contentValue,setContentValue] = useState();
+    const [adressValue,SetAdressValue] = useState();
+
     const redirection = useNavigate(); // 리다이렉트 함수를 리턴
     const imgRef = useRef();
     const editorRef = useRef(null);
@@ -14,9 +25,6 @@ const Upcycle_meet_post = () => {
 
 
     useEffect(() => {
-        // 로그인 상태 확인 로직 (localStorage 또는 서버 API 호출)
-        const storedToken = localStorage.getItem('ACCESS_TOKEN');
-
         if (storedToken) {
             setIsLoggedIn(true);
         } else {
@@ -24,9 +32,40 @@ const Upcycle_meet_post = () => {
             alert('로그인을 하고 이용해주세요!');
             redirection('/sign_in');
         }
-
-
+        // console.log(selectedLabel);
     }, []);
+
+    const [correct, setCorrect] = useState({
+        title: false,
+        content: false,
+        adress: false
+    });
+
+    const [selectedLabel, setSelectedLabel] = useState("개인");
+
+    const radioBtnClickHandler = (e) => {
+        const value = e.target.value;
+        const label = document.querySelector(`label.x${value}`);
+        setSelectedLabel(label ? label.getAttribute("data-label") : "");
+        setX(value);
+
+
+        console.log(label);
+    }
+    useEffect(() => {
+        console.log(selectedLabel);
+    }, [selectedLabel])
+
+
+    const addressHandler = (e) => {
+        e.preventDefault(); // Prevent any default behavior that might cause the form to submit
+        setIsPostcodeVisible(true);
+    };
+    const selectAddress = (data) => {
+        // Update the selected address and hide the Daum Postcode popup
+        setSelectedAddress(data.address);
+        setIsPostcodeVisible(false); // This should only hide the popup, not cause other re-renders
+    };
 
     const imgUploadHandler = () => {
         const file = imgRef.current.files?.[0]; // 파일을 가져옴
@@ -43,38 +82,111 @@ const Upcycle_meet_post = () => {
         reader.readAsDataURL(file);
     };
 
+    const titleAddHandler = (e) => {
+        const inputVal = e.target.value;
+        console.log(inputVal);
+
+        let flag;
+        if (!inputVal) {
+            flag = false;
+        } else {
+            flag = true;
+        }
+        setCorrect({...correct, title: flag});
+        setTitleValue(inputVal);
+    }
+
+
+    const contentAddHandler = (content) => {
+        // const data = editorRef.current.getInstance().getHTML();
+        const inputVal = content;
+        console.log(content);
+
+        let flag;
+        if (!content) {
+            flag = false;
+        } else {
+            flag = true;
+        }
+        setCorrect({...correct, content: flag});
+        setContentValue(content);
+    }
+
     const checkClickHandler = async (e) => {
         e.preventDefault();
         if (editorRef.current) {
             console.log(editorRef.current.getContent());
         }
-        //
-        // // 이메일과 다른 입력값들이 올바른지 확인
-        // if (!correct.password || !correct.passwordCheck || !correct.email || !correct.phoneNumber) {
-        //     alert('입력란을 다시 확인해주세요!');
-        //     return;
-        // }
-        //
-        // // fetchSignUpPost를 호출하기 전에 userValue가 올바르게 업데이트되었는지 확인
-        // await new Promise((resolve) => setTimeout(resolve, 100)); // 약간의 지연시간 추가
-        //
-        // // 회원가입 진행
-        // fetchSignUpPost();
+
+        // 이메일과 다른 입력값들이 올바른지 확인
+        if (!correct.title || !correct.content || !correct.adress ) {
+            alert('입력란을 다시 확인해주세요!');
+            return;
+        }
+
+        // fetchSignUpPost를 호출하기 전에 userValue가 올바르게 업데이트되었는지 확인
+        await new Promise((resolve) => setTimeout(resolve, 100)); // 약간의 지연시간 추가
+
+        // 회원가입 진행
+        fetchMeetPost();
     };
+
+    const fetchMeetPost = async () => {
+
+        const res = await fetch(MEET_POST_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${storedToken}`
+            },
+            body: JSON.stringify({
+                title: titleValue,
+                content: contentValue,
+                option: selectedLabel,
+                adress: adressValue,
+                thumbnailUrl: imgUrl
+            })
+        });
+
+        if (res.ok) {
+            const json = await res.json();
+            console.log(json);
+            redirection('/upcycle_meet');
+            alert('성공적으로 게시물이 올라갔습니다.');
+        } else {
+            console.error('응답 상태 코드:', res.status);
+            alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
+        }
+
+    }
 
     return (
         <>
             <Header/>
-            <div className="upcycle-post-container">
+            {isPostcodeVisible && (
+                <div className="modal-background" onClick={() => setIsPostcodeVisible(false)}>
+                    <div className="modal-meet-content">
+                        <DaumPostcode
+                            className="daumpostcode"
+                            visible={isPostcodeVisible}
+                            autoClose={false}
+                            onComplete={selectAddress}
+                        />
+                    </div>
+                </div>
+            )}
+            <div className="meet-post-container">
                 <div className="content-box">
                     <div className="title-box">
-                        <input className="title-input" type="text" placeholder="제목"/>
+                        <input className="title-input" type="text" placeholder="제목"
+                        onChange={titleAddHandler}/>
                     </div>
                     <Editor
                         style="height=1000px"
                         className="editor"
                         apiKey='k31l7cbssdoqhzh6h9f1f4c01mdz9d0g3lw57c76ji4s1un8'
-                        onInit={(_evt, editor) => editorRef.current = editor}
+                        onInit={(_evt, editor) => (editorRef.current = editor)}
+                        onEditorChange={contentAddHandler}
                         // initialValue="<p>This is the initial content of the editor.</p>"
                         init={{
                             height: 500,
@@ -109,11 +221,32 @@ const Upcycle_meet_post = () => {
                            onChange={imgUploadHandler}
                            ref={imgRef}/>
 
-                    <div className="uppost-btn-box">
+                    <div className="radio-group">
+                        <input
+                            type="radio"
+                            value="1"
+                            checked={x === "1"}
+                            onChange={radioBtnClickHandler}/>
+                        <label className="x1" data-label="개인">개인</label>
+                        <input
+                            type="radio"
+                            value="2"
+                            checked={x === "2"}
+                            onChange={radioBtnClickHandler}/>
+                        <label className="x2" data-label="사업">사업</label>
+                    </div>
+                    <div className="adress-box">
+                        <input type="text" className="mp-adress"
+                               value={selectedAddress}
+                               onChange={(e) => setSelectedAddress(e.target.value)}/>
+                        <button className="adress-btn"
+                                onClick={addressHandler}>주소찾기</button>
+                    </div>
+
+                    <div className="meetpost-btn-box">
                         <button className="check" onClick={checkClickHandler}>확인</button>
                         <button className="cancel">취소</button>
                     </div>
-
                 </div>
             </div>
         </>

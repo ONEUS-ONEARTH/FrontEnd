@@ -16,7 +16,7 @@ const My_meet_list = () => {
                 <div className="header">
                     <My_info_header/>
                 </div>
-                <div className="myinfo-bg">
+                <div className="mymeet-bg">
                     
                 </div>
             </div>

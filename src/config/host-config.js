@@ -19,6 +19,9 @@ const LOCATION_URL = 'http://localhost:3000';
 
 const USER = '/api/user';
 const UPCYCLE = '/api/upcycle'
+const MEET = '/api/meeting'
+
 
 export const USER_URL = API_BASE_URL + USER;
 export const UPCYCLE_URL = API_BASE_URL + UPCYCLE;
+export const MEET_URL = API_BASE_URL + MEET;

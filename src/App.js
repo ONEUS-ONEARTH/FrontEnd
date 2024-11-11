@@ -11,6 +11,7 @@ import My_meet_list from "./component/mypage/js/my_meet_list";
 import My_upcycle_list from "./component/mypage/js/my_upcycle_list";
 import Upcycle from "./component/subpage/js/upcycle";
 import Upcycle_detail from "./component/subpage/js/upcycle_detail";
+import Upcycle_meet_detail from "./component/subpage/js/upcycle_meet_detail";
 
 import Upcycle_post from "./component/subpage/js/upcycle_post";
 import Upcycle_meet from "./component/subpage/js/upcycle_meet";
@@ -55,6 +56,7 @@ function App() {
           <Route path="/upcycle_meet" element={<Upcycle_meet/>}/>
           <Route path="/upcycle_meet_post" element={<Upcycle_meet_post/>}/>
           <Route path={'/upcycle_detail/:id'} element={<Upcycle_detail />}/>
+          <Route path={'/upcycle_meet_detail/:id'} element={<Upcycle_meet_detail />}/>
       </Routes>
     </BrowserRouter>
   </GoogleOAuthProvider>
