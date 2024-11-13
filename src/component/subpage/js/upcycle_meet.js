@@ -104,7 +104,7 @@ const Upcycle_meet = (props) => {
                     <Map
                         className="map-api"
                         center={{lat: 33.450701, lng: 126.570667}}
-                        level={1}>
+                        level={3}>
                     </Map>
                         <Link to={'/upcycle_meet_post'}>
                         <BiSolidPlusCircle className="mpost-icon">

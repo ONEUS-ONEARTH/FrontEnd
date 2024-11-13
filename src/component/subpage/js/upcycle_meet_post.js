@@ -5,9 +5,11 @@ import Header from "../../header/js/header";
 import {MEET_URL} from "../../../config/host-config";
 import { Editor } from '@tinymce/tinymce-react';
 import DaumPostcode from 'react-daum-postcode';
+const {kakao} = window;
 
 const Upcycle_meet_post = () => {
     const MEET_POST_URL = MEET_URL + '/createmeeting';
+    const REST_API_KEY = '75f4e97c95a20a05b08c102f76677c36';
     const storedToken = localStorage.getItem('ACCESS_TOKEN');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [x,setX] = useState('1');
@@ -17,10 +19,13 @@ const Upcycle_meet_post = () => {
     const [titleValue,setTitleValue] = useState();
     const [contentValue,setContentValue] = useState();
     const [adressValue,SetAdressValue] = useState();
+    var geocoder = new kakao.maps.services.Geocoder();
 
     const redirection = useNavigate(); // 리다이렉트 함수를 리턴
     const imgRef = useRef();
     const editorRef = useRef(null);
+
+
 
 
 
@@ -57,14 +62,68 @@ const Upcycle_meet_post = () => {
     }, [selectedLabel])
 
 
-    const addressHandler = (e) => {
+    const adressHandler = (e) => {
         e.preventDefault(); // Prevent any default behavior that might cause the form to submit
         setIsPostcodeVisible(true);
     };
-    const selectAddress = (data) => {
+
+
+    const [coordinates, setCoordinates] = useState({ longitude: null, latitude: null });
+
+    const selectAddress = async (data) => {
         // Update the selected address and hide the Daum Postcode popup
+        let flag = data ? true : false;
+        setCorrect({ ...correct, adress: flag });
         setSelectedAddress(data.address);
-        setIsPostcodeVisible(false); // This should only hide the popup, not cause other re-renders
+
+        setIsPostcodeVisible(false);
+        const position = await getPosition(data.address);
+        if (position) {
+            setCoordinates(position); // 좌표를 상태에 저장
+        } else {
+            console.error("Position is undefined. Could not get coordinates.");
+        }
+    };
+
+    // selectedAddress가 업데이트될 때 getPosition을 호출
+    // useEffect(() => {
+    //     if (selectedAddress) {
+    //         getPosition();
+    //     }
+
+    //     if (position) {
+    //         const { longitude, latitude } = position;
+    //         fetchMeetPost(longitude, latitude); // 서버로 좌표 전송
+    //     } else {
+    //         console.error("Position is undefined. Could not get coordinates.");
+    //     }
+    // }, [selectedAddress]);
+
+
+
+    const getPosition = async (address) => {
+        const url = `https://dapi.kakao.com/v2/local/search/address?query=${address}`;
+        try {
+            const res = await fetch(url, {
+                headers: {
+                    Authorization: `KakaoAK ${REST_API_KEY}`,
+                },
+            });
+            if (res.ok) {
+                const data = await res.json();
+                if (data.documents.length > 0) { // 데이터가 있을 때만 처리
+                    const {x: longitude, y: latitude} = data.documents[0];
+                    return {longitude, latitude};
+                } else {
+                    console.error("No coordinates found for this address.");
+                    return null; // 좌표를 찾지 못한 경우 null 반환
+                }
+            }
+            throw new Error("Something went wrong with the API request.");
+        } catch (error) {
+            console.log("Error in getPosition:", error);
+            return null;
+        }
     };
 
     const imgUploadHandler = () => {
@@ -84,7 +143,7 @@ const Upcycle_meet_post = () => {
 
     const titleAddHandler = (e) => {
         const inputVal = e.target.value;
-        console.log(inputVal);
+        // console.log(inputVal);
 
         let flag;
         if (!inputVal) {
@@ -100,7 +159,7 @@ const Upcycle_meet_post = () => {
     const contentAddHandler = (content) => {
         // const data = editorRef.current.getInstance().getHTML();
         const inputVal = content;
-        console.log(content);
+        // console.log(content);
 
         let flag;
         if (!content) {
@@ -128,11 +187,28 @@ const Upcycle_meet_post = () => {
         await new Promise((resolve) => setTimeout(resolve, 100)); // 약간의 지연시간 추가
 
         // 회원가입 진행
-        fetchMeetPost();
+        if (coordinates.longitude && coordinates.latitude) {
+            await fetchMeetPost(coordinates.longitude, coordinates.latitude);
+        } else {
+            console.error("Coordinates are not available.");
+        }
     };
 
-    const fetchMeetPost = async () => {
 
+
+
+    // geocoder.addressSearch(selectedAddress, function(result, status) {
+    //
+    //     // 정상적으로 검색이 완료됐으면
+    //     if (status === kakao.maps.services.Status.OK) {
+    //
+    //         var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+    //
+    //     }
+    // }
+
+    const fetchMeetPost = async (longitude, latitude) => {
+        console.log("Sending to server:", { longitude, latitude });
         const res = await fetch(MEET_POST_URL, {
             method: 'POST',
             headers: {
@@ -144,7 +220,9 @@ const Upcycle_meet_post = () => {
                 content: contentValue,
                 option: selectedLabel,
                 adress: adressValue,
-                thumbnailUrl: imgUrl
+                thumbnailUrl: imgUrl,
+                x: longitude,
+                y: latitude
             })
         });
 
@@ -240,7 +318,7 @@ const Upcycle_meet_post = () => {
                                value={selectedAddress}
                                onChange={(e) => setSelectedAddress(e.target.value)}/>
                         <button className="adress-btn"
-                                onClick={addressHandler}>주소찾기</button>
+                                onClick={adressHandler}>주소찾기</button>
                     </div>
 
                     <div className="meetpost-btn-box">

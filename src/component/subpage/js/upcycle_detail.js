@@ -316,7 +316,7 @@ const Upcycle_detail = () => {
                                     {publish_date}
                                 </div>
                                 <div className="upd-score">
-                                    <BiLike/> {likeScore}
+                                    <BiLike/> {getItem.likeScore}
                                 </div>
                             </div>
                             <input className="upd-tag" value={mTagValue}

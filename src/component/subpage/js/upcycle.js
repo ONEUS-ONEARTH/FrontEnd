@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { Link, useNavigate } from 'react-router-dom';
+import Pagination from "react-js-pagination";
 import "../scss/upcycle.scss"
 import Header from "../../header/js/header";
 import Upcycle_content from "./upcycle_content";
@@ -11,8 +12,11 @@ const Upcycle = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [postList, setPostList] = useState([]);
     const storedToken = localStorage.getItem('ACCESS_TOKEN');
+    const [page, setPage] = useState(1);
 
-
+    const pageHandler = (e) => {
+        setPage(+e.target.innerText);
+    };
    
 
     useEffect(() => {
@@ -78,6 +82,13 @@ const Upcycle = () => {
                 </Link>
             </div>
             }
+             <Pagination
+                 activePage={page}
+                 // totalItemsCount={totalPage}
+                 itemsCountPerPage={20}
+                 pageRangeDisplayed={10}
+                 onChange={pageHandler}
+             />
          </div>
     </>
     )       
