@@ -85,21 +85,6 @@ const Upcycle_meet_post = () => {
         }
     };
 
-    // selectedAddress가 업데이트될 때 getPosition을 호출
-    // useEffect(() => {
-    //     if (selectedAddress) {
-    //         getPosition();
-    //     }
-
-    //     if (position) {
-    //         const { longitude, latitude } = position;
-    //         fetchMeetPost(longitude, latitude); // 서버로 좌표 전송
-    //     } else {
-    //         console.error("Position is undefined. Could not get coordinates.");
-    //     }
-    // }, [selectedAddress]);
-
-
 
     const getPosition = async (address) => {
         const url = `https://dapi.kakao.com/v2/local/search/address?query=${address}`;
@@ -112,8 +97,11 @@ const Upcycle_meet_post = () => {
             if (res.ok) {
                 const data = await res.json();
                 if (data.documents.length > 0) { // 데이터가 있을 때만 처리
-                    const {x: longitude, y: latitude} = data.documents[0];
-                    return {longitude, latitude};
+                    const { x, y } = data.documents[0];
+                    // 숫자형으로 변환하여 반환
+                    const longitude = Number(x);
+                    const latitude = Number(y);
+                    return { longitude, latitude };
                 } else {
                     console.error("No coordinates found for this address.");
                     return null; // 좌표를 찾지 못한 경우 null 반환
