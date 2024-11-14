@@ -3,11 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../scss/upcycle_meet_content.scss'
 import { FaHeart } from "react-icons/fa";
 
-const Upcycle_meet_content = (id,title,option,thumbnailUrl) => {
+const Upcycle_meet_content = ({id, title, option, content}) => {
     
     return (
         <>
-            <li className="meet-obj" id={id}>
+            <li className="meet-obj">
                 <Link className="mp-box" to={`/upcycle_meet_detail/${id}`}>
                     <img className="obj-img"
                          src="https://cdn.newshyu.com/news/photo/202206/1006289_213259_5152.jpg"

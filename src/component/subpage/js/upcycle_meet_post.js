@@ -122,7 +122,7 @@ const Upcycle_meet_post = () => {
         const reader = new FileReader();
         reader.onload = () => {
             const imageDataUrl = reader.result;
-            setImgUrl(imageDataUrl); // 미리보기용으로만 사용
+            setImgUrl(imageDataUrl);
 
             // 파일 객체는 userValue에 저장하지 않음, 나중에 FormData에 직접 추가
         };
@@ -299,7 +299,7 @@ const Upcycle_meet_post = () => {
                             value="2"
                             checked={x === "2"}
                             onChange={radioBtnClickHandler}/>
-                        <label className="x2" data-label="사업">사업</label>
+                        <label className="x2" data-label="회사">회사</label>
                     </div>
                     <div className="adress-box">
                         <input type="text" className="mp-adress"

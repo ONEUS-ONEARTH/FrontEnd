@@ -29,7 +29,7 @@ const Upcycle_meet = (props) => {
     useEffect(() => {
         fetchGetMeet();
         fetchGetMap();
-    })
+    },[])
 
 
     const fetchGetMap = async () => {
@@ -45,7 +45,7 @@ const Upcycle_meet = (props) => {
 
             if (res.status === 200) {
                 const json = await res.json();
-                console.log(json);
+                console.log(json.map);
             }
         } catch (error) {
             console.error("Error fetching upcycle posts:", error);
@@ -67,7 +67,7 @@ const Upcycle_meet = (props) => {
                 const json = await res.json();
                 if (json && json.boards) {
                     setMeetList(json.boards);
-                    // console.log(json.boards); // boards를 여기에서 출력
+                    console.log(json.boards); // boards를 여기에서 출력
                 }
             }
         } catch (error) {
@@ -87,12 +87,12 @@ const Upcycle_meet = (props) => {
                         <ul className="meetlist">
                             {meetList.map((boards) => (
                                 <Upcycle_meet_content
-                                    key={boards.id}
-                                    id={boards.id}
+                                    // key={boards.id}
+                                    // id={boards.id}
                                     title={boards.title}
                                     content={boards.content}
                                     option={boards.option}
-                                    thumbnailUrl={boards.thumbnailUrl}
+                                    // thumbnailUrl={boards.thumbnailUrl}
                                 />
                             ))}
                         </ul>
