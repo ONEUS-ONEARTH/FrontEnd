@@ -27,32 +27,29 @@ const Upcycle_meet_detail = () => {
     return (
         <>
             <Header/>
-            {/*<div className="upd-container">*/}
+            {/*<div className="umd-container">*/}
             {/*    {!isModify ? (*/}
             {/*        <>*/}
-            {/*            <div className="upd-column1">*/}
-            {/*                <img className="upd-img" src="" alt="" />*/}
-            {/*                <div className="upd-data">*/}
-            {/*                    <div className="upd-author">*/}
+            {/*            <div className="umd-column1">*/}
+            {/*                <img className="umd-img" src="" alt="" />*/}
+            {/*                <div className="umd-data">*/}
+            {/*                    <div className="umd-author">*/}
             {/*                        /!*{getItem.author}*!/*/}
             {/*                    </div>*/}
-            {/*                    <div className="upd-date">*/}
+            {/*                    <div className="umd-date">*/}
             {/*                        /!*{publish_date}*!/*/}
             {/*                    </div>*/}
-            {/*                    <div className="upd-score">*/}
+            {/*                    <div className="umd-score">*/}
             {/*                        <BiLike className={cn({"like-btn" : likeScore})} onClick={scoreClickHandler}/>*/}
             {/*                        /!*{getItem.likeScore}*!/*/}
             {/*                    </div>*/}
             {/*                </div>*/}
-            {/*                <div className="upd-tag">*/}
-            {/*                    /!*{getItem.tag}*!/*/}
-            {/*                </div>*/}
             {/*            </div>*/}
-            {/*            <div className="upd-column2">*/}
-            {/*                <div className="upd-title">*/}
+            {/*            <div className="umd-column2">*/}
+            {/*                <div className="umd-title">*/}
             {/*                    /!*{getItem.title}*!/*/}
             {/*                </div>*/}
-            {/*                <div className="upd-content">*/}
+            {/*                <div className="umd-content">*/}
             {/*                    /!*{content}*!/*/}
             {/*                </div>*/}
             {/*                <div className="btn-box">*/}
@@ -73,34 +70,32 @@ const Upcycle_meet_detail = () => {
             {/*        </>*/}
             {/*    ) : (*/}
             {/*        <>*/}
-            {/*            <div className="upd-column1">*/}
-            {/*                <img className="upd-img" src="" alt="" onClick={() => imgRef.current.click()}/>*/}
+            {/*            <div className="umd-column1">*/}
+            {/*                <img className="umd-img" src="" alt="" onClick={() => imgRef.current.click()}/>*/}
 
             {/*                <input type="file" className="img-input" accept="image/*"*/}
             {/*                       name="imagePath"*/}
             {/*                       onChange={changeImgHandler}*/}
             {/*                       ref={imgRef}/>*/}
-            {/*                <div className="upd-data">*/}
-            {/*                    <div className="upd-author">*/}
+            {/*                <div className="umd-data">*/}
+            {/*                    <div className="umd-author">*/}
             {/*                        /!*{getItem.author}*!/*/}
             {/*                    </div>*/}
-            {/*                    <div className="upd-date">*/}
+            {/*                    <div className="umd-date">*/}
             {/*                        /!*{publish_date}*!/*/}
             {/*                    </div>*/}
-            {/*                    <div className="upd-score">*/}
+            {/*                    <div className="umd-score">*/}
             {/*                        <BiLike/>*/}
             {/*                        /!*{getItem.likeScore}*!/*/}
             {/*                    </div>*/}
             {/*                </div>*/}
-            {/*                <input className="upd-tag" value={mTagValue}*/}
-            {/*                       onChange={tagModifyHandler}/>*/}
             {/*            </div>*/}
-            {/*            <div className="upd-column2">*/}
-            {/*                <input className="upd-title"*/}
+            {/*            <div className="umd-column2">*/}
+            {/*                <input className="umd-title"*/}
             {/*                       value={mTitleValue}*/}
             {/*                       onChange={titleModifyHandler}/>*/}
 
-            {/*                <textarea className="upd-content"*/}
+            {/*                <textarea className="umd-content"*/}
             {/*                          value={mContentValue}*/}
             {/*                          onChange={contentModifyHandler}/>*/}
             {/*                <div className="btn-box">*/}

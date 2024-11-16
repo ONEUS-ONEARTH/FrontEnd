@@ -156,7 +156,14 @@ const Upcycle_Post = () => {
         fetchUpcyclePost();
     };
     const fetchUpcyclePost = async () => {
-        
+        const formData = new FormData();
+
+        // console.log(userValue);
+
+        // 이미지 파일이 있는 경우에만 추가
+        // const file = imgRef.current.files?.[0];
+        // formData.append('imageFile', file);
+
         const res = await fetch(UPCYCLE_POST_URL, {
             method: 'POST',
             headers: {

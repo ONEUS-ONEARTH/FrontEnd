@@ -41,7 +41,7 @@
         border-radius: 5px;
         padding: 2%;
         .myname-box {
-          height: 40%;
+          height: 30%;
           display: flex;
           flex-direction: row;
           align-items: center;
@@ -62,8 +62,36 @@
           display: flex;
           flex-direction: column;
           justify-content: space-between;
-          padding-top: 4%;
+          //padding-top: 4%;
           font-size: 18px;
+
+          .pn-box {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+            .pn-input {
+              font-size: 20px;
+            }
+          }
+          .email-box {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+            .email-input {
+              font-size: 20px;
+            }
+          }
+          .pw-box {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+            .pw-input {
+              font-size: 20px;
+            }
+          }
         }
       }
       .myadd-box {

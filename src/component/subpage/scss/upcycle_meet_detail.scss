@@ -1,18 +1,18 @@
-.upd-container {
+.umd-container {
   width: 100%;
   height: 83vh;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   margin-top: 10vh;
-  .upd-column1 {
+  .umd-column1 {
     width: 40%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
 
-    .upd-img {
+    .umd-img {
       width: 480px;
       height: 380px;
       border-radius: 5px;
@@ -21,7 +21,7 @@
     .img-input {
       display: none;
     }
-    .upd-data {
+    .umd-data {
       width: 70%;
       height: 10%;
       max-width: 480px;
@@ -30,7 +30,7 @@
       justify-content: space-between;
       font-size: 18px;
 
-      .upd-score {
+      .umd-score {
         display: flex;
         align-items: center;
         gap: 10px;
@@ -43,17 +43,17 @@
     }
   }
 
-  .upd-column2 {
+  .umd-column2 {
     width: 40%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: start;
-    .upd-title {
+    .umd-title {
       width: 100%;
       font-size: 30px;
     }
-    .upd-content {
+    .umd-content {
       width: 100%;
       height: 40%;
       //border: 1px solid #333;

@@ -197,21 +197,30 @@ const Upcycle_meet_post = () => {
 
     const fetchMeetPost = async (longitude, latitude) => {
         console.log("Sending to server:", { longitude, latitude });
+        const formData = new FormData();
+
+        const file = imgRef.current.files?.[0];
+        if (file) {
+            formData.append('imageFile', file);
+        }
+
+        // 텍스트 데이터 추가
+        formData.append('title', titleValue);
+        formData.append('content', contentValue);
+        formData.append('option', selectedLabel);
+        formData.append('adress', adressValue);
+        formData.append('x', longitude);
+        formData.append('y', latitude);
+
+
+
+        // JSON 데이터는 문자열로 변환하여 추가
         const res = await fetch(MEET_POST_URL, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${storedToken}`
             },
-            body: JSON.stringify({
-                title: titleValue,
-                content: contentValue,
-                option: selectedLabel,
-                adress: adressValue,
-                thumbnailUrl: imgUrl,
-                x: longitude,
-                y: latitude
-            })
+            body: formData,
         });
 
         if (res.ok) {
