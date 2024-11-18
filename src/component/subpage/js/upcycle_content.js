@@ -15,7 +15,7 @@ const Upcycle_content = ({id,thumbnailUrl, title, content, tag, createdDate,auth
         <li>
             <Link className="post-box" to={`/upcycle_detail/${id}`}>
                 <div className="image-box">
-                    <img src={thumbnailUrl} alt=""/>
+                    <img className="up-img" src={thumbnailUrl} alt=""/>
                 </div>
                 <div className="post-text-box">
                     <div className="post-title">
