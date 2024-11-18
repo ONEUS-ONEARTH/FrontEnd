@@ -208,7 +208,7 @@ const Upcycle_meet_post = () => {
         formData.append('title', titleValue);
         formData.append('content', contentValue);
         formData.append('option', selectedLabel);
-        formData.append('adress', adressValue);
+        formData.append('adress', selectedAddress);
         formData.append('x', latitude);
         formData.append('y', longitude);
 
