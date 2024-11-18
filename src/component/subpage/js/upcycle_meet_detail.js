@@ -52,7 +52,6 @@ const Upcycle_meet_detail = () => {
                 setMTitleValue(json.title);
                 setMContentValue(json.content.replace(/<\/?p>/g, ''));
                 setMImgUrl(json.thumbnailUrl);
-                setSelectedLabel(json.option);
                 console.log(json);
             }
         } catch (error) {
@@ -136,16 +135,25 @@ const Upcycle_meet_detail = () => {
         setCorrect({...correct, content: flag})
     }
 
-    const [selectedLabel, setSelectedLabel] = useState("개인");
-
-    const radioBtnClickHandler = (e) => {
-        const value = e.target.value;
-        const label = document.querySelector(`label.x${value}`);
-        setSelectedLabel(label ? label.getAttribute("data-label") : "");
-        setX(value);
-
-
-        console.log(label);
+    const scoreClickHandler = async () => {
+        try {
+            const res = await fetch(`${MEET_URL}/posts/score/${id}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization':`Bearer ${storedToken}`, // 인증 헤더 추가
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (res.status === 200) {
+                const json = await res.json();
+                if (json) {
+                    // console.log(json);
+                    getDetail();
+                }
+            }
+        } catch (error) {
+            console.error("Error fetching upcycle posts:", error);
+        }
     }
 
     const checkClickHandler = async (e) => {
@@ -225,8 +233,8 @@ const Upcycle_meet_detail = () => {
                                 </div>
                                 <div className="umd-score">
                                     <BiLike
-                                        // className={cn({"like-btn" : likeScore})}
-                                        // onClick={scoreClickHandler}
+                                        className={cn({"like-btn" : likeScore})}
+                                        onClick={scoreClickHandler}
                                     />
                                     {getItem.likeScore}
                                 </div>
@@ -276,7 +284,7 @@ const Upcycle_meet_detail = () => {
                                 </div>
                                 <div className="umd-score">
                                     <BiLike/>
-                                    {/*{getItem.likeScore}*/}
+                                    {getItem.likeScore}
                                 </div>
                             </div>
                         </div>

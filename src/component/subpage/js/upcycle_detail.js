@@ -15,7 +15,7 @@ const Upcycle_detail = () => {
     var moment = require('moment');
     const publish_date = moment(getItem.createdDate).format('YYYY년 MM월 DD일');
     const storedToken = localStorage.getItem('ACCESS_TOKEN');
-    const [likeScore,setLikeScore] = useState();
+    const [likeValue,setLikeValue] = useState();
     const [content, setContent] = useState('');
     const [edit, setEdit] = useState();
     const [mImgUrl, setMImgUrl] = useState();
@@ -34,8 +34,8 @@ const Upcycle_detail = () => {
         setMTitleValue(getItem.title);
         setMContentValue(content);
         setMTagValue(getItem.tag);
-        setLikeScore(getItem.cilcked);
-        console.log(likeScore);
+        setLikeValue(getItem.cilcked);
+        console.log(likeValue);
         // setMImgUrl(getItem.);
     }, [getItem]);
 
@@ -279,7 +279,7 @@ const Upcycle_detail = () => {
                                     {publish_date}
                                 </div>
                                 <div className="upd-score">
-                                    <BiLike className={cn({"like-btn" : likeScore})} onClick={scoreClickHandler}/>
+                                    <BiLike className={cn({"like-btn" : likeValue})} onClick={scoreClickHandler}/>
                                     {getItem.likeScore}
                                 </div>
                             </div>

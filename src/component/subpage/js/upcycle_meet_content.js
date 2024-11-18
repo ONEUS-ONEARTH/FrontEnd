@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import '../scss/upcycle_meet_content.scss'
-import { FaHeart } from "react-icons/fa";
+import { BiLike } from "react-icons/bi";
 
 const Upcycle_meet_content = ({id, title, option, content, thumbnailUrl,likeScore}) => {
     
@@ -23,7 +23,7 @@ const Upcycle_meet_content = ({id, title, option, content, thumbnailUrl,likeScor
                     </div>
                     <div className="obj-like-box">
                         <div className="like-icon-box">
-                            <FaHeart className="like-icon"/>
+                            <BiLike className="like-icon"/>
                         </div>
                         <div className="like-num">
                             {likeScore}
