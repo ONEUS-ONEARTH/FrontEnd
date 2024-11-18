@@ -101,6 +101,7 @@ const Upcycle_meet = () => {
                                     id={boards.id}
                                     title={boards.title}
                                     content={boards.content}
+                                    likeScore={boards.likeScore}
                                     option={boards.option}
                                     thumbnailUrl={boards.thumbnailUrl}
                                 />

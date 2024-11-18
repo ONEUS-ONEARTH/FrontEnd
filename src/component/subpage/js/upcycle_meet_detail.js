@@ -228,7 +228,7 @@ const Upcycle_meet_detail = () => {
                                         // className={cn({"like-btn" : likeScore})}
                                         // onClick={scoreClickHandler}
                                     />
-                                    {/*{getItem.likeScore}*/}
+                                    {getItem.likeScore}
                                 </div>
                             </div>
                         </div>

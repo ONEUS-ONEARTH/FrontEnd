@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../scss/upcycle_meet_content.scss'
 import { FaHeart } from "react-icons/fa";
 
-const Upcycle_meet_content = ({id, title, option, content, thumbnailUrl}) => {
+const Upcycle_meet_content = ({id, title, option, content, thumbnailUrl,likeScore}) => {
     
     return (
         <>
@@ -26,7 +26,7 @@ const Upcycle_meet_content = ({id, title, option, content, thumbnailUrl}) => {
                             <FaHeart className="like-icon"/>
                         </div>
                         <div className="like-num">
-                            6
+                            {likeScore}
                         </div>
                     </div>
                 </Link>

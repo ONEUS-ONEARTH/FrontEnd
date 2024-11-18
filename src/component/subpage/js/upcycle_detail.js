@@ -314,7 +314,6 @@ const Upcycle_detail = () => {
                     <>
                         <div className="upd-column1">
                             <img className="upd-img" src={mImgUrl} alt = "" onClick={() => imgRef.current.click()}/>
-                            }
                             <input type="file" className="img-input" accept="image/*"
                                    name="imagePath"
                                    onChange={changeImgHandler}
