@@ -219,7 +219,6 @@ const My_profile = () => {
             formData.append('image', file); // 파일 추가
         } else {
             console.log('No file selected');
-            formData.append('image', img); // 기존 URL 추가
         }
 
         for (let [key, value] of formData.entries()) {

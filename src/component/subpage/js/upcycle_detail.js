@@ -82,7 +82,6 @@ const Upcycle_detail = () => {
                 if (json) {
                     console.log(json.cilcked);
 
-
                     getDetail();
                 }
             }
