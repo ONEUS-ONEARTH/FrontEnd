@@ -80,7 +80,7 @@ const Upcycle_detail = () => {
                 const json = await res.json();
                 if (json) {
                     console.log(json);
-                    setLikeValue(json);
+                    setLikeValue(json.clicked);
 
                     getDetail();
                 }
