@@ -239,11 +239,15 @@ const My_profile = () => {
 
             if (res.status === 200) {
                 const json = await res.json();
+
                 console.log('Profile updated:', json);
-                if (json) {
-                    setIsModify(!isModify);
-                    userProfileFetch();
-                }
+
+                localStorage.setItem('NICKNAME', json.nickname);
+                localStorage.setItem('PROFILE_IMG', json.imagePath);
+
+                setIsModify(!isModify);
+                userProfileFetch();
+
             }
         } catch (error) {
 
