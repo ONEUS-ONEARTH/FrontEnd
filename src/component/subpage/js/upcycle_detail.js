@@ -53,6 +53,7 @@ const Upcycle_detail = () => {
                 const json = await res.json();
                 if (json) {
                     setGetItem(json);
+                    setLikeValue(json.cilcked);
                     console.log(json);
                     if (json.content) {
                         setContent(json.content.replace(/<\/?p>/g, ''));
@@ -79,8 +80,8 @@ const Upcycle_detail = () => {
             if (res.status === 200) {
                 const json = await res.json();
                 if (json) {
-                    console.log(json);
-                    setLikeValue(json.clicked);
+                    console.log(json.cilcked);
+
 
                     getDetail();
                 }
