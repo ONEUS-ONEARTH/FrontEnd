@@ -44,8 +44,6 @@ const Upcycle_Post = () => {
 
     // 이미지 업로드 input의 onChange
     const imgUploadHandler = (e) => {
-        const inputVal = e.target.value;
-        console.log(inputVal);
         const file = imgRef.current.files?.[0]; // 파일을 가져옴
         // if (!file) return;
         //
@@ -53,20 +51,19 @@ const Upcycle_Post = () => {
         const reader = new FileReader();
         reader.onload = () => {
             const imageDataUrl = reader.result;
-            setImgFile(imageDataUrl); // 미리보기용으로만 사용
+            setImgUrl(imageDataUrl); // 미리보기용으로만 사용
 
         //     // 파일 객체는 userValue에 저장하지 않음, 나중에 FormData에 직접 추가
         };
         reader.readAsDataURL(file);
 
         let flag;
-        if (!inputVal) {
+        if (!file) {
             flag = false;
         } else {
             flag = true;
         }
         setCorrect({...correct, img: flag});
-        setImgUrl(inputVal);
     };
 
 
@@ -108,7 +105,7 @@ const Upcycle_Post = () => {
     const [titleValue, setTitleValue] = useState();
     const titleAddHandler = (e) => {
         const inputVal = e.target.value;
-        console.log(inputVal);
+        // console.log(inputVal);
 
         let flag;
         if (!inputVal) {
@@ -126,7 +123,7 @@ const Upcycle_Post = () => {
     const contentAddHandler = (content) => {
         // const data = editorRef.current.getInstance().getHTML();
         const inputVal = content;
-        console.log(content);
+        // console.log(content);
 
         let flag;
         if (!content) {
@@ -159,6 +156,15 @@ const Upcycle_Post = () => {
     const fetchUpcyclePost = async () => {
         const formData = new FormData();
 
+        const file = imgRef.current.files?.[0];
+        formData.append('thumbnailUrl', file);
+
+        // 텍스트 데이터 추가
+        formData.append('title', titleValue);
+        formData.append('content', contentValue);
+        formData.append('tag', tagValue);
+
+
         // console.log(userValue);
 
         // 이미지 파일이 있는 경우에만 추가
@@ -168,15 +174,10 @@ const Upcycle_Post = () => {
         const res = await fetch(UPCYCLE_POST_URL, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                // 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${storedToken}`
             },
-            body: JSON.stringify({
-                title: titleValue,
-                content: contentValue,
-                tag: tagValue,
-                thumbnailUrl: imgUrl
-            })
+            body: formData
         });
 
         if (res.ok) {
@@ -228,11 +229,14 @@ const Upcycle_Post = () => {
                 </div>
                 <div className="send-box">
                     <div className="img-box" onClick={() => imgRef.current.click()}>
+                        {imgUrl && (
                             <img
                                 className="img"
-                                src={imgFile}
+                                src={imgUrl}
                                 alt="프로필 미리보기"
                             />
+                        )}
+
 
                     </div>
                     <input type="file" className="img-input" accept="image/*"

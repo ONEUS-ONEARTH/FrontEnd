@@ -5,7 +5,7 @@ import Moment from 'moment';
 import { BiLike } from "react-icons/bi";
 import {UPCYCLE_URL} from "../../../config/host-config";
 
-const Upcycle_content = ({id, title, content, tag, createdDate,author,likeScore}) => {
+const Upcycle_content = ({id,thumbnailUrl, title, content, tag, createdDate,author,likeScore}) => {
     const DETAIL_GET_UEL = UPCYCLE_URL + '/{id}'
 
 
@@ -15,7 +15,7 @@ const Upcycle_content = ({id, title, content, tag, createdDate,author,likeScore}
         <li>
             <Link className="post-box" to={`/upcycle_detail/${id}`}>
                 <div className="image-box">
-
+                    <img src={thumbnailUrl} alt=""/>
                 </div>
                 <div className="post-text-box">
                     <div className="post-title">

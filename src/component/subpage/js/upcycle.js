@@ -44,7 +44,7 @@ const Upcycle = () => {
                 const json = await res.json();
                 if (json && json.boards) {
                     setPostList(json.boards);
-                    // console.log(json.boards); // boards를 여기에서 출력
+                    console.log(json.boards); // boards를 여기에서 출력
                 }
             }
         } catch (error) {
@@ -65,6 +65,7 @@ const Upcycle = () => {
                         <Upcycle_content
                             key={boards.id}
                             id={boards.id}
+                            thumbnailUrl={boards.thumbnailUrl}
                             title={boards.title}
                             content={boards.content}
                             author={boards.author}
