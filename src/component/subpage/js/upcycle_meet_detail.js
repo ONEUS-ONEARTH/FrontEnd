@@ -3,7 +3,8 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import '../scss/upcycle_meet_detail.scss'
 import Header from "../../header/js/header";
 import cn from "classnames";
-import Moment from 'moment';
+import moment from 'moment';
+import { MEET_URL } from "../../../config/host-config";
 import { BiLike } from "react-icons/bi";
 
 const Upcycle_meet_detail = () => {
@@ -11,101 +12,290 @@ const Upcycle_meet_detail = () => {
     const { id } = useParams();
     const [isModify, setIsModify] = useState(false); // 수정버튼눌렀을때 input들로 변환
     const [getItem,setGetItem] = useState([]); // list getItem
-    var moment = require('moment');
     const publish_date = moment(getItem.createdDate).format('YYYY년 MM월 DD일'); //날짜 변환
     const storedToken = localStorage.getItem('ACCESS_TOKEN'); //토큰
     const [likeScore,setLikeScore] = useState(); //좋아요 수
+    const [x,setX] = useState('1');
     const [content, setContent] = useState(''); //내용
     const [edit, setEdit] = useState(); // 글쓴이 인지 확인
     const [mImgUrl, setMImgUrl] = useState(); // 이미지 변수
     const imgRef = useRef();
     const [mTitleValue, setMTitleValue] = useState(); // 타이틀 수정 변수
     const [mContentValue, setMContentValue] = useState(); // 내용 수정 변수
-    const [mOptionValue, setMOptionValue] = useState(); // 옵션 수정 변수
+    // const [mOptionValue, setMOptionValue] = useState(); // 옵션 수정 변수
 
+    const [correct, setCorrect] = useState({
+        title: true,
+        content: true,
+        img: true,
+    });
+
+
+    useEffect(() => {
+        getDetail();
+    },[])
+
+    const getDetail = async () => {
+        try {
+            const res = await fetch(MEET_URL + `/posts/${id}`,{
+                method: 'GET',
+                headers: {
+                    'Authorization':`Bearer ${storedToken}`, // 인증 헤더 추가
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (res.status === 200) {
+                const json = await res.json();
+                setGetItem(json);
+                setEdit(json.editable);
+                setContent(json.content.replace(/<\/?p>/g, ''));
+                setMTitleValue(json.title);
+                setMContentValue(json.content.replace(/<\/?p>/g, ''));
+                setMImgUrl(json.thumbnailUrl);
+                setSelectedLabel(json.option);
+                console.log(json);
+            }
+        } catch (error) {
+            console.error("Error fetching upcycle posts:", error);
+        }
+    }
+    
+    const modifyClickHandler = () => {
+        setIsModify(!isModify);
+    }
+
+    const deleteClickHandler = async () => {
+
+        try {
+            const res = await fetch(`${MEET_URL}/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${storedToken}`, // 인증 헤더 추가
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (res.status === 200) {
+                const json = await res.json();
+                if (json) {
+                    redirection('/upcycle_meet');
+                }
+            }
+        } catch (error) {
+            console.error("Error fetching upcycle posts:", error);
+        }
+    }
+
+    const changeImgHandler = (e) => {
+        const file = imgRef.current.files?.[0]; // 파일을 가져옴
+        
+        let flag;
+        if (!file) {
+            flag = false;
+            return;
+        } else {
+            flag = true;
+        }
+
+        // 미리보기 위해 Data URL을 생성 (서버 전송과는 별개)
+        const reader = new FileReader();
+        reader.onload = () => {
+            const imageDataUrl = reader.result;
+            setMImgUrl(imageDataUrl); // 미리보기용으로만 사용
+
+            // 파일 객체는 userValue에 저장하지 않음, 나중에 FormData에 직접 추가
+        };
+        reader.readAsDataURL(file);
+        setCorrect({...correct, img: flag});
+
+    }
+
+    const titleModifyHandler = (e) => {
+        const inputVal = e.target.value;
+
+        let flag;
+        if (!inputVal) {
+            flag = false;
+        } else {
+            flag = true;
+        }
+        setMTitleValue(inputVal);
+        setCorrect({...correct, content: flag})
+    }
+    
+    const contentModifyHandler = (e) => {
+        const inputVal = e.target.value;
+
+        let flag;
+        if (!inputVal) {
+            flag = false;
+        } else {
+            flag = true;
+        }
+        setMContentValue(inputVal);
+        setCorrect({...correct, content: flag})
+    }
+
+    const [selectedLabel, setSelectedLabel] = useState("개인");
+
+    const radioBtnClickHandler = (e) => {
+        const value = e.target.value;
+        const label = document.querySelector(`label.x${value}`);
+        setSelectedLabel(label ? label.getAttribute("data-label") : "");
+        setX(value);
+
+
+        console.log(label);
+    }
+
+    const checkClickHandler = async (e) => {
+
+        e.preventDefault();
+
+        // 이메일과 다른 입력값들이 올바른지 확인
+        if (!correct.title || !correct.content || !correct.img) {
+            alert('입력란을 다시 확인해주세요!');
+            return;
+        }
+
+        // fetchSignUpPost를 호출하기 전에 userValue가 올바르게 업데이트되었는지 확인
+        await new Promise((resolve) => setTimeout(resolve, 100)); // 약간의 지연시간 추가
+
+        // 수정 진행
+        fetchMeetModify();
+    }
+
+    const fetchMeetModify = async () => {
+        const formData = new FormData();
+
+        // console.log(userValue);
+
+        // 이미지 파일이 있는 경우에만 추가
+        const file = imgRef.current.files?.[0];
+
+        formData.append('thumbnailUrl', file); // 파일 객체를 직접 추가
+        // userValue의 각 필드를 FormData에 추가
+        formData.append('title', mTitleValue);
+        formData.append('content', mContentValue);
+        formData.append('postId', id);
+        try {
+            const res = await fetch(MEET_URL + `/modify`,{
+                method: 'PUT',
+                headers: {
+                    // 'Authorization':`Bearer ${storedToken}`, // 인증 헤더 추가
+                    'Content-Type': 'application/json',
+                },
+                body: formData
+            });
+            if (res.status === 200) {
+                const json = await res.json();
+                if (json) {
+                    setIsModify(!isModify);
+                    getDetail();
+                }
+            } else {
+                console.log(id);
+                console.log(mImgUrl);
+                console.log(mTitleValue);
+                console.log(mContentValue);
+            }
+        } catch (error) {
+            console.error("Error fetching upcycle posts:", error);
+        }
+
+    }
 
     return (
         <>
             <Header/>
-            {/*<div className="umd-container">*/}
-            {/*    {!isModify ? (*/}
-            {/*        <>*/}
-            {/*            <div className="umd-column1">*/}
-            {/*                <img className="umd-img" src="" alt="" />*/}
-            {/*                <div className="umd-data">*/}
-            {/*                    <div className="umd-author">*/}
-            {/*                        /!*{getItem.author}*!/*/}
-            {/*                    </div>*/}
-            {/*                    <div className="umd-date">*/}
-            {/*                        /!*{publish_date}*!/*/}
-            {/*                    </div>*/}
-            {/*                    <div className="umd-score">*/}
-            {/*                        <BiLike className={cn({"like-btn" : likeScore})} onClick={scoreClickHandler}/>*/}
-            {/*                        /!*{getItem.likeScore}*!/*/}
-            {/*                    </div>*/}
-            {/*                </div>*/}
-            {/*            </div>*/}
-            {/*            <div className="umd-column2">*/}
-            {/*                <div className="umd-title">*/}
-            {/*                    /!*{getItem.title}*!/*/}
-            {/*                </div>*/}
-            {/*                <div className="umd-content">*/}
-            {/*                    /!*{content}*!/*/}
-            {/*                </div>*/}
-            {/*                <div className="btn-box">*/}
-            {/*                    {!edit ? (*/}
-            {/*                        <>*/}
+            <div className="umd-container">
+                {!isModify ? (
+                    <>
+                        <div className="umd-column1">
+                            <img className="umd-img" src={getItem.thumbnailUrl} alt="" />
+                            <div className="umd-data">
+                                <div className="umd-author">
+                                    {getItem.author}
+                                </div>
+                                <div className="umd-option">
+                                    {getItem.option}
+                                </div>
+                                <div className="umd-date">
+                                    {publish_date}
+                                </div>
+                                <div className="umd-score">
+                                    <BiLike
+                                        // className={cn({"like-btn" : likeScore})}
+                                        // onClick={scoreClickHandler}
+                                    />
+                                    {/*{getItem.likeScore}*/}
+                                </div>
+                            </div>
+                        </div>
+                        <div className="umd-column2">
+                            <div className="umd-title">
+                                {getItem.title}
+                            </div>
+                            <div className="umd-content">
+                                {content}
+                            </div>
+                            <div className="btn-box">
+                                {!edit ? (
+                                    <>
 
-            {/*                        </>*/}
-            {/*                    ) : (*/}
-            {/*                        <>*/}
-            {/*                            <button className="btn-modify" onClick={modifyClickHandler}>수정</button>*/}
-            {/*                            <button className="btn-delete" onClick={deleteClickHandler}>삭제</button>*/}
-            {/*                        </>*/}
+                                    </>
+                                ) : (
+                                    <>
+                                        <button className="btn-modify" onClick={modifyClickHandler}>수정</button>
+                                        <button className="btn-delete" onClick={deleteClickHandler}>삭제</button>
+                                    </>
 
-            {/*                    )}*/}
+                                )}
 
-            {/*                </div>*/}
-            {/*            </div>*/}
-            {/*        </>*/}
-            {/*    ) : (*/}
-            {/*        <>*/}
-            {/*            <div className="umd-column1">*/}
-            {/*                <img className="umd-img" src="" alt="" onClick={() => imgRef.current.click()}/>*/}
+                            </div>
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <div className="umd-column1">
+                            <img className="umd-img" src={getItem.thumbnailUrl} alt=""
+                                 onClick={() => imgRef.current.click()}/>
+                            <input type="file" className="img-input" accept="image/*"
+                                   name="imagePath"
+                                   onChange={changeImgHandler}
+                                   ref={imgRef}/>
+                            <div className="umd-data">
+                                <div className="umd-author">
+                                    {getItem.author}
+                                </div>
+                                <div className="umd-option">
+                                    {getItem.option}
+                                </div>
+                                <div className="umd-date">
+                                    {publish_date}
+                                </div>
+                                <div className="umd-score">
+                                    <BiLike/>
+                                    {/*{getItem.likeScore}*/}
+                                </div>
+                            </div>
+                        </div>
+                        <div className="umd-column2">
+                            <input className="umd-title"
+                                   value={mTitleValue}
+                                   onChange={titleModifyHandler}/>
 
-            {/*                <input type="file" className="img-input" accept="image/*"*/}
-            {/*                       name="imagePath"*/}
-            {/*                       onChange={changeImgHandler}*/}
-            {/*                       ref={imgRef}/>*/}
-            {/*                <div className="umd-data">*/}
-            {/*                    <div className="umd-author">*/}
-            {/*                        /!*{getItem.author}*!/*/}
-            {/*                    </div>*/}
-            {/*                    <div className="umd-date">*/}
-            {/*                        /!*{publish_date}*!/*/}
-            {/*                    </div>*/}
-            {/*                    <div className="umd-score">*/}
-            {/*                        <BiLike/>*/}
-            {/*                        /!*{getItem.likeScore}*!/*/}
-            {/*                    </div>*/}
-            {/*                </div>*/}
-            {/*            </div>*/}
-            {/*            <div className="umd-column2">*/}
-            {/*                <input className="umd-title"*/}
-            {/*                       value={mTitleValue}*/}
-            {/*                       onChange={titleModifyHandler}/>*/}
-
-            {/*                <textarea className="umd-content"*/}
-            {/*                          value={mContentValue}*/}
-            {/*                          onChange={contentModifyHandler}/>*/}
-            {/*                <div className="btn-box">*/}
-            {/*                    <button className="btn-modify" onClick={checkClickHandler}>확인</button>*/}
-            {/*                    <button className="btn-cancle" onClick={modifyClickHandler}>취소</button>*/}
-            {/*                </div>*/}
-            {/*            </div>*/}
-            {/*        </>*/}
-            {/*    )}*/}
-            {/*</div>*/}
+                            <textarea className="umd-content"
+                                      value={mContentValue}
+                                      onChange={contentModifyHandler}/>
+                            <div className="btn-box">
+                                <button className="btn-modify" onClick={checkClickHandler}>확인</button>
+                                <button className="btn-cancle" onClick={modifyClickHandler}>취소</button>
+                            </div>
+                        </div>
+                    </>
+                )}
+            </div>
         </>
     )
 }

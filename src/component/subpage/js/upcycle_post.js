@@ -10,6 +10,7 @@ const Upcycle_Post = () => {
     const storedToken = localStorage.getItem('ACCESS_TOKEN');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [imgUrl, setImgUrl] = useState();
+    const [imgFile, setImgFile] = useState();
     const redirection = useNavigate(); // 리다이렉트 함수를 리턴
     const imgRef = useRef();
     const editorRef = useRef();
@@ -44,19 +45,19 @@ const Upcycle_Post = () => {
     // 이미지 업로드 input의 onChange
     const imgUploadHandler = (e) => {
         const inputVal = e.target.value;
-        console.log(inputVal)
-        // const file = imgRef.current.files?.[0]; // 파일을 가져옴
+        console.log(inputVal);
+        const file = imgRef.current.files?.[0]; // 파일을 가져옴
         // if (!file) return;
         //
         // // 미리보기 위해 Data URL을 생성 (서버 전송과는 별개)
-        // const reader = new FileReader();
-        // reader.onload = () => {
-        //     const imageDataUrl = reader.result;
-        //     setImgUrl(imageDataUrl); // 미리보기용으로만 사용
-        //
+        const reader = new FileReader();
+        reader.onload = () => {
+            const imageDataUrl = reader.result;
+            setImgFile(imageDataUrl); // 미리보기용으로만 사용
+
         //     // 파일 객체는 userValue에 저장하지 않음, 나중에 FormData에 직접 추가
-        // };
-        // reader.readAsDataURL(file);
+        };
+        reader.readAsDataURL(file);
 
         let flag;
         if (!inputVal) {
@@ -227,14 +228,11 @@ const Upcycle_Post = () => {
                 </div>
                 <div className="send-box">
                     <div className="img-box" onClick={() => imgRef.current.click()}>
-                        {imgUrl && (
                             <img
                                 className="img"
-                                src={imgUrl}
+                                src={imgFile}
                                 alt="프로필 미리보기"
                             />
-                        )}
-                        {/*<img/>*/}
 
                     </div>
                     <input type="file" className="img-input" accept="image/*"

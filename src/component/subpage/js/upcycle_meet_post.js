@@ -99,8 +99,8 @@ const Upcycle_meet_post = () => {
                 if (data.documents.length > 0) { // 데이터가 있을 때만 처리
                     const { x, y } = data.documents[0];
                     // 숫자형으로 변환하여 반환
-                    const longitude = Number(x);
-                    const latitude = Number(y);
+                    const latitude = Number(x);
+                    const longitude = Number(y);
                     return { longitude, latitude };
                 } else {
                     console.error("No coordinates found for this address.");
@@ -195,13 +195,13 @@ const Upcycle_meet_post = () => {
     //     }
     // }
 
-    const fetchMeetPost = async (longitude, latitude) => {
-        console.log("Sending to server:", { longitude, latitude });
+    const fetchMeetPost = async (latitude, longitude) => {
+        console.log("Sending to server:", { latitude, longitude });
         const formData = new FormData();
 
         const file = imgRef.current.files?.[0];
         if (file) {
-            formData.append('imageFile', file);
+            formData.append('thumnailImg', file);
         }
 
         // 텍스트 데이터 추가
@@ -209,8 +209,8 @@ const Upcycle_meet_post = () => {
         formData.append('content', contentValue);
         formData.append('option', selectedLabel);
         formData.append('adress', adressValue);
-        formData.append('x', longitude);
-        formData.append('y', latitude);
+        formData.append('x', latitude);
+        formData.append('y', longitude);
 
 
 

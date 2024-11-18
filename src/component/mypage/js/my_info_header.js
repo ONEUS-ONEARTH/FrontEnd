@@ -1,18 +1,42 @@
-import React from "react";
+import React, {useEffect, useRef, useState} from 'react';
 import "../scss/my_info_header.scss"
 import { Link } from 'react-router-dom';
+import {USER_URL} from "../../../config/host-config";
 
 
 const My_info_header = () => {
-    const nickname = localStorage.getItem('NICKNAME');
+    // const nickname = localStorage.getItem('NICKNAME');
     const profileImg = localStorage.getItem('PROFILE_IMG');
+    const [name, setName] = useState();
+    const storedToken = localStorage.getItem('ACCESS_TOKEN');
+    const PROFILE_URL = USER_URL + "/myprofile";
+    useEffect(() => {
+        userProfileFetch();
+    },[])
+
+    const userProfileFetch = async () => {
+
+        const res = await fetch(PROFILE_URL, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${storedToken}`
+            }
+        });
+        if (res.status === 200) {
+            const json = await res.json();
+            // console.log(json);
+           setName(json.name);
+
+
+        }
+    }
 
     return (
         <>
             <div className="profile">
                 <img className="profile-img" src={profileImg} alt="프로필이미지"/>
                 <div className="my-nickname">
-                    <p>{nickname}</p>
+                    <p>{name}</p>
                 </div>
                 <div className="myinfo-menu">
                     <Link to='/my_profile' className="profile-btn link-btn">

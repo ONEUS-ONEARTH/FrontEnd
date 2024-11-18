@@ -43,8 +43,10 @@ const Main = () => {
         <>
             <Header/>
             <div className="main-container">
-                    <img className="adv-box" src={process.env.PUBLIC_URL + '/assets/ad-img.jpg'} alt=""/>
-                <div className="implication-box">
+                <div className="adv-box">
+                    <img className="ad-img" src={process.env.PUBLIC_URL + '/assets/ouoe_campaign.png'} alt=""/>
+                </div>
+                    <div className="implication-box">
                     <div className="impl-title-name">
                         {arrow ?(
                             <p>업사이클</p>

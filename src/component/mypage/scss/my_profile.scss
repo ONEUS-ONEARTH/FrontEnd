@@ -53,6 +53,9 @@
             background: #CCCCCC;
             border-radius: 50%;
           }
+          .img-input {
+            display: none;
+          }
           .myinfo-name {
             font-size: 22px;
           }
@@ -107,12 +110,49 @@
           font-size: 22px;
         }
         .detail-myadd {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 20px;
           .ar-ad {
+            width: 60%;
+            height: 28px;
             font-size: 20px;
+          }
+          .adress-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100px;
+            height: 35px;
+            background: #79B49F;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            color: #fff;
           }
           .j-ad {
             font-size: 18px;
           }
+        }
+      }
+      .row-btn-box {
+        width: 80%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+        .cancle-btn {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 120px;
+          height: 45px;
+          font-size: 18px;
+          color: #333333;
+          background: #ffffff;
+          border-radius: 5px;
+          border: 1px solid #333333;
         }
       }
       .info-modify-btn {
