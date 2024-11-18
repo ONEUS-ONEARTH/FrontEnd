@@ -123,17 +123,26 @@ const Upcycle_detail = () => {
 
     // img
     const changeImgHandler = (e) => {
-        const inputVal = e.target.value;
-        // console.log(inputVal);
+        const file = imgRef.current.files?.[0]; // 파일을 가져옴
+        // if (!file) return;
+        //
+        // // 미리보기 위해 Data URL을 생성 (서버 전송과는 별개)
+        const reader = new FileReader();
+        reader.onload = () => {
+            const imageDataUrl = reader.result;
+            setMImgUrl(imageDataUrl); // 미리보기용으로만 사용
+
+            //     // 파일 객체는 userValue에 저장하지 않음, 나중에 FormData에 직접 추가
+        };
+        reader.readAsDataURL(file);
 
         let flag;
-        if (!inputVal) {
+        if (!file) {
             flag = false;
         } else {
             flag = true;
         }
         setCorrect({...correct, img: flag});
-        setMImgUrl(inputVal);
     }
 
     // title
@@ -213,7 +222,15 @@ const Upcycle_detail = () => {
     }
 
     const modifySendHandler = async () => {
+        const formData = new FormData();
 
+        const file = imgRef.current.files?.[0];
+        formData.append('thumbnailUrl', file);
+
+        // 텍스트 데이터 추가
+        formData.append('title', mTitleValue);
+        formData.append('content', mContentValue);
+        formData.append('tag', mTagValue);
 
         try {
             const res = await fetch(`${UPCYCLE_URL}/modify`, {
@@ -221,15 +238,9 @@ const Upcycle_detail = () => {
                 method: 'PUT',
                 headers: {
                     // 'Authorization': `Bearer ${storedToken}`, // 인증 헤더 추가
-                    'Content-Type': 'application/json',
+                    // 'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    postId: id,
-                    title: mTitleValue,
-                    content: mContentValue,
-                    tag: mTagValue,
-                    thumbnailUrl: mImgUrl
-                })
+                body: formData
             });
 
             if (res.status === 200) {
@@ -259,7 +270,7 @@ const Upcycle_detail = () => {
                 {!isModify ? (
                     <>
                         <div className="upd-column1">
-                            <img className="upd-img" src="" alt="" />
+                            <img className="upd-img" src={getItem.thumbnailUrl} alt="" />
                             <div className="upd-data">
                                 <div className="upd-author">
                                     {getItem.author}
@@ -302,8 +313,8 @@ const Upcycle_detail = () => {
                 ) : (
                     <>
                         <div className="upd-column1">
-                            <img className="upd-img" src="" alt="" onClick={() => imgRef.current.click()}/>
-
+                            <img className="upd-img" src={mImgUrl} alt = "" onClick={() => imgRef.current.click()}/>
+                            }
                             <input type="file" className="img-input" accept="image/*"
                                    name="imagePath"
                                    onChange={changeImgHandler}
