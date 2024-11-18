@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { Link, useNavigate } from 'react-router-dom';
-import Pagination from "react-js-pagination";
+import Pagination from '@mui/material/Pagination';
 import "../scss/upcycle.scss"
 import Header from "../../header/js/header";
 import Upcycle_content from "./upcycle_content";
@@ -13,6 +13,7 @@ const Upcycle = () => {
     const [postList, setPostList] = useState([]);
     const storedToken = localStorage.getItem('ACCESS_TOKEN');
     const [page, setPage] = useState(1);
+    const [totalPost,setTotalPost] = useState();
 
     const pageHandler = (e) => {
         setPage(+e.target.innerText);
@@ -44,6 +45,7 @@ const Upcycle = () => {
                 const json = await res.json();
                 if (json && json.boards) {
                     setPostList(json.boards);
+                    setTotalPost(json.totalPost);
                     console.log(json.boards); // boards를 여기에서 출력
                 }
             }
@@ -85,10 +87,12 @@ const Upcycle = () => {
             }
              <Pagination
                  activePage={page}
-                 // totalItemsCount={totalPage}
+                 totalItemsCount={totalPost}
                  itemsCountPerPage={20}
                  pageRangeDisplayed={10}
                  onChange={pageHandler}
+                 variant="outlined"
+                 // colors={primary}
              />
          </div>
     </>

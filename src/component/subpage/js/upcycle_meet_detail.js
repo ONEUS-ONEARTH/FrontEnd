@@ -14,7 +14,7 @@ const Upcycle_meet_detail = () => {
     const [getItem,setGetItem] = useState([]); // list getItem
     const publish_date = moment(getItem.createdDate).format('YYYY년 MM월 DD일'); //날짜 변환
     const storedToken = localStorage.getItem('ACCESS_TOKEN'); //토큰
-    const [likeScore,setLikeScore] = useState(); //좋아요 수
+    const [likeValue, setLikeValue] = useState(); //좋아요 true, false값 반환
     const [x,setX] = useState('1');
     const [content, setContent] = useState(''); //내용
     const [edit, setEdit] = useState(); // 글쓴이 인지 확인
@@ -52,6 +52,7 @@ const Upcycle_meet_detail = () => {
                 setMTitleValue(json.title);
                 setMContentValue(json.content.replace(/<\/?p>/g, ''));
                 setMImgUrl(json.thumbnailUrl);
+                // setLikeValue(json.clicked);
                 console.log(json);
             }
         } catch (error) {
@@ -233,7 +234,7 @@ const Upcycle_meet_detail = () => {
                                 </div>
                                 <div className="umd-score">
                                     <BiLike
-                                        className={cn({"like-btn" : likeScore})}
+                                        className={cn({"like-btn" : likeValue})}
                                         onClick={scoreClickHandler}
                                     />
                                     {getItem.likeScore}

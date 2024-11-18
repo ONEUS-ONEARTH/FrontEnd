@@ -34,8 +34,8 @@ const Upcycle_detail = () => {
         setMTitleValue(getItem.title);
         setMContentValue(content);
         setMTagValue(getItem.tag);
-        setLikeValue(getItem.cilcked);
-        console.log(likeValue);
+
+        // console.log(likeValue);
         // setMImgUrl(getItem.);
     }, [getItem]);
 
@@ -79,7 +79,9 @@ const Upcycle_detail = () => {
             if (res.status === 200) {
                 const json = await res.json();
                 if (json) {
-                    // console.log(json);
+                    console.log(json);
+                    setLikeValue(json);
+
                     getDetail();
                 }
             }
