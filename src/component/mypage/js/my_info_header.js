@@ -24,8 +24,8 @@ const My_info_header = () => {
         });
         if (res.status === 200) {
             const json = await res.json();
-            // console.log(json);
-           setName(json.name);
+            console.log(json);
+            setName(json.name);
 
 
         }

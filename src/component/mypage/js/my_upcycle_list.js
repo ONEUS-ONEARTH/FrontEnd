@@ -50,6 +50,7 @@ const My_upcycle_list = () => {
                                 title={boards.title}
                                 author={boards.author}
                                 likeScore={boards.likeScore}
+                                thumbnailUrl={boards.thumbnailUrl}
                             />
                         ))}
                     </ul>

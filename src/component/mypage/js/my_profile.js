@@ -1,4 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import "../scss/my_profile.scss"
 import Header from "../../header/js/header";
 import My_info_header from "./my_info_header";
@@ -9,6 +10,7 @@ const My_profile = () => {
     const PROFILE_URL = USER_URL + "/myprofile";
     const MODIFY_URL = USER_URL + "/modify";
     const PW_CHECK_URL = USER_URL + "/modify/checkpassword";
+    const redirection = useNavigate();
 
     const [nickname, setNickname] = useState();
     const [email, setEmail] = useState();
@@ -239,7 +241,6 @@ const My_profile = () => {
 
             if (res.status === 200) {
                 const json = await res.json();
-
                 console.log('Profile updated:', json);
 
                 localStorage.setItem('NICKNAME', json.nickname);
@@ -247,7 +248,6 @@ const My_profile = () => {
 
                 setIsModify(!isModify);
                 userProfileFetch();
-
             }
         } catch (error) {
 

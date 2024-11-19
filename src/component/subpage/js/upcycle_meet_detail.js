@@ -52,7 +52,7 @@ const Upcycle_meet_detail = () => {
                 setMTitleValue(json.title);
                 setMContentValue(json.content.replace(/<\/?p>/g, ''));
                 setMImgUrl(json.thumbnailUrl);
-                // setLikeValue(json.clicked);
+                setLikeValue(json.clicked);
                 console.log(json);
             }
         } catch (error) {
@@ -182,8 +182,11 @@ const Upcycle_meet_detail = () => {
         // 이미지 파일이 있는 경우에만 추가
         const file = imgRef.current.files?.[0];
 
-        formData.append('thumbnailUrl', file); // 파일 객체를 직접 추가
+        if(file) {
+            formData.append('thumbnailUrl', file); // 파일 객체를 직접 추가
+        }
         // userValue의 각 필드를 FormData에 추가
+        formData.append('meetingPostId', id);
         formData.append('title', mTitleValue);
         formData.append('content', mContentValue);
         formData.append('postId', id);
@@ -192,7 +195,7 @@ const Upcycle_meet_detail = () => {
                 method: 'PUT',
                 headers: {
                     // 'Authorization':`Bearer ${storedToken}`, // 인증 헤더 추가
-                    'Content-Type': 'application/json',
+                    // 'Content-Type': 'application/json',
                 },
                 body: formData
             });
@@ -267,7 +270,7 @@ const Upcycle_meet_detail = () => {
                 ) : (
                     <>
                         <div className="umd-column1">
-                            <img className="umd-img" src={getItem.thumbnailUrl} alt=""
+                            <img className="umd-img" src={mImgUrl} alt=""
                                  onClick={() => imgRef.current.click()}/>
                             <input type="file" className="img-input" accept="image/*"
                                    name="imagePath"
@@ -297,6 +300,7 @@ const Upcycle_meet_detail = () => {
                             <textarea className="umd-content"
                                       value={mContentValue}
                                       onChange={contentModifyHandler}/>
+                            
                             <div className="btn-box">
                                 <button className="btn-modify" onClick={checkClickHandler}>확인</button>
                                 <button className="btn-cancle" onClick={modifyClickHandler}>취소</button>

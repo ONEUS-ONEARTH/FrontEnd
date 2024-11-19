@@ -54,6 +54,7 @@ const Upcycle_detail = () => {
                 if (json) {
                     setGetItem(json);
                     setLikeValue(json.cilcked);
+                    setMImgUrl(json.thumbnailUrl)
                     console.log(json);
                     if (json.content) {
                         setContent(json.content.replace(/<\/?p>/g, ''));
@@ -227,9 +228,12 @@ const Upcycle_detail = () => {
         const formData = new FormData();
 
         const file = imgRef.current.files?.[0];
-        formData.append('thumbnailUrl', file);
+        if (file) {
+            formData.append('thumbnailUrl', file);
+        }
 
         // 텍스트 데이터 추가
+        formData.append('postId', id);
         formData.append('title', mTitleValue);
         formData.append('content', mContentValue);
         formData.append('tag', mTagValue);
