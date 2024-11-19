@@ -134,6 +134,9 @@ const Upcycle_Post = () => {
         setCorrect({...correct, content: flag});
         setContentValue(content);
     }
+    const cancleClickHandler = () => {
+        redirection('/upcycle')
+    }
 
     const checkClickHandler = async (e) => {
         e.preventDefault();
@@ -249,7 +252,7 @@ const Upcycle_Post = () => {
 
                     <div className="uppost-btn-box">
                         <button className="check" onClick={checkClickHandler}>확인</button>
-                        <button className="cancel">취소</button>
+                        <button className="cancel" onClick={cancleClickHandler} >취소</button>
                     </div>
 
                 </div>

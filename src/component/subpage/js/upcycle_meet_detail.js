@@ -259,7 +259,7 @@ const Upcycle_meet_detail = () => {
         formData.append('adress', selectedAddress);
         formData.append('x', latitude);
         formData.append('y', longitude);
-        formData.append('postId', id);
+        
         try {
             const res = await fetch(MEET_URL + `/modify`,{
                 method: 'PUT',

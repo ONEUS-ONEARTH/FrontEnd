@@ -19,7 +19,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 90%;
+    width: 100%;
     height: 80%;
 
     .meetlist-box {
@@ -27,6 +27,8 @@
       margin: 1%;
       display: flex;
       flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
 
       .meetlist {
         display: flex;
@@ -42,7 +44,7 @@
 
     .map-container {
       position: relative; // `Map`과 아이콘이 겹쳐지도록 설정
-      width: 55%;
+      width: 63%;
       height: 100%;
 
       .map-api {

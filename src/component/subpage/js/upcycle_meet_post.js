@@ -194,6 +194,9 @@ const Upcycle_meet_post = () => {
     //
     //     }
     // }
+    const cancleClickHandler = () => {
+        redirection('/upcycle_meet')
+    }
 
     const fetchMeetPost = async (latitude, longitude) => {
         console.log("Sending to server:", { latitude, longitude });
@@ -320,7 +323,7 @@ const Upcycle_meet_post = () => {
 
                     <div className="meetpost-btn-box">
                         <button className="check" onClick={checkClickHandler}>확인</button>
-                        <button className="cancel">취소</button>
+                        <button className="cancel" onClick={cancleClickHandler}>취소</button>
                     </div>
                 </div>
             </div>

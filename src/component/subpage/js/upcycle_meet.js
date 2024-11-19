@@ -6,6 +6,7 @@ import { MEET_URL } from "../../../config/host-config";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import { BiSolidPlusCircle } from "react-icons/bi";
 import Upcycle_meet_content from "./upcycle_meet_content";
+import Pagination from '@mui/material/Pagination';
 
 const Upcycle_meet = () => {
     const MEET_GET_URL = MEET_URL + "/posts";
@@ -15,6 +16,8 @@ const Upcycle_meet = () => {
     const [location, setLocation] = useState({ lat: 37.5665, lng: 126.9780 }); // 기본값 서울
     const [error, setError] = useState(null);
     const [meetList, setMeetList] = useState([]);
+    const [page, setPage] = useState(1);
+    const [totalPost,setTotalPost] = useState();
 
     useEffect(() => {
         // 현재 위치 가져오기
@@ -77,7 +80,8 @@ const Upcycle_meet = () => {
                 const json = await res.json();
                 if (json && json.boards) {
                     setMeetList(json.boards);
-                    console.log(json.boards);
+                    setTotalPost(json.totalPost);
+                    console.log(json);
                 }
             }
         } catch (error) {
@@ -85,6 +89,9 @@ const Upcycle_meet = () => {
         }
     };
 
+    const pageHandler = (e) => {
+        setPage(+e.target.innerText);
+    };
     return (
         <>
             <Header />
@@ -107,27 +114,37 @@ const Upcycle_meet = () => {
                                 />
                             ))}
                         </ul>
-                        <div className="meetlist-btn"></div>
+                        <Pagination
+                            activePage={page}
+                            totalItemsCount={totalPost}
+                            itemsCountPerPage={20}
+                            pageRangeDisplayed={10}
+                            onChange={pageHandler}
+                            // count={10}
+                            variant="outlined"
+                            color="primary"
+                        />
                     </div>
                     <div className="map-container">
                         <Map
                             id="map"
                             className="map-api"
-                            center={{ lat: location.lat, lng: location.lng }}
-                            level={5}
-                        >
+                            center={{lat: location.lat, lng: location.lng}}
+                            level={5}>
+
                             {mapMarker.map((position, index) => (
                                 <MapMarker
                                     key={`${position.x}_${position.y}`}
-                                    position={{ lat: position.x, lng: position.y }}
+                                    position={{lat: position.x, lng: position.y}}
                                 />
                             ))}
                         </Map>
                         <Link to={"/upcycle_meet_post"}>
-                            <BiSolidPlusCircle className="mpost-icon" />
+                            <BiSolidPlusCircle className="mpost-icon"/>
                         </Link>
                     </div>
                 </div>
+
             </div>
         </>
     );

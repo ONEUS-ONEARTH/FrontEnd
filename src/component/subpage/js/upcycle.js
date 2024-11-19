@@ -92,7 +92,7 @@ const Upcycle = () => {
                  pageRangeDisplayed={10}
                  onChange={pageHandler}
                  variant="outlined"
-                 // colors={primary}
+                 color="primary"
              />
          </div>
     </>
