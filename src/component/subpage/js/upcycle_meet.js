@@ -23,7 +23,7 @@ const Upcycle_meet = () => {
     const [meetList, setMeetList] = useState([]);
     const [totalPost,setTotalPost] = useState();
     const [page, setPage] = useState(1);
-    const itemsPerPage = 5;
+    const itemsPerPage = 7;
     const displayedMeetList = meetList.slice(
         (page - 1) * itemsPerPage,
         page * itemsPerPage
@@ -134,7 +134,7 @@ const Upcycle_meet = () => {
                             activePage={page} // 현재 페이지
                             itemsCountPerPage={itemsPerPage} // 한 페이지당 아이템 수
                             totalItemsCount={totalPost} // 전체 아이템 수
-                            pageRangeDisplayed={5} // 페이지 번호 범위
+                            pageRangeDisplayed={10} // 페이지 번호 범위
                             onChange={handlePageChange} // 페이지 변경 핸들러
                             prevPageText={<FaAngleDoubleLeft />}
                             firstPageText={<FaAngleLeft />}
