@@ -12,7 +12,7 @@ const Upcycle_content = ({id,thumbnailUrl, title, content, tag, createdDate,auth
     var moment = require('moment');
     const publish_date = moment(createdDate).format('YYYY년 MM월 DD일')
     return (
-        <li>
+        <li className="grid-w">
             <Link className="post-box" to={`/upcycle_detail/${id}`}>
                 <div className="image-box">
                     <img className="up-img" src={thumbnailUrl} alt=""/>

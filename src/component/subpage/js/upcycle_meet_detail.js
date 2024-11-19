@@ -57,7 +57,7 @@ const Upcycle_meet_detail = () => {
                 setMTitleValue(json.title);
                 setMContentValue(json.content.replace(/<\/?p>/g, ''));
                 setMImgUrl(json.thumbnailUrl);
-                setLikeValue(json.clicked);
+                setLikeValue(json.cilcked);
                 console.log(json);
             }
         } catch (error) {

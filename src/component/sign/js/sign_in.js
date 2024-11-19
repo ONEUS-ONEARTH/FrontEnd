@@ -1,7 +1,6 @@
 import React from "react";
 import Header from "../../header/js/header";
 import {Link, useNavigate} from 'react-router-dom';
-// import react, {  } from 'react';
 import "../scss/sign_in.scss"
 import {USER_URL,KAKAO_URL,REST_API_KEY,REDIRECT_URI} from "../../../config/host-config";
 import { FcGoogle } from "react-icons/fc";
@@ -9,6 +8,7 @@ import {GoogleOAuthProvider } from "@react-oauth/google";
 import { useGoogleLogin } from '@react-oauth/google';
 import { useSearchParams } from 'react-router-dom';
 import  { useEffect } from 'react';
+import { SiKakaotalk } from "react-icons/si";
 
 
 const Sign_in = () => {
@@ -196,8 +196,8 @@ const Sign_in = () => {
                             <button className="google-btn" onClick={() => googleLogin()}>
                                 <FcGoogle className="google"/>
                             </button>
-                            <button className="google-btn" onClick={() => kakaoLogin()}>
-                                button
+                            <button className="kakao-btn" onClick={() => kakaoLogin()}>
+                                <SiKakaotalk className="kakao"/>
                             </button>
 
                         </div>
