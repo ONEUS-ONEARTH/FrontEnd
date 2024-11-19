@@ -2,88 +2,95 @@
   width: 100%;
   height: 93vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   position: relative;
   gap: 100px;
 
-  .upcycle-meet-title {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 8vh;
-    font-size: 35px;
-  }
+
 
   .upcycle-meet-box {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
-    width: 100%;
-    height: 80%;
+    width:30%;
+    height: 90%;
+    position: absolute;
+    z-index: 200;
+    background: #fff;
+    padding: 3% 1%;
+    box-shadow: 1px 0px 10px #ccc;
+
+
+    .upcycle-meet-title {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 36px;
+    }
 
     .meetlist-box {
-      width: 35%;
-      margin: 1%;
+      width: 100%;
+      height: 90%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
 
+
       .meetlist {
         display: flex;
         flex-direction: column;
-
-
-      }
-
-      .meetlist-btn {
-
-      }
-    }
-
-    .map-container {
-      position: relative; // `Map`과 아이콘이 겹쳐지도록 설정
-      width: 63%;
-      height: 100%;
-
-      .map-api {
         width: 100%;
-        height: 100%;
-        background: #ccc;
       }
 
-      .mpost-icon {
-        position: absolute;
-        bottom: 10px; // 아이콘 위치 왼쪽 아래
-        right: 10px;
-        font-size: 60px;
-        color: #333;
-        z-index: 10; // 지도 위에 표시되도록 z-index 설정
+    }
+  }
 
-        &::after {
-          content: "글쓰기"; // 툴팁에 표시할 텍스트
-          position: absolute;
-          bottom: 100%; // 아이콘 위쪽에 표시
-          left: 50%;
-          transform: translateX(-50%);
-          white-space: nowrap;
-          background-color: white;
-          color: black;
-          padding: 5px 8px;
-          font-size: 12px;
-          border-radius: 4px;
-          opacity: 0;
-          pointer-events: none;
-          transition: opacity 0.2s;
-          z-index: 20;
-        }
 
-        &:hover::after {
-          opacity: 1; // 마우스를 올렸을 때 툴팁 표시
-        }
-      }
+  .map-container {
+    position: relative; // `Map`과 아이콘이 겹쳐지도록 설정
+    width: 100%;
+    height: 100%;
+
+    .map-api {
+      width: 100%;
+      height: 100%;
+      background: #ccc;
     }
 
+    .mpost-icon {
+      position: absolute;
+      bottom: 10px; // 아이콘 위치 왼쪽 아래
+      right: 10px;
+      font-size: 60px;
+      color: #333;
+      z-index: 10; // 지도 위에 표시되도록 z-index 설정
+
+      &::after {
+        content: "글쓰기"; // 툴팁에 표시할 텍스트
+        position: absolute;
+        bottom: 100%; // 아이콘 위쪽에 표시
+        left: 50%;
+        transform: translateX(-50%);
+        white-space: nowrap;
+        background-color: white;
+        color: black;
+        padding: 5px 8px;
+        font-size: 12px;
+        border-radius: 4px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s;
+        z-index: 20;
+      }
+
+      &:hover::after {
+        opacity: 1; // 마우스를 올렸을 때 툴팁 표시
+      }
+    }
   }
+
 }
+

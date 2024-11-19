@@ -96,11 +96,12 @@ const Upcycle_meet = () => {
         <>
             <Header />
             <div className="upcycle-meet-container">
-                <div className="upcycle-meet-title">
-                    <p>모임</p>
-                </div>
                 <div className="upcycle-meet-box">
+                    <div className="upcycle-meet-title">
+                        <p>모임</p>
+                    </div>
                     <div className="meetlist-box">
+
                         <ul className="meetlist">
                             {meetList.map((boards) => (
                                 <Upcycle_meet_content
@@ -125,26 +126,25 @@ const Upcycle_meet = () => {
                             color="primary"
                         />
                     </div>
-                    <div className="map-container">
-                        <Map
-                            id="map"
-                            className="map-api"
-                            center={{lat: location.lat, lng: location.lng}}
-                            level={5}>
-
-                            {mapMarker.map((position, index) => (
-                                <MapMarker
-                                    key={`${position.x}_${position.y}`}
-                                    position={{lat: position.x, lng: position.y}}
-                                />
-                            ))}
-                        </Map>
-                        <Link to={"/upcycle_meet_post"}>
-                            <BiSolidPlusCircle className="mpost-icon"/>
-                        </Link>
-                    </div>
                 </div>
+                <div className="map-container">
+                    <Map
+                        id="map"
+                        className="map-api"
+                        center={{lat: location.lat, lng: location.lng}}
+                        level={5}>
 
+                        {mapMarker.map((position, index) => (
+                            <MapMarker
+                                key={`${position.x}_${position.y}`}
+                                position={{lat: position.x, lng: position.y}}
+                            />
+                        ))}
+                    </Map>
+                    <Link to={"/upcycle_meet_post"}>
+                        <BiSolidPlusCircle className="mpost-icon"/>
+                    </Link>
+                </div>
             </div>
         </>
     );
