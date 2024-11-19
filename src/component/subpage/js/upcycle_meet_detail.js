@@ -6,10 +6,12 @@ import cn from "classnames";
 import moment from 'moment';
 import { MEET_URL } from "../../../config/host-config";
 import { BiLike } from "react-icons/bi";
+import DaumPostcode from 'react-daum-postcode';
 
 const Upcycle_meet_detail = () => {
     const redirection = useNavigate();
     const { id } = useParams();
+    const REST_API_KEY = '75f4e97c95a20a05b08c102f76677c36';
     const [isModify, setIsModify] = useState(false); // 수정버튼눌렀을때 input들로 변환
     const [getItem,setGetItem] = useState([]); // list getItem
     const publish_date = moment(getItem.createdDate).format('YYYY년 MM월 DD일'); //날짜 변환
@@ -22,11 +24,14 @@ const Upcycle_meet_detail = () => {
     const imgRef = useRef();
     const [mTitleValue, setMTitleValue] = useState(); // 타이틀 수정 변수
     const [mContentValue, setMContentValue] = useState(); // 내용 수정 변수
+    const [isPostcodeVisible, setIsPostcodeVisible] = useState(false);
+    const [selectedAddress, setSelectedAddress] = useState('');
     // const [mOptionValue, setMOptionValue] = useState(); // 옵션 수정 변수
 
     const [correct, setCorrect] = useState({
         title: true,
         content: true,
+        adress:true,
         img: true,
     });
 
@@ -134,7 +139,65 @@ const Upcycle_meet_detail = () => {
         }
         setMContentValue(inputVal);
         setCorrect({...correct, content: flag})
+        const adressHandler = (e) => {
+            e.preventDefault(); // Prevent any default behavior that might cause the form to submit
+            setIsPostcodeVisible(true);
+        }
     }
+
+
+    const adressHandler = (e) => {
+        e.preventDefault(); // Prevent any default behavior that might cause the form to submit
+        setIsPostcodeVisible(true);
+    };
+
+
+    const [coordinates, setCoordinates] = useState({ longitude: null, latitude: null });
+
+    const selectAddress = async (data) => {
+        // Update the selected address and hide the Daum Postcode popup
+        let flag = data ? true : false;
+        setCorrect({ ...correct, adress: flag });
+        setSelectedAddress(data.address);
+
+        setIsPostcodeVisible(false);
+        const position = await getPosition(data.address);
+        if (position) {
+            setCoordinates(position); // 좌표를 상태에 저장
+        } else {
+            console.error("Position is undefined. Could not get coordinates.");
+        }
+    };
+
+
+
+    const getPosition = async (address) => {
+        const url = `https://dapi.kakao.com/v2/local/search/address?query=${address}`;
+        try {
+            const res = await fetch(url, {
+                headers: {
+                    Authorization: `KakaoAK ${REST_API_KEY}`,
+                },
+            });
+            if (res.ok) {
+                const data = await res.json();
+                if (data.documents.length > 0) { // 데이터가 있을 때만 처리
+                    const { x, y } = data.documents[0];
+                    // 숫자형으로 변환하여 반환
+                    const latitude = Number(x);
+                    const longitude = Number(y);
+                    return { longitude, latitude };
+                } else {
+                    console.error("No coordinates found for this address.");
+                    return null; // 좌표를 찾지 못한 경우 null 반환
+                }
+            }
+            throw new Error("Something went wrong with the API request.");
+        } catch (error) {
+            console.log("Error in getPosition:", error);
+            return null;
+        }
+    };
 
     const scoreClickHandler = async () => {
         try {
@@ -171,12 +234,16 @@ const Upcycle_meet_detail = () => {
         await new Promise((resolve) => setTimeout(resolve, 100)); // 약간의 지연시간 추가
 
         // 수정 진행
-        fetchMeetModify();
+        if (coordinates.longitude && coordinates.latitude) {
+            await fetchMeetModify(coordinates.longitude, coordinates.latitude);
+        } else {
+            console.error("Coordinates are not available.");
+        }
     }
 
-    const fetchMeetModify = async () => {
+    const fetchMeetModify = async (latitude, longitude) => {
         const formData = new FormData();
-
+        console.log("Sending to server:", { latitude, longitude });
         // console.log(userValue);
 
         // 이미지 파일이 있는 경우에만 추가
@@ -189,6 +256,9 @@ const Upcycle_meet_detail = () => {
         formData.append('meetingPostId', id);
         formData.append('title', mTitleValue);
         formData.append('content', mContentValue);
+        formData.append('adress', selectedAddress);
+        formData.append('x', latitude);
+        formData.append('y', longitude);
         formData.append('postId', id);
         try {
             const res = await fetch(MEET_URL + `/modify`,{
@@ -210,6 +280,7 @@ const Upcycle_meet_detail = () => {
                 console.log(mImgUrl);
                 console.log(mTitleValue);
                 console.log(mContentValue);
+                console.log(selectedAddress);
             }
         } catch (error) {
             console.error("Error fetching upcycle posts:", error);
@@ -270,6 +341,18 @@ const Upcycle_meet_detail = () => {
                 ) : (
                     <>
                         <div className="umd-column1">
+                            {isPostcodeVisible && (
+                                <div className="modal-background" onClick={() => setIsPostcodeVisible(false)}>
+                                    <div className="modal-content">
+                                        <DaumPostcode
+                                            className="daumpostcode"
+                                            visible={isPostcodeVisible}
+                                            autoClose={false}
+                                            onComplete={selectAddress}
+                                        />
+                                    </div>
+                                </div>
+                            )}
                             <img className="umd-img" src={mImgUrl} alt=""
                                  onClick={() => imgRef.current.click()}/>
                             <input type="file" className="img-input" accept="image/*"
@@ -300,7 +383,15 @@ const Upcycle_meet_detail = () => {
                             <textarea className="umd-content"
                                       value={mContentValue}
                                       onChange={contentModifyHandler}/>
-                            
+                            <input className="add-input" type="text"
+                                   value={selectedAddress}
+                                   onChange={(e) => setSelectedAddress(e.target.value)}
+                                   placeholder="주소"/>
+                            <div className="add-box">
+                                <button className="add-btn"
+                                        onClick={adressHandler}>주소찾기
+                                </button>
+                            </div>
                             <div className="btn-box">
                                 <button className="btn-modify" onClick={checkClickHandler}>확인</button>
                                 <button className="btn-cancle" onClick={modifyClickHandler}>취소</button>
