@@ -1,15 +1,21 @@
+.header-fix {
+  position: fixed;
+  width: 100%;
+  z-index: 2000;
+}
 #header {
   height: 7vh;
   position: relative;
   top: 0;
-  z-index: 2000;
   display: flex;
+  padding: 0 9%;
   flex-direction: row;
   justify-content: space-between;
-  background: #79B49F;
+  background: #fff;
+  box-shadow: 0px 1px 7px #ccc  ;
 
   .link-text {
-    color: #ffffff;
+    color: #333;
     text-decoration: none;
   }
 
@@ -18,8 +24,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 50px;
-    color: #ffffff;
+    font-size: 47px;
+    color: #79B49F;
     margin-left: 20px;
     text-decoration: none;
     .word-E {
@@ -34,7 +40,7 @@
     gap: 30px;
     align-items: center;
     font-size: 20px;
-    color: #ffffff;
+    color: #333;
     text-decoration: none;
   }
   .sign-box {
@@ -43,10 +49,10 @@
     flex-direction: row;
     justify-content: center;
     gap: 15px;
-    margin: 0 60px;
+    margin: 0 1%;
     align-items: center;
     font-size: 20px;
-    color: #ffffff;
+    color: #333;
     .profile-img-box {
       width: 50px;
       height: 50px;

@@ -35,6 +35,7 @@ const Header = () => {
 
     return (
         <>
+            <div className="header-fix">
             <div id="header">
                 <Link to='/' className="logo">
                     <p>OUO</p>
@@ -74,6 +75,7 @@ const Header = () => {
                         </>
                     )}
                 </div>
+            </div>
             </div>
         </>
     )
