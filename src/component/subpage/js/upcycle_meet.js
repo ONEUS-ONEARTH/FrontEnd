@@ -6,7 +6,12 @@ import { MEET_URL } from "../../../config/host-config";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import { BiSolidPlusCircle } from "react-icons/bi";
 import Upcycle_meet_content from "./upcycle_meet_content";
-import Pagination from '@mui/material/Pagination';
+import Pagination from "react-js-pagination";
+import { FaAngleLeft } from "react-icons/fa";
+import { FaAngleRight } from "react-icons/fa";
+import { FaAngleDoubleLeft } from "react-icons/fa";
+import { FaAngleDoubleRight } from "react-icons/fa";
+
 
 const Upcycle_meet = () => {
     const MEET_GET_URL = MEET_URL + "/posts";
@@ -16,8 +21,18 @@ const Upcycle_meet = () => {
     const [location, setLocation] = useState({ lat: 37.5665, lng: 126.9780 }); // 기본값 서울
     const [error, setError] = useState(null);
     const [meetList, setMeetList] = useState([]);
-    const [page, setPage] = useState(1);
     const [totalPost,setTotalPost] = useState();
+    const [page, setPage] = useState(1);
+    const itemsPerPage = 5;
+    const displayedMeetList = meetList.slice(
+        (page - 1) * itemsPerPage,
+        page * itemsPerPage
+    );
+
+    const handlePageChange = (pageNumber) => {
+        setPage(pageNumber);
+        console.log(`Current Page: ${pageNumber}`);
+    };
 
     useEffect(() => {
         // 현재 위치 가져오기
@@ -81,7 +96,7 @@ const Upcycle_meet = () => {
                 if (json && json.boards) {
                     setMeetList(json.boards);
                     setTotalPost(json.totalPost);
-                    console.log(json);
+                    console.log(json.totalPost);
                 }
             }
         } catch (error) {
@@ -89,9 +104,9 @@ const Upcycle_meet = () => {
         }
     };
 
-    const pageHandler = (e) => {
-        setPage(+e.target.innerText);
-    };
+    // const pageHandler = (e) => {
+    //     setPage(+e.target.innerText);
+    // };
     return (
         <>
             <Header />
@@ -103,9 +118,9 @@ const Upcycle_meet = () => {
                     <div className="meetlist-box">
 
                         <ul className="meetlist">
-                            {meetList.map((boards) => (
+                            {displayedMeetList.map((boards, index) => (
                                 <Upcycle_meet_content
-                                    key={boards.id}
+                                    key={index} // 고유한 키
                                     id={boards.id}
                                     title={boards.title}
                                     content={boards.content}
@@ -116,14 +131,15 @@ const Upcycle_meet = () => {
                             ))}
                         </ul>
                         <Pagination
-                            activePage={page}
-                            totalItemsCount={totalPost}
-                            itemsCountPerPage={20}
-                            pageRangeDisplayed={10}
-                            onChange={pageHandler}
-                            // count={10}
-                            variant="outlined"
-                            color="primary"
+                            activePage={page} // 현재 페이지
+                            itemsCountPerPage={itemsPerPage} // 한 페이지당 아이템 수
+                            totalItemsCount={totalPost} // 전체 아이템 수
+                            pageRangeDisplayed={5} // 페이지 번호 범위
+                            onChange={handlePageChange} // 페이지 변경 핸들러
+                            prevPageText={<FaAngleDoubleLeft />}
+                            firstPageText={<FaAngleLeft />}
+                            lastPageText={<FaAngleRight />}
+                            nextPageText={<FaAngleDoubleRight />}
                         />
                     </div>
                 </div>

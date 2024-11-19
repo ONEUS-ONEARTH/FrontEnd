@@ -1,19 +1,33 @@
 import React, {useEffect, useState} from "react";
 import { Link, useNavigate } from 'react-router-dom';
-import Pagination from '@mui/material/Pagination';
 import "../scss/upcycle.scss"
 import Header from "../../header/js/header";
 import Upcycle_content from "./upcycle_content";
 import { CiCirclePlus } from "react-icons/ci";
 import {UPCYCLE_URL} from "../../../config/host-config";
+import Pagination from "react-js-pagination";
+import { FaAngleLeft } from "react-icons/fa";
+import { FaAngleRight } from "react-icons/fa";
+import { FaAngleDoubleLeft } from "react-icons/fa";
+import { FaAngleDoubleRight } from "react-icons/fa";
 
 const Upcycle = () => {
     const UPCYCLE_GET_URL = UPCYCLE_URL + '/posts'
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [postList, setPostList] = useState([]);
     const storedToken = localStorage.getItem('ACCESS_TOKEN');
-    const [page, setPage] = useState(1);
     const [totalPost,setTotalPost] = useState();
+    const [page, setPage] = useState(1);
+    const itemsPerPage = 20;
+    const displayedMeetList = postList.slice(
+        (page - 1) * itemsPerPage,
+        page * itemsPerPage
+    );
+
+    const handlePageChange = (pageNumber) => {
+        setPage(pageNumber);
+        console.log(`Current Page: ${pageNumber}`);
+    };
 
     const pageHandler = (e) => {
         setPage(+e.target.innerText);
@@ -64,9 +78,9 @@ const Upcycle = () => {
             </div>
             <div className="upcycle-column">
                 <ul className="upcycle-row">
-                    {postList.map((boards) => (
+                    {displayedMeetList.map((boards, index) => (
                         <Upcycle_content
-                            key={boards.id}
+                            key={index}
                             id={boards.id}
                             thumbnailUrl={boards.thumbnailUrl}
                             title={boards.title}
@@ -75,8 +89,8 @@ const Upcycle = () => {
                             likeScore={boards.likeScore}
                             tag={boards.tag}
                             createdDate={boards.createdDate}
-                            />
-                        ))}
+                        />
+                    ))}
                 </ul>
             </div>
             {isLoggedIn &&
@@ -87,13 +101,15 @@ const Upcycle = () => {
             </div>
             }
              <Pagination
-                 activePage={page}
-                 totalItemsCount={totalPost}
-                 itemsCountPerPage={20}
-                 pageRangeDisplayed={10}
-                 onChange={pageHandler}
-                 variant="outlined"
-                 color="primary"
+                 activePage={page} // 현재 페이지
+                 itemsCountPerPage={itemsPerPage} // 한 페이지당 아이템 수
+                 totalItemsCount={totalPost} // 전체 아이템 수
+                 pageRangeDisplayed={5} // 페이지 번호 범위
+                 onChange={handlePageChange} // 페이지 변경 핸들러
+                 prevPageText={<FaAngleDoubleLeft />}
+                 firstPageText={<FaAngleLeft />}
+                 lastPageText={<FaAngleRight />}
+                 nextPageText={<FaAngleDoubleRight />}
              />
          </div>
     </>

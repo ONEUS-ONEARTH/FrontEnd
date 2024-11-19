@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../scss/main.scss';
 import {MdArrowBackIos, MdArrowForwardIos} from "react-icons/md";
 import Main_upcycle from "./main_upcycle";
-import Main_upcycle_meet from "./main_upcycle_meet";
+import Main_meet from "./main_meet.js";
 
 
 
@@ -61,7 +61,7 @@ const Main = () => {
                         {arrow ?(
                             <Main_upcycle/>
                         ) : (
-                            <Main_upcycle_meet/>
+                            <Main_meet/>
                         )}
 
                         <div className="right-arrow" onClick={arrowClickHandler}>

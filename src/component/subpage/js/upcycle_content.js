@@ -5,14 +5,14 @@ import Moment from 'moment';
 import { BiLike } from "react-icons/bi";
 import {UPCYCLE_URL} from "../../../config/host-config";
 
-const Upcycle_content = ({id,thumbnailUrl, title, content, tag, createdDate,author,likeScore}) => {
+const Upcycle_content = ({index, id, thumbnailUrl, title, content, tag, createdDate,author,likeScore}) => {
     const DETAIL_GET_UEL = UPCYCLE_URL + '/{id}'
 
 
     var moment = require('moment');
     const publish_date = moment(createdDate).format('YYYY년 MM월 DD일')
     return (
-        <li className="grid-w">
+        <li className="grid-w" key={index}>
             <Link className="post-box" to={`/upcycle_detail/${id}`}>
                 <div className="image-box">
                     <img className="up-img" src={thumbnailUrl} alt=""/>

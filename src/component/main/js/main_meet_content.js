@@ -5,12 +5,12 @@ import { BiLike } from "react-icons/bi";
 
 
 
-const Main_upcycle_content = ({id,title, likeScore}) => {
+const Main_meet_content = ({id,title, likeScore}) => {
 
     return (
         <>
             <li className="list-obj">
-                <Link className="main-postlist" to={`/upcycle_detail/${id}`}>
+                <Link className="main-postlist" to={`/upcycle_meet_detail/${id}`}>
                     <div className="content-box">
                         <div className="content-title">
                             <p>{title}</p>
@@ -25,4 +25,4 @@ const Main_upcycle_content = ({id,title, likeScore}) => {
         </>
     )
 }
-export default Main_upcycle_content;
+export default Main_meet_content;

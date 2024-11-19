@@ -3,11 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../scss/upcycle_meet_content.scss'
 import { BiLike } from "react-icons/bi";
 
-const Upcycle_meet_content = ({id, title, option, content, thumbnailUrl,likeScore}) => {
+const Upcycle_meet_content = ({index,id, title, option, content, thumbnailUrl,likeScore}) => {
     
     return (
         <>
-            <li className="meet-obj">
+            <li className="meet-obj" key={index}>
                 <Link className="mp-box" to={`/upcycle_meet_detail/${id}`}>
                     <img className="obj-img"
                          src={thumbnailUrl}
