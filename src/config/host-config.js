@@ -25,3 +25,6 @@ const MEET = '/api/meeting'
 export const USER_URL = API_BASE_URL + USER;
 export const UPCYCLE_URL = API_BASE_URL + UPCYCLE;
 export const MEET_URL = API_BASE_URL + MEET;
+export const KAKAO_URL=`https://kauth.kakao.com/oauth/authorize`;
+export  const REST_API_KEY=`b9b2847831840e2d6c10d44d10de81a5`;
+export  const REDIRECT_URI=`http://localhost:3000/sign_in`;

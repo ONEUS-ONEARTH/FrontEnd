@@ -33,10 +33,11 @@ const Upcycle = () => {
     const fetchGetUpcycle = async () => {
 
         try {
+
             const res = await fetch(UPCYCLE_GET_URL, {
                 method: 'GET',
                 headers: {
-                    // 'Authorization': `Bearer ${storedToken}`, // 인증 헤더 추가
+                    'Authorization': `Bearer ${storedToken}`, // 인증 헤더 추가
                     'Content-Type': 'application/json',
                 },
             });

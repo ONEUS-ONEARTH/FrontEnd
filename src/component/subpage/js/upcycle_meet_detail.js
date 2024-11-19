@@ -261,11 +261,10 @@ const Upcycle_meet_detail = () => {
         formData.append('y', longitude);
         
         try {
-            const res = await fetch(MEET_URL + `/modify`,{
+            const res = await fetch(`${MEET_URL}/modify`,{
                 method: 'PUT',
-                headers: {
-                    // 'Authorization':`Bearer ${storedToken}`, // 인증 헤더 추가
-                    // 'Content-Type': 'application/json',
+                headers:{
+
                 },
                 body: formData
             });

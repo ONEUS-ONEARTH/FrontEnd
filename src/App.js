@@ -17,6 +17,8 @@ import Upcycle_post from "./component/subpage/js/upcycle_post";
 import Upcycle_meet from "./component/subpage/js/upcycle_meet";
 import Upcycle_meet_post from "./component/subpage/js/upcycle_meet_post";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import {USER_URL,KAKAO_URL,REST_API_KEY,REDIRECT_URI} from "../src/config/host-config";
+
 function App() {
     const clientId='506474340540-ptvmfj17ahedtpqqi63bnor2g0c38lgg.apps.googleusercontent.com';
 
@@ -38,6 +40,14 @@ function App() {
         return () => {
             window.removeEventListener('unload', handleBeforeUnload);
         };
+    }, []);
+
+    useEffect(() => {
+        // 카카오 초기화
+        if (!window.Kakao.isInitialized()) {
+            window.Kakao.init(`${REST_API_KEY}`); // REST API 키 입력
+            console.log('Kakao SDK initialized');
+        }
     }, []);
     
   return (
