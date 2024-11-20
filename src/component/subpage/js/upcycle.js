@@ -74,7 +74,7 @@ const Upcycle = () => {
         <Header/>
          <div className="upcycle-container">
             <div className="upcycle-title">
-                <p>업사이클</p>
+                {/*<p>업사이클</p>*/}
             </div>
             <div className="upcycle-column">
                 <ul className="upcycle-row">

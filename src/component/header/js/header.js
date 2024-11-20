@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import '../scss/header.scss';
 import { USER_URL } from "../../../config/host-config";
 
@@ -14,6 +14,7 @@ const Header = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userInfo, setUserInfo] = useState(null);
     const [menuVisible, setMenuVisible] = useState(false);
+    const location = useLocation();
 
     useEffect(() => {
         // 로그인 상태 확인 로직 (localStorage 또는 서버 API 호출)
@@ -42,8 +43,18 @@ const Header = () => {
                     <p className="word-E">E</p>
                 </Link>
                 <div className="header-box">
-                    <Link to='/upcycle_meet' className="link-text">모임</Link>
-                    <Link to='/upcycle' className="link-text">업사이클</Link>
+                    <Link
+                        to="/upcycle_meet"
+                        className={`link-text ${location.pathname === '/upcycle_meet' ? 'active' : ''}`}
+                    >
+                        모임
+                    </Link>
+                    <Link
+                        to="/upcycle"
+                        className={`link-text ${location.pathname === '/upcycle' ? 'active' : ''}`}
+                    >
+                        업사이클
+                    </Link>
                     {/*<p>에코가게정보</p>*/}
                 </div>
                 <div className="sign-box">

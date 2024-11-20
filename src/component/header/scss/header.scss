@@ -42,6 +42,24 @@
     font-size: 20px;
     color: #333;
     text-decoration: none;
+
+    .link-text {
+      text-decoration: none;
+      color: #333; // 기본 색상
+      font-size: 20px;
+      padding: 5px;
+
+      &:hover {
+        color: #79B49F; // 호버 색상
+      }
+
+      &.active {
+        color: #79B49F; // 활성화된 링크 색상
+        font-weight: bold; // 활성화된 링크 강조
+
+        //border-bottom: 2px solid #79B49F; // 밑줄 스타일 추가
+      }
+    }
   }
   .sign-box {
     display: flex;

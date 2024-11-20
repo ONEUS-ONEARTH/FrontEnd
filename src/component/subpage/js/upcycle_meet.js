@@ -113,7 +113,7 @@ const Upcycle_meet = () => {
             <div className="upcycle-meet-container">
                 <div className="upcycle-meet-box">
                     <div className="upcycle-meet-title">
-                        <p>모임</p>
+                        {/*<p>모임</p>*/}
                     </div>
                     <div className="meetlist-box">
 
