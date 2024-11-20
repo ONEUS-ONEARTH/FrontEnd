@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../scss/my_upcycle_content.scss'
 import { BiLike } from "react-icons/bi";
 
+
 const My_upcycle_content = ({index,id, title, author, likeScore,thumbnailUrl}) => {
     return(
         <>

@@ -6,6 +6,7 @@ import '../scss/main.scss';
 import {MdArrowBackIos, MdArrowForwardIos} from "react-icons/md";
 import Main_upcycle from "./main_upcycle";
 import Main_meet from "./main_meet.js";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 
 
@@ -49,14 +50,14 @@ const Main = () => {
                     <div className="implication-box">
                     <div className="impl-title-name">
                         {arrow ?(
-                            <p>업사이클</p>
+                            <p>버려진 물건의 멋진 변신, 함께 확인해요! ♻️</p>
                         ) : (
-                            <p>모임</p>
+                            <p>지구를 위해, 함께 행동해요! 🌱 지금 바로 모임에 참여해 변화를 만들어보세요!</p>
                         )}
                     </div>
                     <div className="implied-object">
                         <div className="left-arrow"  onClick={arrowClickHandler}>
-                            <MdArrowBackIos />
+                            <FaAngleLeft />
                         </div>
                         {arrow ?(
                             <Main_upcycle/>
@@ -65,7 +66,7 @@ const Main = () => {
                         )}
 
                         <div className="right-arrow" onClick={arrowClickHandler}>
-                            <MdArrowForwardIos/>
+                            <FaAngleRight/>
                         </div>
                     </div>
                     <button className="add-btn" onClick={addbtnClickHandler}>

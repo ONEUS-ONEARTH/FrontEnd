@@ -50,15 +50,16 @@
       }
     }
     .add-btn {
-      width: 150px;
-      height: 40px;
-      border: 1px solid #000000;
-      border-radius: 5px;
+      width: 125px;
+      height: 43px;
+      border: 2px solid #79B49F;
+      border-radius: 15px;
       font-size: 20px;
       display: flex;
       justify-content: center;
       align-items: center;
       background: #fff;
+      box-shadow: inset 1px 1px 3px #495e57;
     }
   }
 
