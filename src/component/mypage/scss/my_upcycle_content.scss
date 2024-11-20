@@ -1,5 +1,6 @@
 .obj-container {
   width: 96%;
+  //height: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -23,11 +24,11 @@
     }
     .content-box {
       width: 65%;
-      height: 100%;
+      height: 50px;
       display: flex;
       flex-direction: column;
       align-items: start;
-      justify-content: space-evenly;
+      justify-content: space-between;
 
       .title {
         font-size: 20px;

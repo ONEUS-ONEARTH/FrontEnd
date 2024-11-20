@@ -41,6 +41,7 @@ const My_upcycle_list = () => {
         if (res.status === 200) {
             const json = await res.json();
             setMyPostList(json.boards);
+            setTotalPost(json.totalPost);
             console.log(json.boards);
 
         }
