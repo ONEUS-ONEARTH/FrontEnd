@@ -27,9 +27,9 @@
       height: 100%;
     }
 
-    .my-upcycle-bg {
+    .my-upcycle {
       width: 60%;
-      height: 87.5%;
+      height: 84%;
       display: flex;
       flex-direction: column;
       justify-content: start;
@@ -37,6 +37,59 @@
       gap: 3%;
       align-items: center;
       box-shadow: inset 0 0 10px rgb(0, 0, 0, 0.25);
+      .my-upcycle-bg {
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        justify-content: start;
+        //padding: 4%;
+        gap: 3%;
+        align-items: center;
+
+      }
+      .pagination {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0;
+
+        li {
+          margin: 0 0.5rem;
+
+          &.active {
+            a {
+
+              background-color: #8acab2; /* 주색 */
+              color: #FFFFFF; /* 텍스트 색상 */
+              font-weight: bold;
+              border-radius: 50%;
+              //margin: none;
+            }
+          }
+
+          a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-weight: bold;
+            width: 40px;
+            height: 40px;
+            text-decoration: none;
+            color: #555; /* 기본 텍스트 색상 */
+            //border: 1px solid #79B49F; /* 테두리 */
+            border-radius: 50%;
+            transition: all 0.3s ease;
+
+
+            &:hover {
+              background-color: #ddd; /* 어두운 녹색 */
+              color: #FFFFFF; /* 텍스트 색상 */
+            }
+          }
+        }
+      }
     }
   }
 }

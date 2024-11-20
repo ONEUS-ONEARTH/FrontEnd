@@ -5,15 +5,17 @@
     width: 500px;
     height: 500px;
     background: #ccc;
+    border-radius: 10px;
   }
   //background: #cccccc;
 }
 .implied-board {
   width: 420px;
-  height: 520px;
+  height: 500px;
   border: 1px solid #000000;
   border-radius: 5px;
   padding: 40px 40px;
+
 
   .list {
     width: 100%;

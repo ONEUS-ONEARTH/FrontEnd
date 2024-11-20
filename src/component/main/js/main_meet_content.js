@@ -9,7 +9,7 @@ const Main_meet_content = ({id,title, likeScore}) => {
 
     return (
         <>
-            <li className="list-obj">
+            <li className="list-obj" >
                 <Link className="main-postlist" to={`/upcycle_meet_detail/${id}`}>
                     <div className="content-box">
                         <div className="content-title">

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import '../scss/main_meet.scss'
-import { Map } from "react-kakao-maps-sdk";
+import { Map, MapMarker } from "react-kakao-maps-sdk";
 import { MEET_URL } from "../../../config/host-config";
 import Main_meet_content from "./main_meet_content.js"
 
@@ -12,9 +12,36 @@ const Main_meet = () => {
     const [postList, setPostList] = useState([]);
     const [totalPost, setTotalPost] = useState();
     const storedToken = localStorage.getItem('ACCESS_TOKEN');
+    const [location, setLocation] = useState({ lat: 37.5665, lng: 126.9780 }); // 기본값 서울
+    const [error, setError] = useState(null);
+
 
 
     useEffect(() => {
+        // 현재 위치 가져오기
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    setLocation({
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                    });
+                    setError(null);
+                },
+                (err) => {
+                    console.error("위치 가져오기 실패:", err.message);
+                    setError("위치를 가져올 수 없습니다. 기본 위치로 설정합니다.");
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0,
+                }
+            );
+        } else {
+            setError("Geolocation이 지원되지 않는 브라우저입니다.");
+        }
+
         fetchGetMeet();
     }, []);
 
@@ -49,10 +76,18 @@ const Main_meet = () => {
         <>
         <div className="implied-map">
             <Map
+                id="map"
                 className="map-api"
-                center={{lat: 33.450701, lng: 126.570667}}
-                level={5}
-            />
+                center={{lat: location.lat, lng: location.lng}}
+                level={5}>
+
+                {postList.map((position, index) => (
+                    <MapMarker
+                        key={`${position.x}_${position.y}`}
+                        position={{lat: position.x, lng: position.y}}
+                    />
+                ))}
+            </Map>
         </div>
         <div className="implied-board">
             <ul className="list">

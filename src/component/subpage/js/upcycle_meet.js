@@ -31,7 +31,7 @@ const Upcycle_meet = () => {
 
     const handlePageChange = (pageNumber) => {
         setPage(pageNumber);
-        console.log(`Current Page: ${pageNumber}`);
+        // console.log(`Current Page: ${pageNumber}`);
     };
 
     useEffect(() => {
